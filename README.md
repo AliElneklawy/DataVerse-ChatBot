@@ -105,3 +105,5 @@
 2. Run the application (you can choose to run the telegram bot, the whatsapp bot, the ifram or just the `main.py` file):
      ```bash
      python main.py
+3. You can create your own dataset using `make_dataset.py` script.
+4. You can train your own classifier using `train_clf.py` script. 
