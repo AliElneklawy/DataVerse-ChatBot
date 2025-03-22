@@ -25,18 +25,18 @@
   - Shuffling and saving datasets for training purposes.
 - **Content Storage**: Saves the dataset in `data/datasets/`.
 - **Training Scripts**: Utilizes `train_clf.py` to train classification models with support for:
-  - Random Forest and XGBoost classifiers.
-  - Hyperparameter tuning using `RandomizedSearchCV`.
+  - [Random Forest](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html) and [XGBoost](https://xgboost.readthedocs.io/en/stable/) classifiers.
+  - Hyperparameter tuning using [`RandomizedSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html).
   - Embedding generation with `sentence-transformers/all-MiniLM-L6-v2`.
 - **Evaluation Metrics**:
   - Accuracy, Precision, and Recall.
-  - ROC and Precision-Recall Curve plotting.
+  - [ROC](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_curve.html) and [Precision-Recall](https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html) Curve plotting.
   - The model achieved 92.7% accuracy on the test set.
 - **Model Persistence**: Saves trained models as `.pkl` files and logs metadata (e.g., hyperparameters, evaluation results).
 
 
 ### Chat Interfaces
-- **WhatsApp Bot**: Deployable as a WhatsApp bot for seamless, mobile-friendly conversations.
+- **WhatsApp Bot**: Deployable as a WhatsApp bot using Twilio for seamless, mobile-friendly conversations.
 - **Telegram Bot**: Available as a Telegram bot, integrating with Telegram’s messaging ecosystem.
 - **Iframe Embedding**: Embeddable via an iframe for easy integration into websites or applications.
 
@@ -54,7 +54,7 @@
 ### Retrieval-Augmented Generation (RAG)
 - **Base RAG Framework**: Provides a consistent RAG interface for retrieval and generation.
 - **LLM-Specific RAG**: Custom implementations for each supported LLM, optimizing performance.
-- **Vector Store Integration**: Uses FAISS (in `data/indexes/`) for fast, efficient document retrieval.
+- **Vector Store Integration**: Uses [FAISS](https://github.com/facebookresearch/faiss?tab=readme-ov-file) (in `data/indexes/`) for fast, efficient document retrieval.
 - **Context-Aware Responses**: Combines extracted data with LLM capabilities for accurate replies.
 
 ### Embedding Generation
@@ -63,7 +63,7 @@
 - **Content Indexing**: Stores embeddings in FAISS indexes (`index.faiss`, `index.pkl`) for quick retrieval.
 
 ### Chat Functionality
-- **Chat History Persistence**: Saves conversations in a SQLite database (`chat_history.db`).
+- **Chat History Persistence**: Saves conversations in a [SQLite](https://docs.python.org/3/library/sqlite3.html) database (`chat_history.db`).
 - **Context Retention**: Maintains conversational context using history and retrieved data.
 - **Query Processing**: Processes user inputs through embeddings and RAG for response generation.
 
