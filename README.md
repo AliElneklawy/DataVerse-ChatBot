@@ -11,6 +11,29 @@
 - **Multi-Format Data Extraction**: Supports 2 libraries for data extraction; `langchain` and `docling` to extract data from nearly all file formats (e.g., PDFs, text files, docx, csv, xlsx, etc...), broadening its knowledge base beyond web content.
 - **Content Storage**: Saves extracted data in `data/web_content/` as text files for indexing and retrieval.
 
+### Monitoring and Uncertainty Detection
+- **Response Monitoring**: Implements a monitoring service to track responses and detect the questions that the LLM couldn't answer.
+- **Uncertain Response Classification**: Uses a trained classifier to detect uncertain responses from LLM.
+- **Email Notifications**: Sends alerts via email when uncertain responses are detected.
+- **Chat History Monitoring**: Periodically emails the chat history to a configured email address.
+
+### Dataset Creation and Model Training
+- **Dataset Creation**: Uses the `make_dataset.py` script to create standardized datasets from RAG responses. It supports:
+  - Data cleaning and tokenization using `sentence-transformers/all-MiniLM-L6-v2`.
+  - Saving structured responses in CSV format for further processing.
+  - Shuffling and saving datasets for training purposes.
+- **Content Storage**: Saves the dataset in `data/datasets/`.
+- **Training Scripts**: Utilizes `train_clf.py` to train classification models with support for:
+  - Random Forest and XGBoost classifiers.
+  - Hyperparameter tuning using `RandomizedSearchCV`.
+  - Embedding generation with `sentence-transformers/all-MiniLM-L6-v2`.
+- **Evaluation Metrics**:
+  - Accuracy, Precision, and Recall.
+  - ROC and Precision-Recall Curve plotting.
+  - The model achieved 92.7% accuracy on the test set.
+- **Model Persistence**: Saves trained models as `.pkl` files and logs metadata (e.g., hyperparameters, evaluation results).
+
+
 ### Chat Interfaces
 - **WhatsApp Bot**: Deployable as a WhatsApp bot for seamless, mobile-friendly conversations.
 - **Telegram Bot**: Available as a Telegram bot, integrating with Telegram’s messaging ecosystem.
