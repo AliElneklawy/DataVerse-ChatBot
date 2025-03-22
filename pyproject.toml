@@ -1,7 +1,7 @@
 [project]
-name = "webrag"
+name = "DataVerse-ChatBot"
 version = "2.1.0"
-description = "Add your description here"
+description = "Versatile RAG system that powers real-time chat with data from the web and nearly all file formats, deployable as WhatsApp/Telegram bots or an iframe."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
