@@ -94,8 +94,8 @@
 ### Windows
 1. Clone the repository:
    ```bash
-   git clone https://github.com/AliElneklawy/chat-with-your-data.git
-   cd chat-with-your-data
+   git clone https://github.com/AliElneklawy/DataVerse-ChatBot.git
+   cd DataVerse-ChatBot
 2. Run the installation script:
    ```bash
    install.bat
