@@ -20,7 +20,7 @@
 
 ### Dataset Creation and Model Training
 - **Dataset Creation**: Uses the `make_dataset.py` script to create standardized datasets from RAG responses. It supports:
-  - Data cleaning and tokenization using `sentence-transformers/all-MiniLM-L6-v2`.
+  - Data cleaning and tokenization using [`sentence-transformers/all-MiniLM-L6-v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2).
   - Saving structured responses in CSV format for further processing.
   - Shuffling and saving datasets for training purposes.
 - **Content Storage**: Saves the dataset in `data/datasets/`.
