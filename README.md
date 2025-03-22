@@ -1,95 +1,84 @@
-# WebRAG: Real-Time Chat with AI-Augmented Web Data
+# DataVerse ChatBot
 
-**WebRAG** is a sophisticated Python-based application designed to combine web crawling capabilities with Retrieval-Augmented Generation (RAG) techniques, enabling real-time chat interactions powered by advanced AI models. This project leverages an external `crawl4ai` library for crawling and integrates various RAG implementations to provide accurate, context-aware responses.
+![image](https://github.com/user-attachments/assets/357e1df2-7f28-44b3-b242-6c39e9784d32)
 
-## Table of Contents
-
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-  - [Windows](#windows)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
+**DataVerse ChatBot** is a powerful Python-based application that enables real-time, AI-driven chat interactions by extracting and processing data from virtually any source—web pages, nearly all file formats, and more. Combining advanced web crawling, multi-format data extraction, and Retrieval-Augmented Generation (RAG) techniques, it integrates with leading Large Language Models (LLMs) to deliver context-aware responses. Deployable as WhatsApp and Telegram bots or embedded via an iframe, DataVerse ChatBot also supports voice messages, making it a versatile tool for conversational AI.
 
 ## Features
 
-- **Web Crawling**: Efficiently gathers content from specified web sources using the `crawl4ai` library.
-- **LLM Integration**: Supports multiple LLMs (e.g., OpenAI, Claude, Cohere) for enhanced response generation.
-- **Modular Design**: Organized into reusable packages for embeddings, RAG implementations, and utilities.
-- **Automated Setup**: Installs dependencies and configures the environment with a single command.
+### Data Extraction and Processing
+- **Web Crawling**: Supports 2 libraries for web crawling; `crawl4ai` and `scrapegraphai` to efficiently gather content from specified web sources, with customizable parameters (e.g., crawl depth, preferred client).
+- **Multi-Format Data Extraction**: Supports 2 libraries for data extraction; `langchain` and `docling` to extract data from nearly all file formats (e.g., PDFs, text files, docx, csv, xlsx, etc...), broadening its knowledge base beyond web content.
+- **Content Storage**: Saves extracted data in `data/web_content/` as text files for indexing and retrieval.
 
-## Requirements
+### Chat Interfaces
+- **WhatsApp Bot**: Deployable as a WhatsApp bot for seamless, mobile-friendly conversations.
+- **Telegram Bot**: Available as a Telegram bot, integrating with Telegram’s messaging ecosystem.
+- **Iframe Embedding**: Embeddable via an iframe for easy integration into websites or applications.
 
-- **Python**: Version 3.11 or higher.
-- **Environment Variables**: A `.env` file with necessary API keys (see `.env.example` for template).
-- **Internet Connection**: Required for dependency installation and web crawling.
+### Large Language Model (LLM) Integration
+- **Multiple LLM Support**: Integrates with various LLMs, including:
+  - OpenAI
+  - Claude
+  - Cohere
+  - DeepSeek
+  - Gemini
+  - Grok
+  - Mistral
+- **Flexible LLM Selection**: Configurable via settings to switch between LLMs based on user preference or use case.
+
+### Retrieval-Augmented Generation (RAG)
+- **Base RAG Framework**: Provides a consistent RAG interface for retrieval and generation.
+- **LLM-Specific RAG**: Custom implementations for each supported LLM, optimizing performance.
+- **Vector Store Integration**: Uses FAISS (in `data/indexes/`) for fast, efficient document retrieval.
+- **Context-Aware Responses**: Combines extracted data with LLM capabilities for accurate replies.
+
+### Embedding Generation
+- **Base Embedding System**: Generates embeddings for data and queries via a reusable interface.
+- **Multiple Embedding Models**: Supports embedding APIs from LLMs (Cohere, Mistral, OpenAI) or standalone models (HuggingFace).
+- **Content Indexing**: Stores embeddings in FAISS indexes (`index.faiss`, `index.pkl`) for quick retrieval.
+
+### Chat Functionality
+- **Chat History Persistence**: Saves conversations in a SQLite database (`chat_history.db`).
+- **Context Retention**: Maintains conversational context using history and retrieved data.
+- **Query Processing**: Processes user inputs through embeddings and RAG for response generation.
+
+### Modular Design
+- **Package Structure**: Organized into reusable modules:
+  - `crawler.py`: Web crawling logic.
+  - `embeddings/`: Embedding generation.
+  - `rag/`: RAG implementations.
+  - `utils/`: Helper functions.
+- **Extensibility**: Easy to add new LLMs, embedding models, or features.
+
+### Setup and Installation
+- **Automated Setup**: Single-command installation via `install.bat` (Windows) for dependencies and configuration.
+- **Dependency Management**: Installs packages from `pyproject.toml`.
+- **Environment Configuration**: Automated configuration.
+
+### Data Management
+- **Persistent Storage**: Organizes data into:
+  - `data/web_content/`: Extracted content.
+  - `data/indexes/`: Vectorized indexes.
+  - `data/database/`: Chat history database (also monitors the induced costs for using the LLMs across all chat interfaces).
+- **Efficient Retrieval**: Uses FAISS for scalable similarity searches.
+- **Database Support**: Lightweight SQLite for chat history.
+
 
 ## Installation
 
-Follow the instructions below to set up the project on your system. The installation process automatically installs all dependencies and runs required setup commands from the `crawl4ai` library.
-
 ### Windows
-
-1. **Clone the Repository**:
-   
-   Open a Command Prompt (CMD) and execute:
-   ```cmd
-   git clone https://github.com/AliElneklawy/WebRAG.git
-   cd WebRAG
-   
-3. **Install and Configure**:
-   
-   Run the provided batch script to install dependencies and set up the project:
-   ```cmd
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/AliElneklawy/chat-with-your-data.git
+   cd chat-with-your-data
+2. Run the installation script:
+   ```bash
    install.bat
-   
-  This command Installs all dependencies listed in `requirements.txt`.
-  Executes `crawl4ai-setup` and `crawl4ai-doctor` to configure the environment.
+  This installs dependencies and configures the environment.
 
 ## Usage
-
-After installation, run the `main.py` file. This launches the main application entry point. API configurations should be provided in a `.env` file in the project root. Refer to `.env` for the required format.
-
-## Project Structure
-
-The repository is organized as follows:
-
-```plaintext
-├── WebRAG
-│   ├── .env 
-│   ├── install.bat  # Windows installation script
-│   ├── requirements.txt 
-│   ├── setup.py 
-│   ├── setup_project.py 
-│   ├── data 
-│   │   ├── database  # Chat history database
-│   │   │   ├── chat_history.db 
-│   │   ├── indexes # Vector store indexes
-│   │   │   ├── index_623e7ea40a8e68c.faiss 
-│   │   │   │   ├── index.faiss 
-│   │   │   │   ├── index.pkl 
-│   │   ├── web_content  # Crawled web content
-│   │   │   ├── pydantic.txt 
-│   ├── src # Source code
-│   │   ├── main.py 
-│   │   ├── chatbot 
-│   │   │   ├── config.py 
-│   │   │   ├── crawler.py  # Web crawling logic
-│   │   │   ├── __init__.py 
-│   │   │   ├── embeddings  # Embedding-related modules
-│   │   │   │   ├── base_embedding.py 
-│   │   │   │   ├── __init__.py 
-│   │   │   ├── rag 
-│   │   │   │   ├── base_rag.py 
-│   │   │   │   ├── claude_rag.py 
-│   │   │   │   ├── cohere_rag.py 
-│   │   │   │   ├── deepseek_rag.py 
-│   │   │   │   ├── gemini_rag.py 
-│   │   │   │   ├── grok_rag.py 
-│   │   │   │   ├── mistral_rag.py 
-│   │   │   │   ├── openai_rag.py 
-│   │   │   │   ├── __init__.py 
-│   │   │   ├── utils 
-│   │   │   │   ├── utils.py 
-│   │   │   │   ├── __init__.py 
-│   ├── tests 
+1. Configure your .env file with API keys.
+2. Run the application (you can choose to run the telegram bot, the whatsapp bot, the ifram or just the `main.py` file):
+     ```bash
+     python main.py
