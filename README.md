@@ -1,4 +1,4 @@
-# WebRAG
+# WebRAG: Real-Time Chat with AI-Augmented Web Data
 
 **WebRAG** is a sophisticated Python-based application designed to combine web crawling capabilities with Retrieval-Augmented Generation (RAG) techniques, enabling real-time chat interactions powered by advanced AI models. This project leverages an external `crawl4ai` library for crawling and integrates various RAG implementations to provide accurate, context-aware responses.
 
