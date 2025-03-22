@@ -3,3 +3,7 @@ test.py
 *.pyc
 assets
 .mypy_cache
+/.venv
+/data/chat_history
+data/datasets/responses (0).csv
+data/datasets/responses (0).json

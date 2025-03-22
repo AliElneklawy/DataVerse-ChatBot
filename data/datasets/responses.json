@@ -1,0 +1,2449 @@
+[
+    {
+        "response": "I don't have enough information in the provided context to answer this question about...",
+        "label": 1
+    },
+    {
+        "response": "I'm not able to find information about this topic in the given materials.",
+        "label": 1
+    },
+    {
+        "response": "The context doesn't mention anything about this particular subject.",
+        "label": 1
+    },
+    {
+        "response": "Based on the context, the answer is that Company XYZ was founded in 1995 by John Smith...",
+        "label": 0
+    },
+    {
+        "response": "According to the provided information, the process involves three main steps...",
+        "label": 0
+    },
+    {
+        "response": "The data shows that the product achieved a 27% increase in sales during Q3 of 2023...",
+        "label": 0
+    },
+    {
+        "response": "Unfortunately, the context provided does not offer any details about this specific aspect.",
+        "label": 1
+    },
+    {
+        "response": "I've searched through the materials, but information regarding this query is absent.",
+        "label": 1
+    },
+    {
+        "response": "This particular topic is not addressed or discussed within the provided context.",
+        "label": 1
+    },
+    {
+        "response": "Based on the text you provided, the company's revenue increased by 15% in 2022 due to...",
+        "label": 0
+    },
+    {
+        "response": "The documents specify that the project will be completed over a period of five years...",
+        "label": 0
+    },
+    {
+        "response": "From the information given, we can understand that customer satisfaction rates have risen significantly...",
+        "label": 0
+    },
+    {
+        "response": "The context lacks sufficient data to provide a definitive answer to your question.",
+        "label": 1
+    },
+    {
+        "response": "There's no mention of this subject matter within the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "I am unable to locate the answer to your question within the given information.",
+        "label": 1
+    },
+    {
+        "response": "The text clearly indicates that the new policy will be implemented starting January 1st, 2024...",
+        "label": 0
+    },
+    {
+        "response": "According to the context, the main challenges faced during the implementation were...",
+        "label": 0
+    },
+    {
+        "response": "The data suggests a strong correlation between employee training and improved performance...",
+        "label": 0
+    },
+    {
+        "response": "The supplied context is insufficient for me to formulate a response to your query.",
+        "label": 1
+    },
+    {
+        "response": "This specific detail is not included in the information you have given me.",
+        "label": 1
+    },
+    {
+        "response": "The provided documents do not contain the information necessary to answer this.",
+        "label": 1
+    },
+    {
+        "response": "The context states that the primary goal of the initiative is to enhance user engagement...",
+        "label": 0
+    },
+    {
+        "response": "The information provided confirms that the product has received positive feedback from users...",
+        "label": 0
+    },
+    {
+        "response": "Analysis of the context reveals that the market share has expanded by 10% in the last quarter...",
+        "label": 0
+    },
+    {
+        "response": "للأسف، السياق المقدم لا يقدم أي تفاصيل حول هذا الجانب المحدد.",
+        "label": 1
+    },
+    {
+        "response": "لقد بحثت في المواد، لكن المعلومات المتعلقة بهذا الاستفسار غير موجودة.",
+        "label": 1
+    },
+    {
+        "response": "هذا الموضوع بالذات غير مطروح أو مناقش في السياق المقدم.",
+        "label": 1
+    },
+    {
+        "response": "بناءً على النص الذي قدمته، زادت إيرادات الشركة بنسبة 15٪ في عام 2022 بسبب...",
+        "label": 0
+    },
+    {
+        "response": "تحدد المستندات أن المشروع سيتم إنجازه على مدى خمس سنوات...",
+        "label": 0
+    },
+    {
+        "response": "من المعلومات المعطاة، يمكننا أن نفهم أن معدلات رضا العملاء قد ارتفعت بشكل كبير...",
+        "label": 0
+    },
+    {
+        "response": "السياق يفتقر إلى بيانات كافية لتقديم إجابة قاطعة لسؤالك.",
+        "label": 1
+    },
+    {
+        "response": "لا يوجد ذكر لهذا الموضوع في المواد المقدمة.",
+        "label": 1
+    },
+    {
+        "response": "أنا غير قادر على تحديد موقع الإجابة على سؤالك في المعلومات المعطاة.",
+        "label": 1
+    },
+    {
+        "response": "يشير النص بوضوح إلى أن السياسة الجديدة سيتم تطبيقها ابتداءً من 1 يناير 2024...",
+        "label": 0
+    },
+    {
+        "response": "وفقًا للسياق، كانت التحديات الرئيسية التي واجهت أثناء التنفيذ هي...",
+        "label": 0
+    },
+    {
+        "response": "تشير البيانات إلى وجود علاقة قوية بين تدريب الموظفين وتحسين الأداء...",
+        "label": 0
+    },
+    {
+        "response": "السياق المورد غير كافٍ بالنسبة لي لصياغة رد على استفسارك.",
+        "label": 1
+    },
+    {
+        "response": "هذه التفاصيل المحددة غير مدرجة في المعلومات التي قدمتها لي.",
+        "label": 1
+    },
+    {
+        "response": "المستندات المقدمة لا تحتوي على المعلومات اللازمة للإجابة على هذا.",
+        "label": 1
+    },
+    {
+        "response": "يذكر السياق أن الهدف الأساسي من المبادرة هو تعزيز مشاركة المستخدمين...",
+        "label": 0
+    },
+    {
+        "response": "تؤكد المعلومات المقدمة أن المنتج قد تلقى ردود فعل إيجابية من المستخدمين...",
+        "label": 0
+    },
+    {
+        "response": "The context provided does not contain any information about the history of this event.",
+        "label": 1
+    },
+    {
+        "response": "I cannot answer your question based on the text provided as it is not mentioned.",
+        "label": 1
+    },
+    {
+        "response": "The document is silent on the matter you are inquiring about.",
+        "label": 1
+    },
+    {
+        "response": "As per the context, the primary beneficiaries of this program are small business owners...",
+        "label": 0
+    },
+    {
+        "response": "The information specifies that the deadline for submission has been extended to next month...",
+        "label": 0
+    },
+    {
+        "response": "Based on the data available, there has been a significant decrease in customer complaints...",
+        "label": 0
+    },
+    {
+        "response": "Unfortunately, this aspect is not covered within the scope of the provided context.",
+        "label": 1
+    },
+    {
+        "response": "I looked into the materials, but could not find any relevant details concerning your query.",
+        "label": 1
+    },
+    {
+        "response": "This particular point is outside the scope of the context you've given.",
+        "label": 1
+    },
+    {
+        "response": "The text clearly states that the company launched its new product line in the spring of 2023...",
+        "label": 0
+    },
+    {
+        "response": "The report indicates that the main factors contributing to the success were strategic partnerships...",
+        "label": 0
+    },
+    {
+        "response": "From the details presented, it’s evident that employee engagement has improved after the initiative...",
+        "label": 0
+    },
+    {
+        "response": "The information needed to answer your question is not present in the context.",
+        "label": 1
+    },
+    {
+        "response": "This specific item is not referenced or detailed in the materials provided.",
+        "label": 1
+    },
+    {
+        "response": "The context you've given me does not include the necessary information to respond to this.",
+        "label": 1
+    },
+    {
+        "response": "The context indicates that the core objective of the project is to increase market penetration...",
+        "label": 0
+    },
+    {
+        "response": "The provided data confirms that the service has received high ratings from its users...",
+        "label": 0
+    },
+    {
+        "response": "An analysis of the context shows that profitability has increased by 8% over the past fiscal year...",
+        "label": 0
+    },
+    {
+        "response": "Regrettably, the context does not supply sufficient information to address your question.",
+        "label": 1
+    },
+    {
+        "response": "This specific piece of information is not contained within the document you’ve provided.",
+        "label": 1
+    },
+    {
+        "response": "The documents at hand do not have the information required to respond to this question.",
+        "label": 1
+    },
+    {
+        "response": "The context mentions that the central aim of this policy is to improve operational efficiency...",
+        "label": 0
+    },
+    {
+        "response": "Information available confirms user testimonials are overwhelmingly positive about the new features...",
+        "label": 0
+    },
+    {
+        "response": "Examination of the context reveals that operational costs have reduced by 5% in the current quarter...",
+        "label": 0
+    },
+    {
+        "response": "There's no mention of this topic in the provided text.",
+        "label": 1
+    },
+    {
+        "response": "The context doesn't provide enough details to answer this question.",
+        "label": 1
+    },
+    {
+        "response": "I couldn't find the answer to your question within the given material.",
+        "label": 1
+    },
+    {
+        "response": "The context specifies that the initial phase of the project will focus on user research...",
+        "label": 0
+    },
+    {
+        "response": "The information confirms that customer retention rates have improved significantly...",
+        "label": 0
+    },
+    {
+        "response": "The analysis of the context suggests a positive trend in sales growth this year...",
+        "label": 0
+    },
+    {
+        "response": "السياق المقدم لا يحتوي على أية معلومات حول تاريخ هذا الحدث.",
+        "label": 1
+    },
+    {
+        "response": "لا يمكنني الإجابة على سؤالك بناءً على النص المقدم لأنه غير مذكور.",
+        "label": 1
+    },
+    {
+        "response": "الوثيقة صامتة بشأن الموضوع الذي تستفسر عنه.",
+        "label": 1
+    },
+    {
+        "response": "حسب السياق، المستفيدون الرئيسيون من هذا البرنامج هم أصحاب المشاريع الصغيرة...",
+        "label": 0
+    },
+    {
+        "response": "تحدد المعلومات أن الموعد النهائي للتقديم قد تم تمديده إلى الشهر القادم...",
+        "label": 0
+    },
+    {
+        "response": "بناءً على البيانات المتاحة، كان هناك انخفاض كبير في شكاوى العملاء...",
+        "label": 0
+    },
+    {
+        "response": "للأسف، هذا الجانب غير مغطى ضمن نطاق السياق المقدم.",
+        "label": 1
+    },
+    {
+        "response": "لقد بحثت في المواد، ولكن لم أتمكن من العثور على أي تفاصيل ذات صلة بشأن استفسارك.",
+        "label": 1
+    },
+    {
+        "response": "هذه النقطة بالذات تقع خارج نطاق السياق الذي قدمته.",
+        "label": 1
+    },
+    {
+        "response": "يذكر النص بوضوح أن الشركة أطلقت خط إنتاجها الجديد في ربيع عام 2023...",
+        "label": 0
+    },
+    {
+        "response": "يشير التقرير إلى أن العوامل الرئيسية التي ساهمت في النجاح كانت الشراكات الاستراتيجية...",
+        "label": 0
+    },
+    {
+        "response": "من التفاصيل المقدمة، يتضح أن مشاركة الموظفين قد تحسنت بعد المبادرة...",
+        "label": 0
+    },
+    {
+        "response": "المعلومات اللازمة للإجابة على سؤالك غير موجودة في السياق.",
+        "label": 1
+    },
+    {
+        "response": "هذا العنصر المحدد غير مشار إليه أو مفصل في المواد المقدمة.",
+        "label": 1
+    },
+    {
+        "response": "السياق الذي قدمته لي لا يتضمن المعلومات الضرورية للرد على هذا.",
+        "label": 1
+    },
+    {
+        "response": "يشير السياق إلى أن الهدف الأساسي للمشروع هو زيادة اختراق السوق...",
+        "label": 0
+    },
+    {
+        "response": "تؤكد البيانات المقدمة أن الخدمة قد تلقت تقييمات عالية من مستخدميها...",
+        "label": 0
+    },
+    {
+        "response": "يُظهر تحليل السياق أن الربحية زادت بنسبة 8٪ خلال السنة المالية الماضية...",
+        "label": 0
+    },
+    {
+        "response": "للأسف، السياق لا يوفر معلومات كافية لمعالجة سؤالك.",
+        "label": 1
+    },
+    {
+        "response": "هذه المعلومة المحددة غير واردة في الوثيقة التي قدمتها.",
+        "label": 1
+    },
+    {
+        "response": "الوثائق المتاحة لا تحتوي على المعلومات المطلوبة للرد على هذا السؤال.",
+        "label": 1
+    },
+    {
+        "response": "يذكر السياق أن الهدف المركزي لهذه السياسة هو تحسين الكفاءة التشغيلية...",
+        "label": 0
+    },
+    {
+        "response": "تؤكد المعلومات المتاحة أن شهادات المستخدمين إيجابية للغاية بشأن الميزات الجديدة...",
+        "label": 0
+    },
+    {
+        "response": "يكشف فحص السياق أن التكاليف التشغيلية قد انخفضت بنسبة 5٪ في الربع الحالي...",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد ذكر لهذا الموضوع في النص المقدم.",
+        "label": 1
+    },
+    {
+        "response": "السياق لا يقدم تفاصيل كافية للإجابة على هذا السؤال.",
+        "label": 1
+    },
+    {
+        "response": "لم أتمكن من العثور على إجابة لسؤالك في المادة المقدمة.",
+        "label": 1
+    },
+    {
+        "response": "يحدد السياق أن المرحلة الأولية من المشروع ستركز على بحث المستخدمين...",
+        "label": 0
+    },
+    {
+        "response": "تؤكد المعلومات أن معدلات الاحتفاظ بالعملاء قد تحسنت بشكل ملحوظ...",
+        "label": 0
+    },
+    {
+        "response": "يشير تحليل السياق إلى اتجاه إيجابي في نمو المبيعات هذا العام...",
+        "label": 0
+    },
+    {
+        "response": "The context explicitly states that the event took place on June 12, 2022...",
+        "label": 0
+    },
+    {
+        "response": "I don’t have access to enough details in the provided text to respond to this.",
+        "label": 1
+    },
+    {
+        "response": "Based on the information, the team completed the task ahead of schedule...",
+        "label": 0
+    },
+    {
+        "response": "There’s no reference to this topic in the materials you gave me.",
+        "label": 1
+    },
+    {
+        "response": "The data indicates a 12% growth in revenue over the last fiscal year...",
+        "label": 0
+    },
+    {
+        "response": "The provided context lacks any mention of this issue.",
+        "label": 1
+    },
+    {
+        "response": "According to the text, the policy change resulted in higher productivity...",
+        "label": 0
+    },
+    {
+        "response": "I couldn’t locate any relevant information about this in the given context.",
+        "label": 1
+    },
+    {
+        "response": "The document confirms that the deadline is set for April 15, 2025...",
+        "label": 0
+    },
+    {
+        "response": "This specific question isn’t addressed in the provided information.",
+        "label": 1
+    },
+    {
+        "response": "The report highlights that customer feedback improved by 30%...",
+        "label": 0
+    },
+    {
+        "response": "Unfortunately, the context doesn’t cover this particular detail.",
+        "label": 1
+    },
+    {
+        "response": "From the data, it’s clear that the project budget was $2 million...",
+        "label": 0
+    },
+    {
+        "response": "The text you provided doesn’t contain an answer to this query.",
+        "label": 1
+    },
+    {
+        "response": "The context reveals that the product launch increased brand awareness...",
+        "label": 0
+    },
+    {
+        "response": "I’m unable to respond as the necessary information isn’t included.",
+        "label": 1
+    },
+    {
+        "response": "The materials state that the initiative began in early 2021...",
+        "label": 0
+    },
+    {
+        "response": "There’s no data in the context to support an answer to this.",
+        "label": 1
+    },
+    {
+        "response": "The analysis shows a decline in errors after the system update...",
+        "label": 0
+    },
+    {
+        "response": "This aspect isn’t mentioned anywhere in the provided documents.",
+        "label": 1
+    },
+    {
+        "response": "The text confirms that the team consists of 15 members...",
+        "label": 0
+    },
+    {
+        "response": "I can’t find anything related to this in the given information.",
+        "label": 1
+    },
+    {
+        "response": "Based on the context, the survey results were published last month...",
+        "label": 0
+    },
+    {
+        "response": "The provided materials don’t offer any insight into this matter.",
+        "label": 1
+    },
+    {
+        "response": "The data suggests that user retention improved after the update...",
+        "label": 0
+    },
+    {
+        "response": "The context is silent regarding this particular topic.",
+        "label": 1
+    },
+    {
+        "response": "The document specifies that the event will occur annually...",
+        "label": 0
+    },
+    {
+        "response": "There’s insufficient information in the text to address this.",
+        "label": 1
+    },
+    {
+        "response": "The provided info states that the company expanded to three new cities...",
+        "label": 0
+    },
+    {
+        "response": "I searched the context, but this detail is missing.",
+        "label": 1
+    },
+    {
+        "response": "The text indicates that the software was updated on December 1, 2024...",
+        "label": 0
+    },
+    {
+        "response": "This question falls outside the scope of the given materials.",
+        "label": 1
+    },
+    {
+        "response": "The context shows that sales peaked during the holiday season...",
+        "label": 0
+    },
+    {
+        "response": "The information provided doesn’t allow me to answer this.",
+        "label": 1
+    },
+    {
+        "response": "The report confirms that the campaign reached 1 million users...",
+        "label": 0
+    },
+    {
+        "response": "There’s no trace of this subject in the context you shared.",
+        "label": 1
+    },
+    {
+        "response": "The data points to a 5% reduction in operating costs...",
+        "label": 0
+    },
+    {
+        "response": "The text lacks the details needed to respond to your question.",
+        "label": 1
+    },
+    {
+        "response": "The context explains that the delay was due to supply chain issues...",
+        "label": 0
+    },
+    {
+        "response": "I’m unable to provide an answer based on the given context.",
+        "label": 1
+    },
+    {
+        "response": "The document notes that the new feature was well-received...",
+        "label": 0
+    },
+    {
+        "response": "This topic isn’t covered in the materials you provided.",
+        "label": 1
+    },
+    {
+        "response": "The information shows that the project was funded by a grant...",
+        "label": 0
+    },
+    {
+        "response": "The context doesn’t include anything about this subject.",
+        "label": 1
+    },
+    {
+        "response": "The text states that the company hired 50 new employees last year...",
+        "label": 0
+    },
+    {
+        "response": "I don’t see any relevant data in the context to answer this.",
+        "label": 1
+    },
+    {
+        "response": "The analysis confirms that satisfaction scores rose by 20%...",
+        "label": 0
+    },
+    {
+        "response": "The provided text doesn’t mention this at all.",
+        "label": 1
+    },
+    {
+        "response": "The new software update rolled out last week with improved security features.",
+        "label": 0
+    },
+    {
+        "response": "Sorry, I don’t have any details about that event in the info you gave me.",
+        "label": 1
+    },
+    {
+        "response": "Sales dropped by 12% after the price hike in June.",
+        "label": 0
+    },
+    {
+        "response": "There’s nothing here about how the team performed last quarter.",
+        "label": 1
+    },
+    {
+        "response": "The CEO stepped down in 2021 after 15 years with the company.",
+        "label": 0
+    },
+    {
+        "response": "I can’t tell you what the budget was—those numbers aren’t in the data.",
+        "label": 1
+    },
+    {
+        "response": "The project hit a snag due to supply chain issues in early 2023.",
+        "label": 0
+    },
+    {
+        "response": "No clue about that; it’s not mentioned anywhere in what you provided.",
+        "label": 1
+    },
+    {
+        "response": "User feedback has been overwhelmingly positive since the redesign.",
+        "label": 0
+    },
+    {
+        "response": "I don’t see anything about that policy in the documents.",
+        "label": 1
+    },
+    {
+        "response": "The app’s crash rate dropped by 30% after the latest patch.",
+        "label": 0
+    },
+    {
+        "response": "Can’t help you there—the context doesn’t cover it.",
+        "label": 1
+    },
+    {
+        "response": "They opened three new stores in the Midwest last month.",
+        "label": 0
+    },
+    {
+        "response": "Nothing in the text explains why that decision was made.",
+        "label": 1
+    },
+    {
+        "response": "The survey showed 85% of employees feel more productive now.",
+        "label": 0
+    },
+    {
+        "response": "I’ve got no info on that topic from what you shared.",
+        "label": 1
+    },
+    {
+        "response": "The campaign boosted website traffic by 40% in two weeks.",
+        "label": 0
+    },
+    {
+        "response": "That’s a blank spot in the data—I can’t answer it.",
+        "label": 1
+    },
+    {
+        "response": "Production doubled after they upgraded the factory equipment.",
+        "label": 0
+    },
+    {
+        "response": "Sorry, the materials don’t mention anything about that.",
+        "label": 1
+    },
+    {
+        "response": "The team finished the prototype ahead of schedule last Friday.",
+        "label": 0
+    },
+    {
+        "response": "No idea—the info you gave me doesn’t touch on that.",
+        "label": 1
+    },
+    {
+        "response": "Customer wait times shrank by 25% with the new system.",
+        "label": 0
+    },
+    {
+        "response": "I can’t find any reference to that in what you provided.",
+        "label": 1
+    },
+    {
+        "response": "The event drew a crowd of over 10,000 people last weekend.",
+        "label": 0
+    },
+    {
+        "response": "تم إطلاق التحديث الجديد للبرنامج الأسبوع الماضي مع ميزات أمان محسنة.",
+        "label": 0
+    },
+    {
+        "response": "آسف، لا أملك أي تفاصيل عن ذلك الحدث في المعلومات التي أعطيتني إياها.",
+        "label": 1
+    },
+    {
+        "response": "انخفضت المبيعات بنسبة 12% بعد رفع الأسعار في يونيو.",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد شيء هنا عن أداء الفريق في الربع الأخير.",
+        "label": 1
+    },
+    {
+        "response": "استقال المدير التنفيذي في 2021 بعد 15 عامًا مع الشركة.",
+        "label": 0
+    },
+    {
+        "response": "لا أستطيع أن أخبرك عن الميزانية—تلك الأرقام ليست في البيانات.",
+        "label": 1
+    },
+    {
+        "response": "تعثر المشروع بسبب مشاكل في سلسلة التوريد مطلع 2023.",
+        "label": 0
+    },
+    {
+        "response": "لا أعرف شيئًا عن ذلك، لم يُذكر في أي مكان مما قدمته.",
+        "label": 1
+    },
+    {
+        "response": "ردود الفعل من المستخدمين كانت إيجابية للغاية منذ إعادة التصميم.",
+        "label": 0
+    },
+    {
+        "response": "لا أرى شيئًا عن تلك السياسة في الوثائق.",
+        "label": 1
+    },
+    {
+        "response": "انخفض معدل تعطل التطبيق بنسبة 30% بعد التحديث الأخير.",
+        "label": 0
+    },
+    {
+        "response": "لا أستطيع مساعدتك هناك—السياق لا يغطيه.",
+        "label": 1
+    },
+    {
+        "response": "افتتحوا ثلاثة متاجر جديدة في الغرب الأوسط الشهر الماضي.",
+        "label": 0
+    },
+    {
+        "response": "لا شيء في النص يشرح لماذا اتُخذ ذلك القرار.",
+        "label": 1
+    },
+    {
+        "response": "أظهر الاستطلاع أن 85% من الموظفين يشعرون بإنتاجية أكبر الآن.",
+        "label": 0
+    },
+    {
+        "response": "ليس لدي أي معلومات عن ذلك الموضوع مما شاركتني إياه.",
+        "label": 1
+    },
+    {
+        "response": "عززت الحملة حركة المرور على الموقع بنسبة 40% في أسبوعين.",
+        "label": 0
+    },
+    {
+        "response": "هذا فراغ في البيانات—لا أستطيع الإجابة عليه.",
+        "label": 1
+    },
+    {
+        "response": "تضاعف الإنتاج بعد ترقية معدات المصنع.",
+        "label": 0
+    },
+    {
+        "response": "آسف، المواد لا تذكر شيئًا عن ذلك.",
+        "label": 1
+    },
+    {
+        "response": "أنهى الفريق النموذج الأولي قبل الموعد المحدد يوم الجمعة الماضي.",
+        "label": 0
+    },
+    {
+        "response": "لا أعرف—المعلومات التي أعطيتني إياها لا تتطرق لذلك.",
+        "label": 1
+    },
+    {
+        "response": "تقلصت أوقات انتظار العملاء بنسبة 25% مع النظام الجديد.",
+        "label": 0
+    },
+    {
+        "response": "لا أستطيع العثور على أي إشارة لذلك فيما قدمته.",
+        "label": 1
+    },
+    {
+        "response": "جذب الحدث حشدًا يزيد عن 10,000 شخص نهاية الأسبوع الماضي.",
+        "label": 0
+    },
+    {
+        "response": "...يسعدني أن أقدم لك معلومات حول خدمة المساعد الذكي التي نقدمها في مركز البحرين لتقنية المعلومات والذكاء الاصطناعي. خدمة المساعد الذكي هي إحدى خدماتنا ",
+        "label": 0
+    },
+    {
+        "response": "مجموعة من خدمات تقنية المعلومات المتكاملة وحلول مبتكرة وفعالة تلبي احتياجات عملائنا وتسهم في تحقيق أهدافهم.",
+        "label": 0
+    },
+    {
+        "response": "يبدو أنك تريد معرفة المزيد عن شركة 'x'. 'x' هي شركة رائدة في مجال تقنية المعلومات والذكاء الاصطناعي، وتلتزم بتقديم خدمات وحلول مبتكرة ",
+        "label": 0
+    },
+    {
+        "response": "As a customer support agent, I can provide you with information about the services offered by the Bahrain Center for Information Technology and Artificial Intelligence. Here's an overview:",
+        "label": 0
+    },
+    {
+        "response": "Hello! How can I assist you today? Feel free to ask any ....",
+        "label": 0
+    },
+    {
+        "response": "I don't have access to specific...",
+        "label": 1
+    },
+    {
+        "response": "Our mission is to provide exceptional customer support and assist users ...",
+        "label": 0
+    },
+    {
+        "response": "لم يتم ذكر 'x' محدد ضمن المعلومات المتوفرة....",
+        "label": 1
+    },
+    {
+        "response": "عذراً، لا يمكنني الإجابة على سؤالك...",
+        "label": 1
+    },
+    {
+        "response": "I'm sorry, I'm unable to provide information about...",
+        "label": 1
+    },
+    {
+        "response": "التحول الرقمي هو عملية استخدام التكنولوجيا الرقمية لتحسين العمليات التجارية، وتقديم قيمة مضافة للعمل...",
+        "label": 0
+    },
+    {
+        "response": "As a customer support agent, my achievements and expertise lie in providing exceptional assistance and guidance to users based on the training data I've been provided with. My primary goal is to ensure a seamless and informative experience for customers seeking support related to the services offered by the company.",
+        "label":  0
+    },
+    {
+        "response": "We offer a diverse range of advanced services tailored to large companies, aiming to enhance efficiency, boost productivity, and achieve sustainable success.  We also understand the challenges faced by small businesses and strive to provide innovative services to help them grow and thrive.  Furthermore, we recognize the unique challenges faced by home-based businesses and aim to deliver exceptional services to help them succeed and excel in the market.  Our services include mobile application development, search engine optimization, marketing strategy building, financial decision-making support, strategic and organizational planning, interactive chat development, cybersecurity solutions, and website development. We also specialize in artificial intelligence and information technology solutions.",
+        "label": 0
+    },
+    {
+        "response": "I don't have access to specific contact details like phone numbers. Please visit the 'تواصل معنا' (Contact Us) section on our website at [BCAI Tech](https://bcaitech.bh/) for the most accurate and up-to-date contact information.",
+        "label": 1
+    },
+    {
+        "response": "كمسؤول دعم عملاء، أستطيع أن أقدم لك بعض النصائح حول التحديات التي قد تواجهها عند إنشاء متجر إلكتروني...",
+        "label": 0
+    },
+    {
+        "response": "أنا اسف ولكن لا استطيع الاجابة على سؤالك. من فضلك تواصل مع الدعم الفني للحصول على اجابات.",
+        "label": 1
+    },
+    {
+        "response": "I'm sorry, but as a customer support agent, I cannot provide information about individuals or topics unrelated to the services or products offered by the company. My role is to assist with queries and concerns related to customer support and the specific training data provided. If you have any questions or need assistance regarding the services or products offered by the company, feel free to ask, and I'll be glad to help.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, neural networks use a softmax function for the output layer in classification tasks, which produces a vector of values in (0,1) that add up to 1 and represent conditional probability distributions P(Y=c|X=x).",
+        "label": 0
+    },
+    {
+        "response": "According to the slides, the backpropagation algorithm calculates gradients by first computing the partial derivatives of the loss with respect to the output, then using the chain rule to calculate gradients for each layer's weights and biases.",
+        "label": 0
+    },
+    {
+        "response": "The document explains that for stochastic gradient descent (SGD), a good starting approach is to try a large learning rate first (η = 0.1 or even η = 1) and then divide by 10 and retry if there's divergence.",
+        "label": 0
+    },
+    {
+        "response": "The materials indicate that Adam optimizer often works well with a global learning rate of 3e-4, making it a good default choice, though well-tuned SGD with learning rate scheduling can sometimes generalize better.",
+        "label": 0
+    },
+    {
+        "response": "I don't have enough information in the provided context about convolutional neural networks or their architectures.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, momentum in gradient descent accumulates gradients across successive updates with the formula m_t = γm_{t-1} + η∇_θL_B_t(θ_{t-1}), where γ is typically set to 0.9.",
+        "label": 0
+    },
+    {
+        "response": "The context doesn't mention anything about transformer architectures or attention mechanisms.",
+        "label": 1
+    },
+    {
+        "response": "According to the slides, when initializing neural network weights, zero initialization is problematic because it's a saddle point with no gradient, while constant initialization causes hidden units to collapse by symmetry.",
+        "label": 0
+    },
+    {
+        "response": "The materials provided don't contain any information about recurrent neural networks or LSTM architectures.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, one hidden layer neural networks can be represented in Keras with a Sequential model that adds Dense layers with appropriate activations, as shown in the example code on slide 14.",
+        "label": 0
+    },
+    {
+        "response": "This particular document does not discuss generative adversarial networks or their training procedures.",
+        "label": 1
+    },
+    {
+        "response": "According to the lecture slides, input data for neural networks should be normalized to have approximately the same range, using techniques like standardization or quantile normalization.",
+        "label": 0
+    },
+    {
+        "response": "The context provided doesn't offer any details about transfer learning or pre-trained models.",
+        "label": 1
+    },
+    {
+        "response": "Based on the information in the slides, the Nesterov accelerated gradient is a variation of momentum given by the formula m_t = γm_{t-1} + η∇_θL_B_t(θ_{t-1} - γm_{t-1}).",
+        "label": 0
+    },
+    {
+        "response": "The document specifies that biases in neural networks can (and should) be initialized to zero, unlike weights which require random initialization.",
+        "label": 0
+    },
+    {
+        "response": "I've searched through the materials, but information regarding reinforcement learning algorithms is absent.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, promising stochastic second-order methods like K-FAC and Shampoo can be used to accelerate training of very large models.",
+        "label": 0
+    },
+    {
+        "response": "The slides explain that for binary classification tasks, the output function is logistic(x) = 1/(1+e^(-x)) with binary cross-entropy as the loss function.",
+        "label": 0
+    },
+    {
+        "response": "The provided documents do not contain information about natural language processing applications of neural networks.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, the loss function for neural network classification is negative log-likelihood: l(f(x_s;θ),y_s) = -log f(x_s;θ)_y_s, and the cost function is the negative likelihood computed on the full training set.",
+        "label": 0
+    },
+    {
+        "response": "Based on the slides, regularization can be added to the cost function with the term λΩ(θ) = λ(||W_h||^2 + ||W_o||^2), which helps prevent overfitting in neural networks.",
+        "label": 0
+    },
+    {
+        "response": "The document explains that gradient descent with momentum provides larger updates in directions where the gradient sign is constant, which helps accelerate optimization in low curvature areas.",
+        "label": 0
+    },
+    {
+        "response": "وفقًا للوثيقة، يتم تدريب الشبكات العصبية بتقليل دالة الخسارة باستخدام طريقة التدرج النزولي العشوائي (SGD) التي تحدث الوزن بصيغة: θ ← θ - ηΔ، حيث η هي معدل التعلم.",
+        "label": 0
+    },
+    {
+        "response": "المستندات المقدمة لا تحتوي على معلومات حول تطبيقات الشبكات العصبية في معالجة الصور.",
+        "label": 1
+    },
+    {
+        "response": "وفقًا للشرائح، فإن دالة التنشيط softmax تستخدم في طبقة الإخراج للتصنيف متعدد الفئات، حيث تنتج متجهًا من القيم بين (0,1) يجمع إلى 1 ويمثل توزيع احتمالات شرطي.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في السياق المقدم حول أساليب التعلم العميق للرؤية الحاسوبية.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, the chain rule is fundamental for backpropagation, allowing the computation of gradients through the layers of a neural network.",
+        "label": 0
+    },
+    {
+        "response": "This document does not discuss techniques for hyperparameter optimization in neural networks.",
+        "label": 1
+    },
+    {
+        "response": "توضح الوثيقة أن لتهيئة أوزان الشبكة العصبية، يُفضل استخدام التهيئة العشوائية مثل w ~ N(0, 0.01) بدلاً من التهيئة الصفرية أو الثابتة.",
+        "label": 0
+    },
+    {
+        "response": "لا يتضمن المستند معلومات عن تقنيات تقليل الأبعاد مثل تحليل المكونات الرئيسية.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, for continuous output regression tasks, the output function is Identity with square loss as the loss function, and the model assumes Y|X=x follows a normal distribution N(μ=f(x;θ), σ²I).",
+        "label": 0
+    },
+    {
+        "response": "وفقًا للشرائح، يُستخدم Adam كمحسّن بديل عن SGD، حيث يتكيف معدل التعلم لكل معامل، وغالبًا ما يعمل بشكل جيد مع معدل تعلم شامل يبلغ 3e-4.",
+        "label": 0
+    },
+    {
+        "response": "The slides do not provide information about data augmentation techniques for training neural networks.",
+        "label": 1
+    },
+    {
+        "response": "يشرح المستند أن عند تدريب شبكة عصبية، يجب مراقبة خسارة التحقق وتقليل معدل التعلم η بمعامل 2 أو 10 عندما لا يكون هناك تقدم.",
+        "label": 0
+    },
+    {
+        "response": "لا يقدم السياق معلومات حول تقنيات تقييم أداء نماذج التعلم العميق.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, a one hidden layer neural network can be represented with the equations: z_h(x) = W_h*x + b_h, h(x) = g(z_h(x)), z_o(x) = W_o*h(x) + b_o, and f(x) = softmax(z_o(x)).",
+        "label": 0
+    },
+    {
+        "response": "The document does not discuss the concept of early stopping or other regularization techniques beyond L2 regularization.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, paleontological evidence indicates that adaptations for complex vocalization were present in both Neanderthals and Homo heidelbergensis, suggesting speech capabilities existed at least 400,000 years ago.",
+        "label": 0
+    },
+    {
+        "response": "The paper doesn't discuss any evidence related to the development of writing systems in early human societies.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, the position of the larynx in Neanderthals was initially thought to prevent them from producing certain sounds, but more recent reconstructions suggest they had articulatory abilities similar to modern humans.",
+        "label": 0
+    },
+    {
+        "response": "There is no information in the provided text about brain regions involved in language processing.",
+        "label": 1
+    },
+    {
+        "response": "The paper mentions that all great apes except modern humans have air sacs, and their presence would decrease the understandability of vocalizations according to acoustic analysis and experiments.",
+        "label": 0
+    },
+    {
+        "response": "The document doesn't provide any details about language acquisition in children or how it might relate to evolutionary development.",
+        "label": 1
+    },
+    {
+        "response": "According to the paper, MacLarnon and Hewitt proposed that the thoracic vertebral canal can be used as a fossil indication of speech evolution, as it relates to the control of intercostal muscles needed for the long and accurate outbreaths used in speech.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find any information in the text about the role of mitochondrial DNA in tracing human language evolution.",
+        "label": 1
+    },
+    {
+        "response": "The document states that Martínez et al. found that Homo heidelbergensis had hearing similar to modern humans, which was interpreted as an indication that hearing had specialized for speech.",
+        "label": 0
+    },
+    {
+        "response": "The paper does not discuss any linguistic comparisons between Neanderthal and Cro-Magnon communication systems.",
+        "label": 1
+    },
+    {
+        "response": "وفقًا للمستند، تشير الأدلة الحفرية إلى أن تكيفات التصويت المعقدة كانت موجودة لدى كل من إنسان نياندرتال وهومو هايدلبرجنسيس، مما يشير إلى أن قدرات الكلام كانت موجودة منذ 400,000 عام على الأقل.",
+        "label": 0
+    },
+    {
+        "response": "لا تتناول الورقة أي أدلة تتعلق بتطور أنظمة الكتابة في المجتمعات البشرية المبكرة.",
+        "label": 1
+    },
+    {
+        "response": "The author argues that it is unlikely that language first evolved in the gestural modality and later shifted to the acoustic modality, as evolution tends to stick with solutions that work well rather than necessarily optimal ones.",
+        "label": 0
+    },
+    {
+        "response": "There's no discussion in the document about the genetic basis for language disorders such as dyslexia or specific language impairment.",
+        "label": 1
+    },
+    {
+        "response": "يذكر المستند أن جميع القردة العليا باستثناء البشر المعاصرين لديها أكياس هوائية، وأن وجودها يقلل من فهم الأصوات وفقًا للتحليل الصوتي والتجارب.",
+        "label": 0
+    },
+    {
+        "response": "لا يقدم المستند أي تفاصيل حول اكتساب اللغة عند الأطفال أو كيف يمكن أن يرتبط ذلك بالتطور التطوري.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, a fossil hyoid bone fragment (a bulla) of Australopithecus afarensis that is shaped like that of a chimpanzee indicates that Australopithecines most likely had air sacs.",
+        "label": 0
+    },
+    {
+        "response": "The text doesn't provide any information about how climate changes might have influenced the evolution of human language capabilities.",
+        "label": 1
+    },
+    {
+        "response": "وفقًا للورقة، اقترح ماكلارنون وهيويت أن القناة الفقرية الصدرية يمكن استخدامها كمؤشر أحفوري على تطور الكلام، حيث أنها ترتبط بالسيطرة على العضلات بين الضلوع اللازمة للزفير الطويل والدقيق المستخدم في الكلام.",
+        "label": 0
+    },
+    {
+        "response": "لا يمكنني العثور على أي معلومات في النص حول دور الحمض النووي الميتوكوندري في تتبع تطور اللغة البشرية.",
+        "label": 1
+    },
+    {
+        "response": "The document suggests that even with a monkey-like vocal tract, it would probably be possible to produce a range of articulations sufficient to be usable for language, with Rotokas language being cited as only using 11 phonemic contrasts.",
+        "label": 0
+    },
+    {
+        "response": "The paper does not contain any information about the relationship between tool-making abilities and language development in early hominins.",
+        "label": 1
+    },
+    {
+        "response": "According to the text, D'Anastasio et al. studied the internal composition of a Neanderthal hyoid bone and found that the ways in which muscles attached to it and exerted stresses on it are indistinguishable between modern humans and Neanderthals.",
+        "label": 0
+    },
+    {
+        "response": "There is no discussion in the document about how different populations might have developed distinct language families or linguistic structures.",
+        "label": 1
+    },
+    {
+        "response": "تشير الوثيقة إلى أنه حتى مع وجود قناة صوتية شبيهة بالقرود، من المحتمل أن يكون من الممكن إنتاج مجموعة من النطق كافية للاستخدام في اللغة، مع الإشارة إلى لغة روتوكاس التي تستخدم فقط 11 تباينًا صوتيًا.",
+        "label": 0
+    },
+    {
+        "response": "لا تحتوي الورقة على أي معلومات حول العلاقة بين قدرات صنع الأدوات وتطور اللغة في الإنسانيات المبكرة.",
+        "label": 1
+    },
+    {
+        "response": "The paper argues that speech and language most likely evolved together, and it's unlikely that language evolved separately in the gestural modality before shifting to the vocal modality.",
+        "label": 0
+    },
+    {
+        "response": "I don't see any mention in the document of how the development of agriculture might have influenced linguistic complexity.",
+        "label": 1
+    },
+    {
+        "response": "وفقًا للنص، درس دي أناستاسيو وزملاؤه التكوين الداخلي لعظم لامي لإنسان نياندرتال ووجدوا أن الطرق التي ترتبط بها العضلات به وتمارس الضغوط عليه لا يمكن تمييزها بين البشر المعاصرين ونياندرتال.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد مناقشة في المستند حول كيف يمكن للمجموعات السكانية المختلفة أن تطور عائلات لغوية أو هياكل لغوية متميزة.",
+        "label": 1
+    },
+    {
+        "response": "The document points out that the prelinguistic cognitive abilities of the latest common ancestor with apes included the ability to learn a sizable lexicon of form-meaning mappings (about 800 words in gorillas and chimpanzees) and the ability to do basic semantics.",
+        "label": 0
+    },
+    {
+        "response": "There is no information in the text regarding sign languages or their evolution alongside spoken languages.",
+        "label": 1
+    },
+    {
+        "response": "تشير الورقة إلى أن الكلام واللغة على الأرجح تطورا معًا، ومن غير المحتمل أن تكون اللغة قد تطورت بشكل منفصل في الوضع الإيمائي قبل الانتقال إلى الوضع الصوتي.",
+        "label": 0
+    },
+    {
+        "response": "لا أرى أي ذكر في المستند لكيفية تأثير تطور الزراعة على التعقيد اللغوي.",
+        "label": 1
+    },
+    {
+        "response": "According to the paper, the author argues against the hypothesis that vocalizations were first used for music (in the form of song) before language, stating it seems unlikely that the extra cognitive abilities needed for music would not also directly have given our ancestors an ability for simple language.",
+        "label": 0
+    },
+    {
+        "response": "The document doesn't discuss any archaeological evidence of symbolic representations that might indicate language use.",
+        "label": 1
+    },
+    {
+        "response": "يشير المستند إلى أن القدرات المعرفية ما قبل اللغوية للسلف المشترك الأخير مع القردة تضمنت القدرة على تعلم معجم كبير من روابط الشكل والمعنى (حوالي 800 كلمة عند الغوريلا والشمبانزي) والقدرة على القيام بعلم الدلالات الأساسي.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في النص بخصوص لغات الإشارة أو تطورها جنبًا إلى جنب مع اللغات المنطوقة.",
+        "label": 1
+    },
+    {
+        "response": "The paper describes how self-organization causes phenomena to emerge in a language that language users can then adapt to, which helps overcome the problem of frequency dependence of the selective advantage of adaptations to language.",
+        "label": 0
+    },
+    {
+        "response": "There is no information in the document about the effects of bilingualism on cognitive development or brain structure.",
+        "label": 1
+    },
+    {
+        "response": "وفقًا للورقة، يعارض المؤلف فرضية أن الأصوات استخدمت أولاً للموسيقى (في شكل أغنية) قبل اللغة، مشيرًا إلى أنه من غير المحتمل أن القدرات المعرفية الإضافية اللازمة للموسيقى لم تمنح أسلافنا أيضًا القدرة على استخدام لغة بسيطة.",
+        "label": 0
+    },
+    {
+        "response": "لا يناقش المستند أي أدلة أثرية للتمثيلات الرمزية التي قد تشير إلى استخدام اللغة.",
+        "label": 1
+    },
+    {
+        "response": "The author argues that evolution of cognitive and anatomical adaptations for language is inherently a process of coevolution, and it is misleading to speak about one being more important than the other.",
+        "label": 0
+    },
+    {
+        "response": "The document doesn't contain any discussion of how environmental pressures might have influenced the evolution of specific language features.",
+        "label": 1
+    },
+    {
+        "response": "تصف الورقة كيف يتسبب التنظيم الذاتي في ظهور ظواهر في اللغة يمكن لمستخدمي اللغة التكيف معها لاحقًا، مما يساعد على التغلب على مشكلة تبعية التردد للميزة الانتخابية للتكيفات مع اللغة.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في المستند حول تأثيرات ثنائية اللغة على التطور المعرفي أو بنية الدماغ.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, the human vocal tract is different from other primates in that humans have a much bigger gap between the larynx and the velum than other primates, which increases the risk of choking on food.",
+        "label": 0
+    },
+    {
+        "response": "The paper doesn't mention anything about the relationship between language evolution and the development of complex social structures.",
+        "label": 1
+    },
+    {
+        "response": "يجادل المؤلف بأن تطور التكيفات المعرفية والتشريحية للغة هو في الأساس عملية تطور مشترك، ومن المضلل الحديث عن أهمية أحدهما أكثر من الآخر.",
+        "label": 0
+    },
+    {
+        "response": "لا يحتوي المستند على أي مناقشة حول كيفية تأثير الضغوط البيئية على تطور ميزات لغوية محددة.",
+        "label": 1
+    },
+    {
+        "response": "The document notes that Lieberman and Crelin reconstructed the Neanderthal vocal tract and concluded they were not able to produce the complete range of sounds that modern humans can make, but their results have not been universally accepted.",
+        "label": 0
+    },
+    {
+        "response": "There is no information in the text about how writing systems evolved from pictographic representations to phonetic alphabets.",
+        "label": 1
+    },
+    {
+        "response": "وفقًا للمستند، يختلف الجهاز الصوتي البشري عن الرئيسيات الأخرى في أن البشر لديهم فجوة أكبر بين الحنجرة والحنك اللين مقارنة بالرئيسيات الأخرى، مما يزيد من خطر الاختناق بالطعام.",
+        "label": 0
+    },
+    {
+        "response": "لا تذكر الورقة أي شيء عن العلاقة بين تطور اللغة وتطور الهياكل الاجتماعية المعقدة.",
+        "label": 1
+    },
+    {
+        "response": "The document argues that although anatomical innovations allow for a larger and more fluent set of utterances and put pressure on cognitive systems dealing with speech, it is likely that cognitive adaptations must have triggered the emergence of language.",
+        "label": 0
+    },
+    {
+        "response": "The paper does not contain any discussion about the role of metaphor in language evolution or conceptual development.",
+        "label": 1
+    },
+    {
+        "response": "According to the lecture slides, a neural network for classification is a vector function with tunable parameters θ that maps from R^N to (0,1)^K.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات كافية في المستندات المقدمة حول كيفية تحسين أداء الشبكات العصبية باستخدام التعلم العميق.",
+        "label": 1
+    },
+    {
+        "response": "The document shows that the softmax function is used to convert the pre-activation vector (often called 'logits') into probability values that sum to 1.",
+        "label": 0
+    },
+    {
+        "response": "Based on the slides, backpropagation involves computing partial derivatives of the loss function with respect to the weights and biases of the network.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find information in the provided materials about convolutional neural networks or their applications to image processing.",
+        "label": 1
+    },
+    {
+        "response": "وفقاً للمحاضرة، يتم حساب تدرجات الطبقة الخفية عن طريق انتشار الخطأ للخلف من طبقة الإخراج.",
+        "label": 0
+    },
+    {
+        "response": "The document indicates that for stochastic gradient descent, the learning rate η is a critical parameter that should be set carefully - too high leads to divergence, while too low leads to slow convergence.",
+        "label": 0
+    },
+    {
+        "response": "There's no specific information in the context about transformer architectures or attention mechanisms.",
+        "label": 1
+    },
+    {
+        "response": "According to the slides, when initializing the weights, zero initialization should be avoided because it's a saddle point with no gradient, leading to no learning.",
+        "label": 0
+    },
+    {
+        "response": "لا يذكر النص أي معلومات عن استخدام الشبكات العصبية في معالجة اللغة الطبيعية.",
+        "label": 1
+    },
+    {
+        "response": "The document explains that the loss function for classification tasks is typically the negative log-likelihood (cross-entropy): l(f(x_s;θ),y_s) = -log f(x_s;θ)_y_s",
+        "label": 0
+    },
+    {
+        "response": "Based on the lecture, momentum helps accelerate SGD by accumulating gradients across successive updates, with the formula m_t = γm_{t-1} + η∇_θL_B_t(θ_{t-1}).",
+        "label": 0
+    },
+    {
+        "response": "I can't find any information in the materials about recurrent neural networks or LSTM architectures.",
+        "label": 1
+    },
+    {
+        "response": "توضح الشرائح أن تهيئة الأوزان بشكل عشوائي أفضل من تهيئتها بقيمة ثابتة، حيث أن التهيئة الثابتة تؤدي إلى انهيار الوحدات الخفية بسبب التماثل.",
+        "label": 0
+    },
+    {
+        "response": "According to the document, Adam optimizer is often a good default choice with a global learning rate of 3e-4, but a well-tuned SGD with learning rate scheduling can sometimes generalize better.",
+        "label": 0
+    },
+    {
+        "response": "There is no information provided about the history of neural networks or when they were first developed.",
+        "label": 1
+    },
+    {
+        "response": "The slides show that for a one hidden layer network, the computation follows: z_h(x) = W_h x + b_h, then h(x) = g(z_h(x)), then z_o(x) = W_o h(x) + b_o, and finally f(x) = softmax(z_o).",
+        "label": 0
+    },
+    {
+        "response": "لا أستطيع العثور على معلومات حول كيفية تدريب نماذج التعلم العميق على أجهزة GPU.",
+        "label": 1
+    },
+    {
+        "response": "Based on the lecture, for continuous output (regression), the model assumes Y|X=x follows a normal distribution with mean μ = f(x;θ) and uses the square loss function.",
+        "label": 0
+    },
+    {
+        "response": "The document mentions that input data should be normalized to have approximately the same range, using techniques like standardization or quantile normalization.",
+        "label": 0
+    },
+    {
+        "response": "I don't see any information about neural network applications in healthcare or medical diagnosis in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "وفقاً للمحاضرة، فإن الخسارة في مهام التصنيف متعدد الفئات تُحسب باستخدام دالة الإنتروبيا المتقاطعة الفئوية.",
+        "label": 0
+    },
+    {
+        "response": "According to the slides, biases can and should be initialized to zero, unlike the weight matrices which require random initialization.",
+        "label": 0
+    },
+    {
+        "response": "The provided context doesn't contain information about how neural networks can be used for natural language processing tasks.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, Nesterov accelerated gradient is a variation of momentum where the gradient is computed at a look-ahead position: m_t = γm_{t-1} + η∇_θL_B_t(θ_{t-1} - γm_{t-1}).",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في المواد المقدمة عن الشبكات العصبية التوليدية التنافسية (GANs).",
+        "label": 1
+    },
+    {
+        "response": "The slides explain that for stochastic gradient descent, parameters are updated as θ ← θ - ηΔ, where η is the learning rate and Δ is the gradient of the loss function.",
+        "label": 0
+    },
+    {
+        "response": "According to the document, when computing gradients for the output layer, ∇_{z_o(x)}l = f(x) - e(y), where e(y) is the one-hot encoding of the target class.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find information about transfer learning or fine-tuning pre-trained models in the provided context.",
+        "label": 1
+    },
+    {
+        "response": "تشير الشرائح إلى أن دالة التنشيط softmax تحول المدخلات إلى متجه من القيم بين (0،1) والتي يبلغ مجموعها 1.",
+        "label": 0
+    },
+    {
+        "response": "Based on the lecture, regularization can be added to the cost function as λΩ(θ) = λ(||W_h||^2 + ||W_o||^2) to prevent overfitting.",
+        "label": 0
+    },
+    {
+        "response": "There's no mention in the document about specific neural network frameworks or libraries like TensorFlow or PyTorch.",
+        "label": 1
+    },
+    {
+        "response": "According to the slides, when using SGD with momentum, larger updates occur in directions where the gradient sign is constant, helping to accelerate learning in low curvature areas.",
+        "label": 0
+    },
+    {
+        "response": "لم أجد معلومات حول كيفية تقييم أداء نماذج الشبكات العصبية أو مقاييس الدقة المستخدمة.",
+        "label": 1
+    },
+    {
+        "response": "The document shows that for a one hidden layer network in Keras, the implementation uses model.add(Dense(H, input_dim=N)) followed by activation and output layers.",
+        "label": 0
+    },
+    {
+        "response": "Based on the slides, better weight initialization methods include Xavier Glorot, Kaiming He, and orthogonal initialization, which help with training deeper networks.",
+        "label": 0
+    },
+    {
+        "response": "I don't see any information about how to handle missing data when training neural networks in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "تشرح المحاضرة أن طريقة الانحدار التدريجي العشوائي تعتمد على اختيار مجموعة صغيرة من العينات عشوائياً وحساب التدرجات بناءً عليها.",
+        "label": 0
+    },
+    {
+        "response": "According to the document, a Mixture Density Network can be used for multimodal outputs, where Y|X=x follows a Gaussian Mixture Model with parameters predicted by the network.",
+        "label": 0
+    },
+    {
+        "response": "The provided context doesn't contain information about model deployment or how to optimize neural networks for production environments.",
+        "label": 1
+    },
+    {
+        "response": "Based on the lecture slides, for learning rate scheduling, it's recommended to monitor validation loss and divide the learning rate by 2 or 10 when there's no progress, using ReduceLROnPlateau in Keras.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في النص عن تقنيات تقليل أبعاد البيانات مثل PCA أو t-SNE مع الشبكات العصبية.",
+        "label": 1
+    },
+    {
+        "response": "The document shows that the derivative of the softmax function is softmax(x)_i · (1 - softmax(x)_i) when i = j, and -softmax(x)_i · softmax(x)_j when i ≠ j.",
+        "label": 0
+    },
+    {
+        "response": "According to the slides, when computing the gradients for output weights, ∇_{W_o}l = ∇_{z_o(x)}l · h(x)^T, linking the error at the output to the hidden layer activations.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find information about adversarial attacks on neural networks or methods to make models more robust in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "وفقاً للمحاضرة، يجب تجنب تهيئة الأوزان بالصفر لأنها نقطة سرج حيث لا يوجد تدرج، مما يؤدي إلى عدم حدوث تعلم.",
+        "label": 0
+    },
+    {
+        "response": "The document mentions that for binary classification, the output function is the logistic function logistic(x) = 1/(1+e^(-x)), with Y|X=x following a Bernoulli distribution.",
+        "label": 0
+    },
+    {
+        "response": "There's no specific information about hyperparameter tuning techniques like grid search or random search in the provided context.",
+        "label": 1
+    },
+    {
+        "response": "Based on the slides, promising stochastic second-order methods for training very large models include K-FAC and Shampoo.",
+        "label": 0
+    },
+    {
+        "response": "لا تتضمن المواد المقدمة معلومات عن استخدام الشبكات العصبية في الرؤية الحاسوبية أو التعرف على الصور.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, the cost function is the negative likelihood of the model computed on the full training set: L_S(θ) = -1/|S| · ∑_{s∈S} log f(x_s;θ)_{y_s} + λΩ(θ).",
+        "label": 0
+    },
+    {
+        "response": "The lecture explains that for computing gradients in the hidden layer, we need to propagate the error backward from the output layer using the chain rule.",
+        "label": 0
+    },
+    {
+        "response": "I don't see any information about residual connections or skip connections used in deep neural networks in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "تشير الشرائح إلى أن معدل التعلم هو معلمة حساسة جداً: إذا كان مرتفعاً جداً، يؤدي إلى هضبة مبكرة أو حتى تباعد، وإذا كان منخفضاً جداً، يؤدي إلى تقارب بطيء.",
+        "label": 0
+    },
+    {
+        "response": "Based on the document, the Karpathy Constant for the Adam optimizer refers to the recommended learning rate of 3e-4, which often works well enough as a default value.",
+        "label": 0
+    },
+    {
+        "response": "The provided context doesn't contain information about how to handle class imbalance in neural network training.",
+        "label": 1
+    },
+    {
+        "response": "According to the slides, when propagating gradients backward, the gradient with respect to the hidden activations is computed as ∇_h(x)l = W_o^T · ∇_{z_o(x)}l.",
+        "label": 0
+    },
+    {
+        "response": "لم أعثر على معلومات حول تقنيات اختيار النماذج أو التحقق المتقاطع في سياق الشبكات العصبية.",
+        "label": 1
+    },
+    {
+        "response": "Based on the lecture, for multiclass classification, the output follows a Multinoulli distribution with probabilities given by the softmax function, and uses categorical cross-entropy as the loss function.",
+        "label": 0
+    },
+    {
+        "response": "The document shows that in the backpropagation process, the gradients for the hidden layer biases are computed after getting the gradients for the hidden layer pre-activations.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find information about explainable AI or methods to interpret neural network decisions in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "وفقاً للمحاضرة، يتم تحديث المعلمات في خوارزمية الانحدار التدريجي العشوائي باستخدام الصيغة: θ ← θ - ηΔ، حيث η هي معدل التعلم و Δ هي التدرجات.",
+        "label": 0
+    },
+    {
+        "response": "According to the slides, in training we try to find parameters θ = (W_h; b_h; W_o; b_o) that minimize the negative log likelihood (or cross entropy) on the training data.",
+        "label": 0
+    },
+    {
+        "response": "The context doesn't provide information about dropout or other regularization techniques beyond L2 regularization.",
+        "label": 1
+    },
+    {
+        "response": "Based on the document, when initializing a neural network, hidden units can collapse by symmetry if all weights are initialized to the same constant value.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في المواد المقدمة حول كيفية التعامل مع بيانات التسلسل الزمني باستخدام الشبكات العصبية.",
+        "label": 1
+    },
+    {
+        "response": "According to the lecture slides, SGD involves randomly selecting a small batch of samples (B ⊂ S) for each iteration, computing gradients on this batch, and updating parameters accordingly.",
+        "label": 0
+    },
+    {
+        "response": "The document mentions that for a well-tuned SGD with learning rate scheduling, it can sometimes generalize better than Adam (with naive L2 regularization).",
+        "label": 0
+    },
+    {
+        "response": "I don't see any information about generative models like VAEs or how they differ from discriminative models in the provided context.",
+        "label": 1
+    },
+    {
+        "response": "تشرح الشرائح أن خطوة حساب التدرجات في الانتشار الخلفي تبدأ بحساب المشتقات الجزئية لدالة الخسارة بالنسبة لمخرجات الشبكة.",
+        "label": 0
+    },
+    {
+        "response": "Based on the lecture, artificial neurons compute z(x) = w^T·x + b followed by f(x) = g(w^T·x + b), where g is the activation function.",
+        "label": 0
+    },
+    {
+        "response": "The provided materials don't discuss how to handle overfitting in neural networks using techniques like early stopping.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, a layer of neurons computes f(x) = g(z(x)) = g(Wx + b), where W and b are now a matrix and vector respectively.",
+        "label": 0
+    },
+    {
+        "response": "لا أجد معلومات حول كيفية تحسين أداء الشبكات العصبية على مهام التصنيف غير المتوازنة.",
+        "label": 1
+    },
+    {
+        "response": "Based on the slides, for a one hidden layer network, the forward computation involves calculating hidden pre-activations, applying activation function, calculating output pre-activations, and finally applying softmax.",
+        "label": 0
+    },
+    {
+        "response": "The document shows that for heteroscedastic regression, the neural network can predict both the mean μ and variance σ² of the output distribution.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find information about federated learning or distributed training of neural networks in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "وفقاً للمحاضرة، يستخدم الزخم (momentum) لتراكم التدرجات عبر التحديثات المتتالية، مما يسمح بتحديثات أكبر في الاتجاهات التي تكون فيها إشارة التدرج ثابتة.",
+        "label": 0
+    },
+    {
+        "response": "According to the slides, when using the chain rule for backpropagation, we compute the gradient of the loss with respect to each layer's parameters by propagating the gradient backward from the output.",
+        "label": 0
+    },
+    {
+        "response": "The document doesn't provide information about how to deploy neural networks in resource-constrained environments like mobile devices.",
+        "label": 1
+    },
+    {
+        "response": "Based on the lecture, for binary classification with logistic regression, the output follows a Bernoulli distribution with parameter b = f(x;θ), and uses binary cross-entropy as the loss function.",
+        "label": 0
+    },
+    {
+        "response": "لا توجد معلومات في النص عن كيفية مقارنة أداء الشبكات العصبية المختلفة أو اختيار أفضل نموذج.",
+        "label": 1
+    },
+    {
+        "response": "According to the slides, the stopping criterion for SGD training is typically when the negative log likelihood stops decreasing when computed on the validation set.",
+        "label": 0
+    },
+    {
+        "response": "The document shows that when computing gradients for the output biases, we have ∇_{b_o}l = ∇_{z_o(x)}l because the partial derivative of z_o(x)_i with respect to b_o_j is 1 when i=j.",
+        "label": 0
+    },
+    {
+        "response": "I don't see any information about pruning neural networks or model compression techniques in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "تشير المحاضرة إلى أن التهيئة العشوائية للأوزان مثل w ~ N(0, 0.01) هي حل لمشكلة انهيار الوحدات الخفية التي تحدث عند التهيئة الثابتة.",
+        "label": 0
+    },
+    {
+        "response": "Based on the lecture, the output of a neural network for classification represents a conditional probability distribution: f(x_s;θ)_c = P(Y=c|X=x_s).",
+        "label": 0
+    },
+    {
+        "response": "The context doesn't provide information about ensemble methods or how to combine multiple neural networks for better performance.",
+        "label": 1
+    },
+    {
+        "response": "According to the document, when initializing the learning rate for SGD, it's recommended to try a large value first (η = 0.1 or even η = 1) and then divide by 10 and retry in case of divergence.",
+        "label": 0
+    },
+    {
+        "response": "لم أجد معلومات حول كيفية تحويل نماذج التعلم العميق إلى صيغة أخف للاستخدام على أجهزة محدودة الموارد.",
+        "label": 1
+    },
+    {
+        "response": "Based on the slides, when training a neural network, each epoch involves randomly selecting batches of samples until all of the training set S is covered.",
+        "label": 0
+    },
+    {
+        "response": "The document mentions that for a constant learning rate, it prevents final convergence, so it's recommended to multiply η_t by β < 1 after each update or monitor validation loss and divide η_t by 2 or 10 when no progress is made.",
+        "label": 0
+    },
+    {
+        "response": "I cannot find information about semi-supervised learning approaches with neural networks in the provided materials.",
+        "label": 1
+    },
+    {
+        "response": "وفقاً للمحاضرة، فإن آدم (Adam) هو خيار افتراضي جيد للمحسن مع معدل تعلم عالمي يبلغ 3e-4، ولكن SGD المضبوط جيداً مع جدولة معدل التعلم يمكن أن يعمم بشكل أفضل.",
+        "label": 0
+    },
+    {
+        "response": "According to the slides, the pre-activation vector z(x) in the softmax function is often called 'the logits'.",
+        "label": 0
+    },
+    {
+        "response": "The provided context doesn't contain information about how to handle imbalanced datasets in neural network training.",
+        "label": 1
+    },
+    {
+        "response": "يشير المستند إلى أن ليبرمان وكريلين أعادا بناء القناة الصوتية لإنسان نياندرتال واستنتجا أنهم لم يكونوا قادرين على إنتاج المجموعة الكاملة من الأصوات التي يمكن للبشر المعاصرين إصدارها، لكن نتائجهما لم تحظ بقبول عالمي.",
+        "label": 0
+    },
+    {
+        "response": "تشير الشرائح إلى أن هناك طرق تهيئة أفضل للأوزان مثل Xavier Glorot و Kaming He والتهيئة المتعامدة (orthogonal).",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد في الوثيقة أي ذكر لمشاكل التلاشي أو تضخم التدرج (vanishing or exploding gradients) في الشبكات العصبية العميقة.",
+        "label": 1
+    },
+    {
+        "response": "Based on the slides, an artificial neuron computes the function f(x) = g(w^T*x + b), where g is the activation function, w represents the weights, and b is the bias.",
+        "label": 0
+    },
+    {
+        "response": "The document does not cover batch normalization or other normalization techniques used in deep neural networks.",
+        "label": 1
+    },
+    {
+        "response": "The context does not mention any details about marketing strategies for the project.",
+        "label": 1
+    },
+    {
+        "response": "Based on the proposal, the Healthcare Predictive Analytics project focuses on developing a machine learning-based predictive model to enhance healthcare decision-making.",
+        "label": 0
+    },
+    {
+        "response": "The provided information does not specify the budget or funding sources for the project.",
+        "label": 1
+    },
+    {
+        "response": "According to the proposal, one of the main objectives is to optimize hospital resource management to reduce patient wait times.",
+        "label": 0
+    },
+    {
+        "response": "There's no mention of specific patient data privacy regulations being followed in the project.",
+        "label": 1
+    },
+    {
+        "response": "The document states that the project will use technologies such as TensorFlow, PyTorch, and XGBoost for machine learning model development.",
+        "label": 0
+    },
+    {
+        "response": "The proposal does not provide information about potential challenges or risks in implementing the model.",
+        "label": 1
+    },
+    {
+        "response": "From the given context, we understand that the team will implement MLOps practices to ensure scalable and secure model deployment.",
+        "label": 0
+    },
+    {
+        "response": "The proposal outlines that the project will be completed in six weeks, with the final presentation scheduled for April 19, 2025.",
+        "label": 0
+    },
+    {
+        "response": "Unfortunately, the provided document does not include any case studies or previous implementations of similar models.",
+        "label": 1
+    },
+    {
+        "response": "المقترح لا يتضمن أي تفاصيل حول استراتيجيات تسويق المشروع.",
+        "label": 1
+    },
+    {
+        "response": "The Healthcare Predictive Analytics project focuses on developing a machine learning-based predictive model to enhance healthcare decision-making.",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد أي ذكر لتكلفة المشروع أو مصادر التمويل في الوثيقة.",
+        "label": 1
+    },
+    {
+        "response": "According to the proposal, the project aims to optimize hospital resource management and reduce patient wait times.",
+        "label": 0
+    },
+    {
+        "response": "المستند لا يحتوي على أي معلومات حول الامتثال لقوانين خصوصية البيانات مثل GDPR أو HIPAA.",
+        "label": 1
+    },
+    {
+        "response": "The proposal outlines that the project will be completed in six weeks, with a final presentation scheduled for April 19, 2025.",
+        "label": 0
+    },
+    {
+        "response": "المقترح لا يناقش التحديات المحتملة لاستخدام الذكاء الاصطناعي في الرعاية الصحية.",
+        "label": 1
+    },
+    {
+        "response": "The document states that the project will use TensorFlow, PyTorch, and XGBoost for machine learning development.",
+        "label": 0
+    },
+    {"response": "لم يتم تحديد كيف سيتم دمج النموذج مع أنظمة السجلات الطبية الإلكترونية (EHR).",
+        "label": 1
+    },
+    {
+        "response": "The proposal highlights MLOps practices to ensure scalable and secure model deployment.",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد ذكر لكيفية التعامل مع البيانات غير المكتملة أو المفقودة في النظام.",
+        "label": 1
+    },
+    {
+        "response": "One of the key objectives of the project is to provide data-driven recommendations to improve clinical outcomes.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم التطرق إلى المخاطر الأخلاقية لاستخدام الذكاء الاصطناعي في اتخاذ القرارات الطبية.",
+        "label": 1
+    },
+    {
+        "response": "The proposal includes real-time monitoring to allow continuous tracking of patient conditions.",
+        "label": 0
+    },
+    {
+        "response": "المستند لا يذكر كيف سيتم قياس دقة التنبؤات ضد بيانات المرضى الفعلية.",
+        "label": 1
+    },
+    {"response": "The document specifies that the model will analyze trends in patient data to support disease prevention strategies.",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد تفاصيل عن كيفية تحسين النموذج بعد نشره بناءً على التغذية الراجعة.",
+        "label": 1
+    },
+    {
+        "response": "The team is composed of experts in data collection, analysis, model development, and deployment.",
+        "label": 0
+    },
+    {
+        "response": "المقترح لا يحدد ما إذا كان سيتم تضمين البيانات الوراثية في التقييمات التنبؤية.",
+        "label": 1
+    },
+    {
+        "response": "The proposal identifies key performance indicators such as model accuracy, recall, and precision.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم ذكر تحديات تنفيذ النظام في المستشفيات الكبيرة أو الصغيرة.",
+        "label": 1
+    },
+    {
+        "response": "Data visualization tools such as Matplotlib, Seaborn, and Tableau will be used in the project.",
+        "label": 0
+    },
+    {
+        "response": "المستند لا يحتوي على أي معلومات حول تأثير المشروع على تقليل التكاليف الصحية.",
+        "label": 1
+    },
+    {
+        "response": "The project aims to enhance healthcare decision-making through predictive analytics.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم ذكر أي خطط لاختبار النظام في بيئات الرعاية الصحية الحقيقية.",
+        "label": 1
+    },
+    {
+        "response": "MLflow, Kubeflow, and Docker are part of the tools used for deployment.",
+        "label": 0
+    },
+    {
+        "response": "المقترح لا يتناول إمكانية تعديل النظام لدعم المرضى في المنازل.",
+        "label": 1
+    },
+    {
+        "response": "The team leader is responsible for overseeing project progress and ensuring alignment with objectives.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم توضيح كيفية التعامل مع التحيزات في البيانات لضمان عدالة التنبؤات.",
+        "label": 1
+    },
+    {
+        "response": "Feature engineering and hyperparameter tuning will be applied to improve model performance.",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد ذكر لكيفية استخدام تعليقات المرضى والأطباء لتحسين النموذج بمرور الوقت.",
+        "label": 1
+    },
+    {
+        "response": "SQL and Google Cloud Storage will be used for data collection and storage.",
+        "label": 0
+    },
+    {
+        "response": "المستند لا يحتوي على أي تحليل للعائد على الاستثمار (ROI) للنظام المقترح.",
+        "label": 1
+    },
+    {
+        "response": "According to the proposal, effective feature engineering is one of the key performance indicators.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم التطرق إلى تأثير النموذج على الأطباء وكيف سيؤثر على اتخاذ القرارات السريرية.",
+        "label": 1
+    },
+    {
+        "response": "The document mentions that Flask and FastAPI will be used for deployment.",
+        "label": 0
+    },
+    {
+        "response": "Predictive modeling will be applied to assess patient health risks and enable early intervention.",
+        "label": 0
+    },
+    {
+        "response": "المقترح لا يذكر أي شراكات محتملة مع شركات الأدوية أو مقدمي الرعاية الصحية.",
+        "label": 1
+    },
+    {
+        "response": "The model aims to support healthcare professionals with evidence-based recommendations.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم توضيح كيف سيتم مراقبة الأداء بعد النشر في بيئة الرعاية الصحية الحقيقية.",
+        "label": 1
+    },
+    {
+        "response": "The proposal specifies that AWS and GCP will be utilized for cloud-based deployment.",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد أي ذكر لكيفية ضمان الامتثال التنظيمي للمعايير الصحية العالمية.",
+        "label": 1
+    },
+    {
+        "response": "According to the timeline, model development and optimization will be completed by April 5, 2025.",
+        "label": 0
+    },
+    {
+        "response": "لم يتم توضيح ما إذا كان سيتم تدريب النظام للتعامل مع لغات متعددة.",
+        "label": 1
+    },
+    {
+        "response": "Data preprocessing will be completed within the first two weeks of the project.",
+        "label": 0
+    },
+    {
+        "response": "المقترح لا يذكر أي دراسات حالة أو مشاريع سابقة مماثلة يمكن الاستفادة منها.",
+        "label": 1
+    },
+    {
+        "response": "The proposal highlights that reducing patient wait times is a key objective.",
+        "label": 0
+    },
+    {
+        "response": "المقترح لا يشير إلى تأثير النموذج على الفرق الطبية ومستوى الضغط عليهم.",
+        "label": 1
+    },
+    {
+        "response": "The proposal states that the project will support real-time health analytics.",
+        "label": 0
+    },
+    {
+        "response": "Visualization tools will be used to present key insights in an understandable format.",
+        "label": 0
+    },
+    {
+        "response": "The project aims to integrate multiple data sources to enhance predictive accuracy.",
+        "label": 0
+    },
+    {
+        "response": "Leadership is the process of channelizing the energy of an individual or a group towards achieving specific goals.",
+        "label": 0
+    },
+    {
+        "response": "القيادة تركز على تحفيز الأفراد لتحقيق رؤية مشتركة وأهداف محددة.",
+        "label": 0
+    },
+    {
+        "response": "According to the document, transformational leadership involves inspiring others to work towards a compelling vision.",
+        "label": 0
+    },
+    {
+        "response": "The document does not mention any details about leadership ethics and integrity.",
+        "label": 1
+    },
+    {
+        "response": "المستند لا يحتوي على أي معلومات حول تأثير القيادة على بيئة العمل.",
+        "label": 1
+    },
+    {
+        "response": "There is no discussion in the document regarding how leadership styles influence organizational success.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم التطرق إلى العلاقة بين القيادة الفعالة وتحفيز الموظفين.",
+        "label": 1
+    },
+    {
+        "response": "The document does not include any case studies on transformational leadership in real-world settings.",
+        "label": 1
+    },
+    {
+        "response": "لا يوجد ذكر لكيفية تدريب القادة الجدد داخل المؤسسة.",
+        "label": 1
+    },
+    {
+        "response": "The provided text does not address how leaders manage conflicts within teams.",
+        "label": 1
+    },
+    {
+        "response": "المستند لا يحتوي على معلومات حول تطوير المهارات القيادية لدى الموظفين.",
+        "label": 1
+    },
+    {
+        "response": "There is no mention of leadership challenges in the digital transformation era.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم ذكر أي تحليل لكيفية تأثير القيادة على الأداء المؤسسي.",
+        "label": 1
+    },
+    {
+        "response": "The document does not specify the impact of leadership on employee satisfaction.",
+        "label": 1
+    },
+    {
+        "response": "المستند يوضح أن القادة الناجحين لديهم القدرة على خلق رؤية وتحويلها إلى واقع.",
+        "label": 0
+    },
+    {
+        "response": "Leadership and management differ, as leaders focus on long-term vision while managers handle short-term objectives.",
+        "label": 0
+    },
+    {
+        "response": "المستند يشير إلى أن القيادة تعتمد على التأثير والتحفيز بدلاً من فرض السلطة.",
+        "label": 0
+    },
+    {
+        "response": "A leader’s role is to establish long-term vision, goals, and objectives for an organization.",
+        "label": 0
+    },
+    {
+        "response": "في القيادة التحويلية، يتم تحفيز الفرق للعمل نحو أهداف سامية من خلال الإلهام والتوجيه.",
+        "label": 0
+    },
+    {
+        "response": "According to Huczynski et al. (1993), leadership is about exercising influence over others.",
+        "label": 0
+    },
+    {
+        "response": "Anita Roddick defines leadership as creating a vision that others aspire to and working towards it.",
+        "label": 0
+    },
+    {
+        "response": "المستند يوضح أن القيادة ليست مجرد وظيفة، بل هي القدرة على التأثير وتوجيه الآخرين.",
+        "label": 0
+    },
+    {
+        "response": "Michael Hammer states that without a leader, nothing happens.",
+        "label": 0
+    },
+    {
+        "response": "The document explains that managers assign tasks, while leaders align and motivate employees towards goals.",
+        "label": 0
+    },
+    {
+        "response": "يذكر المستند أن القادة يطرحون أسئلة تحليلية مثل 'لماذا' و 'ماذا' لفهم الرؤية الأكبر.",
+        "label": 0
+    },
+    {
+        "response": "Warren Bennis describes leadership as the ability to create a compelling vision and translate it into action.",
+        "label": 0
+    },
+    {
+        "response": "القيادة تشمل تحفيز الفرق على تحقيق الأهداف باستخدام الإلهام والتأثير الإيجابي.",
+        "label": 0
+    },
+    {
+        "response": "Managers focus on processes and accountability, while leaders focus on motivation and vision.",
+        "label": 0
+    },
+    {
+        "response": "The context highlights that NLP techniques play a crucial role in improving human-computer interaction...",
+        "label": 0
+    },
+    {
+        "response": "The provided data confirms that deep learning has significantly improved NLP accuracy in sentiment analysis...",
+        "label": 0
+    },
+    {
+        "response": "An analysis of the context shows that transformer models have revolutionized machine translation...",
+        "label": 0
+    },
+    {
+        "response": "Regrettably, the document does not contain any discussion on multilingual NLP challenges.",
+        "label": 1
+    },
+    {
+        "response": "The specific details regarding NLP applications in finance are not covered in this text.",
+        "label": 1
+    },
+    {
+        "response": "The provided materials do not include information on how NLP handles ambiguous language structures.",
+        "label": 1
+    },
+    {
+        "response": "The context suggests that named entity recognition (NER) is a key component of NLP text processing...",
+        "label": 0
+    },
+    {
+        "response": "Information available confirms that NLP enables virtual assistants like Siri and Alexa to understand user intent...",
+        "label": 0
+    },
+    {
+        "response": "A review of the context indicates that NLP techniques have advanced significantly with the introduction of transformers...",
+        "label": 0
+    },
+    {
+        "response": "Unfortunately, there is no mention of how NLP can be applied in cybersecurity within the document.",
+        "label": 1
+    },
+    {
+        "response": "The context lacks sufficient details on NLP methods for detecting fake news.",
+        "label": 1
+    },
+    {
+        "response": "I could not find any references to the impact of NLP on speech recognition systems.",
+        "label": 1
+    },
+    {
+        "response": "The document specifies that NLP models rely on techniques such as tokenization and syntactic parsing...",
+        "label": 0
+    },
+    {
+        "response": "The information confirms that NLP is crucial for developing chatbots capable of human-like conversations...",
+        "label": 0
+    },
+    {
+        "response": "Analysis of the text suggests that sentiment analysis is widely used for brand monitoring on social media...",
+        "label": 0
+    },
+    {
+        "response": "السياق المتاح لا يحتوي على أي تفاصيل حول تأثير معالجة اللغة الطبيعية في تحليل المشاعر للغات غير الإنجليزية.",
+        "label": 1
+    },
+    {
+        "response": "لم أتمكن من العثور على أي معلومات تتعلق بكيفية استخدام الذكاء الاصطناعي التوليدي في NLP.",
+        "label": 1
+    },
+    {
+        "response": "الوثيقة المقدمة لا تتناول أي تفاصيل حول تأثير النماذج اللغوية الضخمة على دقة الترجمة الآلية.",
+        "label": 1
+    },
+    {
+        "response": "تشير البيانات إلى أن معالجة اللغة الطبيعية تلعب دورًا أساسيًا في تحليل البيانات النصية غير المهيكلة...",
+        "label": 0
+    },
+    {
+        "response": "توضح المعلومات أن تقنيات NLP تعتمد على التعلم العميق والشبكات العصبية لتحليل وفهم النصوص...",
+        "label": 0
+    },
+    {
+        "response": "تحليل البيانات يشير إلى أن تطبيقات الترجمة الآلية شهدت تحسنًا كبيرًا بعد تطوير نماذج Transformers...",
+        "label": 0
+    },
+    {
+        "response": "للأسف، المستند لا يناقش كيفية معالجة اللغة الطبيعية للتعبيرات الاصطلاحية في اللغات المختلفة.",
+        "label": 1
+    },
+    {
+        "response": "بعد مراجعة المحتوى، لم أجد أي تفاصيل حول استخدام معالجة اللغة الطبيعية في تحليل الوثائق القانونية.",
+        "label": 1
+    },
+    {
+        "response": "النص لا يحتوي على أي إشارات إلى تأثير معالجة اللغة الطبيعية على تحسين البحث في محركات البحث.",
+        "label": 1
+    },
+    {
+        "response": "The context confirms that deep learning-based NLP models outperform traditional rule-based approaches...",
+        "label": 0
+    },
+    {
+        "response": "The data provided indicates that question-answering models like BERT have enhanced the accuracy of search engines...",
+        "label": 0
+    },
+    {
+        "response": "Analysis of the document highlights that NLP advancements are driving improvements in speech-to-text applications...",
+        "label": 0
+    },
+    {
+        "response": "There is no information in the provided text about the challenges of NLP in low-resource languages.",
+        "label": 1
+    },
+    {
+        "response": "The document does not specify how NLP is used in financial text analysis for risk assessment.",
+        "label": 1
+    },
+    {
+        "response": "Unfortunately, this aspect of NLP's impact on medical text processing was not covered in the document.",
+        "label": 1
+    },
+    {
+        "response": "The provided analysis suggests that NLP techniques such as sentiment analysis are widely used in market research...",
+        "label": 0
+    },
+    {
+        "response": "The document states that NLP-powered machine translation systems continue to improve with reinforcement learning...",
+        "label": 0
+    },
+    {
+        "response": "السياق يشير إلى أن أحد الأهداف الرئيسية لمعالجة اللغة الطبيعية هو تحسين تفاعل المستخدم مع الأنظمة الذكية...",
+        "label": 0
+    },
+    {
+        "response": "لا يوجد أي ذكر للتحديات المتعلقة بفهم السياق في نماذج NLP الحديثة.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يحتوي على معلومات كافية حول كيفية تحسين التعرف على الصوت باستخدام تقنيات NLP.",
+        "label": 1
+    },
+    {
+        "response": "The provided text does not include any discussion on NLP's role in automatic document summarization.",
+        "label": 1
+    },
+    {
+        "response": "The document outlines that modern NLP applications leverage transformers for enhanced accuracy in text prediction...",
+        "label": 0
+    },
+    {
+        "response": "The analysis confirms that NLP is essential for developing more natural and context-aware voice assistants...",
+        "label": 0
+    },
+    {
+        "response": "تم التأكيد على أن معالجة اللغة الطبيعية يمكنها تحسين كفاءة تحليل البيانات الضخمة في المجالات المتنوعة...",
+        "label": 0
+    },
+    {
+        "response": "المستند لا يحتوي على أي إشارات إلى كيفية معالجة اللغة الطبيعية لللهجات المختلفة.",
+        "label": 1
+    },
+    {
+        "response": "النص لا يتضمن أي تحليل لمستقبل نماذج NLP وتأثيرها على التقنيات الناشئة.",
+        "label": 1
+    },
+    {
+        "response": "The provided document does not discuss the ethical considerations of using AI-generated text in NLP applications.",
+        "label": 1
+    },
+    {
+        "response": "The document highlights that NLP-based chatbots are improving customer service interactions across industries...",
+        "label": 0
+    },
+    {
+        "response": "المحتوى يؤكد أن استخدام التعلم العميق في NLP أدى إلى تحسين دقة الترجمة والتلخيص التلقائي...",
+        "label": 0
+    },
+    {
+        "response": "The text explains that NLP helps organizations extract meaningful insights from unstructured textual data...",
+        "label": 0
+    },
+    {
+        "response": "The document does not mention how NLP models handle low-resource languages.",
+        "label": 1
+    },
+    {
+        "response": "المستند لا يحتوي على أي تفاصيل حول تأثير معالجة اللغة الطبيعية في تحسين التعليم.",
+        "label": 1
+    },
+    {
+        "response": "There is no discussion about bias in NLP models and how to mitigate it.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم التطرق إلى كيفية تأثير جودة البيانات على أداء نماذج التعلم العميق في NLP.",
+        "label": 1
+    },
+    {
+        "response": "The text does not include any case studies on successful NLP implementations.",
+        "label": 1
+    },
+    {
+        "response": "المستند لا يذكر كيف يمكن استخدام تحليل المشاعر في التنبؤ باتجاهات السوق.",
+        "label": 1
+    },
+
+    {
+        "response": "هو مجال في علوم الحاسوب يهدف إلى تطوير أنظمة يمكنها محاكاة القدرات العقلية البشرية مثل....",
+        "label": 0
+    },
+    {
+        "response": "I'm sorry, but I don't have information about computer vision in my training data..",
+        "label": 1
+    },
+    {
+        "response": "The document does not address the challenges NLP models face with linguistic and cultural biases.",
+        "label": 1
+    },
+    {
+        "response": "There's no information in the text regarding NLP's difficulty in understanding context and sarcasm.",
+        "label": 1
+    },
+    {
+        "response": "The provided material lacks details on the limitations of NLP when processing large volumes of data.",
+        "label": 1
+    },
+    {
+        "response": "لم أجد في المستند أي إشارة إلى كيفية تعامل معالجة اللغة الطبيعية مع اللغات منخفضة الموارد.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يغطي التحديات التي تواجهها نماذج NLP في التعامل مع اللغة غير الرسمية واللهجات.",
+        "label": 1
+    },
+    {
+        "response": "لا توجد معلومات في النص حول صعوبة نماذج NLP في فهم التعابير الاصطلاحية والتعابير المجازية.",
+        "label": 1
+    },
+    {
+        "response": "The document does not discuss the ethical concerns related to biases in NLP models.",
+        "label": 1
+    },
+    {
+        "response": "There's no mention of the challenges NLP faces in achieving real-time processing efficiency.",
+        "label": 1
+    },
+    {
+        "response": "The text lacks information on NLP's struggle with ambiguity and multiple word meanings.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم التطرق في المستند إلى كيفية تعامل NLP مع التباين اللغوي بين اللهجات المختلفة.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يتناول التحديات التي تواجهها NLP في فهم النكات والسخرية.",
+        "label": 1
+    },
+    {
+        "response": "لا توجد تفاصيل في النص حول صعوبة نماذج NLP في التعامل مع الجمل المعقدة ذات التركيبات النحوية المتشابكة.",
+        "label": 1
+    },
+    {
+        "response": "The document does not cover the limitations of NLP in understanding human emotions and intentions.",
+        "label": 1
+    },
+    {
+        "response": "There's no information provided about NLP's dependence on pre-defined rules limiting adaptability.",
+        "label": 1
+    },
+    {
+        "response": "The text does not address the challenges NLP models face with data quality and quantity.",
+        "label": 1
+    },
+    {
+        "response": "لم أجد في المستند أي إشارة إلى التحديات التي تواجهها NLP في تمثيل المعرفة الدلالية.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يغطي صعوبة نماذج NLP في التعامل مع اللغات المتعددة وتنوعها.",
+        "label": 1
+    },
+    {
+        "response": "لا توجد معلومات في النص حول كيفية تعامل NLP مع الخصوصية والمخاوف الأمنية.",
+        "label": 1
+    },
+    {
+        "response": "The document does not mention the challenges of NLP in handling domain-specific jargon.",
+        "label": 1
+    },
+    {
+        "response": "There's no discussion in the text about the limitations of NLP in processing informal language and slang.",
+        "label": 1
+    },
+    {
+        "response": "The document does not explore how NLP handles ambiguous sentences in different languages.",
+        "label": 1
+    },
+    {
+        "response": "There is no mention of NLP's limitations in distinguishing factual from misleading information.",
+        "label": 1
+    },
+    {
+        "response": "Unfortunately, the document does not provide insights on how NLP models process low-resource languages.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم ذكر كيفية تعامل NLP مع الأخطاء الإملائية والنحوية الشائعة في النصوص.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يغطي التحديات التي تواجهها نماذج NLP في تحليل اللغة غير الرسمية والاختصارات.",
+        "label": 1
+    },
+    {
+        "response": "النص لا يحتوي على أي تفاصيل حول كيفية تكيّف NLP مع تطورات اللغة والتغيرات المستمرة فيها.",
+        "label": 1
+    },
+    {
+        "response": "The document does not discuss NLP’s difficulty in understanding sarcasm and humor in social media text.",
+        "label": 1
+    },
+    {
+        "response": "There's no mention of the challenge NLP faces when processing texts with multiple interpretations.",
+        "label": 1
+    },
+    {
+        "response": "The provided material does not include discussions on how NLP struggles with long-form text coherence.",
+        "label": 1
+    },
+    {
+        "response": "لم أجد أي معلومات عن التحديات التي تواجهها NLP في تحليل النصوص القانونية أو الطبية.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يتناول صعوبة تدريب نماذج NLP دون توفر بيانات كافية وعالية الجودة.",
+        "label": 1
+    },
+    {
+        "response": "النص لا يحتوي على أي إشارة إلى تأثير القيم الثقافية على دقة نماذج NLP.",
+        "label": 1
+    },
+    {
+        "response": "The document does not provide information on how NLP models address gender bias in language.",
+        "label": 1
+    },
+    {
+        "response": "There is no discussion regarding the difficulty of NLP in generating truly human-like conversations.",
+        "label": 1
+    },
+    {
+        "response": "Unfortunately, the provided document does not elaborate on how NLP handles multiple languages in a single text.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم توضيح كيفية معالجة NLP للاختلافات في تراكيب الجمل بين اللغات المختلفة.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يوضح كيف يمكن لنماذج NLP التعامل مع البيانات غير المتوازنة في التعلم الآلي.",
+        "label": 1
+    },
+    {
+        "response": "النص لا يشير إلى كيفية تحسين نماذج NLP في فهم النصوص ذات الطابع العاطفي أو الأدبي.",
+        "label": 1
+    },
+    {
+        "response": "The document does not address how NLP manages noisy or low-quality input data effectively.",
+        "label": 1
+    },
+    {
+        "response": "There's no reference to how NLP models cope with rapidly evolving internet slang and new terminologies.",
+        "label": 1
+    },
+    {
+        "response": "The document lacks information on NLP's limitations in speech recognition and transcription accuracy.",
+        "label": 1
+    },
+    {
+        "response": "لم أجد في المستند أي تحليل للتحديات التي تواجه NLP في تصنيف النصوص متعددة المواضيع.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يحتوي على أي معلومات حول تأثير تعدد معاني الكلمات على دقة NLP.",
+        "label": 1
+    },
+    {
+        "response": "النص لم يتناول الصعوبات التي تواجهها NLP في معالجة الأسماء الغامضة والمصطلحات المتخصصة.",
+        "label": 1
+    },
+    {
+        "response": "The document does not examine the dependency of NLP models on high-quality labeled datasets.",
+        "label": 1
+    },
+    {
+        "response": "There is no discussion in the text about NLP’s struggle with complex grammatical structures in certain languages.",
+        "label": 1
+    },
+    {
+        "response": "The provided document does not cover NLP's limitations in understanding non-verbal cues in text.",
+        "label": 1
+    },
+    {
+        "response": "لم يتم ذكر كيف تؤثر اختلافات اللهجات في نفس اللغة على دقة NLP.",
+        "label": 1
+    },
+    {
+        "response": "المحتوى لا يغطي كيفية تعامل NLP مع التحليل النحوي في اللغات التي تفتقر إلى بنية واضحة.",
+        "label": 1
+    },
+    {
+        "response": "النص لا يحتوي على أي تفاصيل حول تأثير نقص البيانات على تعلم نماذج NLP.",
+        "label": 1
+    },
+    {
+        "response": "The document does not discuss the scalability issues of large NLP models in production environments.",
+        "label": 1
+    },
+    {
+        "response": "There is no mention of how NLP handles mixed-language code-switching scenarios.",
+        "label": 1
+    },
+    {
+        "response": "The context confirms that NLP plays a crucial role in enabling machines to understand human language...",
+        "label": 0
+    },
+    {
+        "response": "The provided data highlights that NLP applications are widely used in customer service chatbots...",
+        "label": 0
+    },
+    {
+        "response": "An analysis of the document shows that deep learning has significantly improved NLP accuracy in sentiment analysis...",
+        "label": 0
+    },
+    {
+        "response": "السياق يشير إلى أن معالجة اللغة الطبيعية تُستخدم بشكل واسع في الترجمة الآلية وتحليل النصوص.",
+        "label": 0
+    },
+    {
+        "response": "يؤكد المستند أن NLP يعتمد على تقنيات مثل التعلّم العميق والشبكات العصبية لتحليل النصوص.",
+        "label": 0
+    },
+    {
+        "response": "The document specifies that machine translation systems like Google Translate rely heavily on NLP advancements...",
+        "label": 0
+    },
+    {
+        "response": "The context indicates that NLP-powered voice assistants like Siri and Alexa have improved speech recognition accuracy...",
+        "label": 0
+    },
+    {
+        "response": "توضح المعلومات أن تطبيقات تحليل المشاعر تستخدم NLP لفهم آراء العملاء من وسائل التواصل الاجتماعي.",
+        "label": 0
+    }
+]

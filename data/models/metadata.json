@@ -1,0 +1,46 @@
+{
+    "save_date": "2025-03-18T17:59:03.751559",
+    "library_versions": {
+        "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+        "scikit-learn": "1.6.1",
+        "joblib": "1.4.2",
+        "pandas": "2.2.3",
+        "sentence_transformers": "3.4.0"
+    },
+    "model_details": {
+        "class": "RandomForestClassifier",
+        "hyperparameters": {
+            "n_estimators": 100,
+            "min_samples_split": 5,
+            "min_samples_leaf": 2,
+            "max_features": 0.33,
+            "max_depth": 10,
+            "bootstrap": true
+        },
+        "train_score": 1.0,
+        "cv_score": 0.9122474747474747,
+        "test_score": 0.926829268292683
+    },
+    "dataset": {
+        "dataset_name": "responses.csv",
+        "dataset_info": {
+            "source": "manually created from our own RAG system responses.",
+            "shape": [
+                612,
+                2
+            ],
+            "column_names": [
+                "response",
+                "label"
+            ],
+            "label_dist": {
+                "1": 306,
+                "0": 306
+            }
+        }
+    },
+    "training_info": {
+        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+        "test_ratio": "0.2"
+    }
+}

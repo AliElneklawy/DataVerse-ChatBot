@@ -1,0 +1,2 @@
+cd WebRAG/src
+python -m web.chat_web_app
