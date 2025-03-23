@@ -17,6 +17,7 @@
 - **Uncertain Response Classification**: Uses a trained classifier to detect uncertain responses from LLM.
 - **Email Notifications**: Sends alerts via email when uncertain responses are detected.
 - **Chat History Monitoring**: Periodically emails the chat history to a configured email address.
+- The inference and the monitoring services all run in a separate thread. This ensures that the main program doesn't freeze.
 
 ### Dataset Creation and Model Training
 - **Dataset Creation**: Uses the `make_dataset.py` script to create standardized datasets from RAG responses. It supports:
@@ -32,13 +33,13 @@
   - Accuracy, Precision, and Recall.
   - [ROC](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_curve.html) and [Precision-Recall](https://scikit-learn.org/stable/auto_examples/model_selection/plot_precision_recall.html) Curve plotting.
   - The model achieved 92.7% accuracy on the test set.
-- **Model Persistence**: Saves trained models as `.pkl` files and logs metadata (e.g., hyperparameters, evaluation results).
+- **Model Persistence**: Saves trained models as `.pkl` files and logs metadata (e.g., hyperparameters, evaluation results, versions of the libraries, ...).
 
 
 ### Chat Interfaces
-- **WhatsApp Bot**: Deployable as a WhatsApp bot using Twilio for seamless, mobile-friendly conversations.
-- **Telegram Bot**: Available as a Telegram bot, integrating with Telegram’s messaging ecosystem.
-- **Iframe Embedding**: Embeddable via an iframe for easy integration into websites or applications.
+- **WhatsApp Bot**: Deployable as a WhatsApp bot using [Twilio](https://github.com/twilio/twilio-python) for seamless, mobile-friendly conversations.
+- **Telegram Bot**: Available as a [Telegram bot](https://docs.python-telegram-bot.org/en/stable/), integrating with Telegram’s messaging ecosystem.
+- **Iframe Embedding**: Embeddable via an iframe for easy integration into websites or applications. Built with [FastAPI](https://fastapi.tiangolo.com/) for the backend; HTML, CSS, and JavaScript for the frontend.
 
 ### Large Language Model (LLM) Integration
 - **Multiple LLM Support**: Integrates with various LLMs, including:
@@ -77,7 +78,7 @@
 
 ### Setup and Installation
 - **Automated Setup**: Single-command installation via `install.bat` (Windows) for dependencies and configuration.
-- **Dependency Management**: Installs packages from `pyproject.toml`.
+- **Dependency Management**: Installs packages from `pyproject.toml` (built by [uv](https://github.com/astral-sh/uv)).
 - **Environment Configuration**: Automated configuration.
 
 ### Data Management
