@@ -7,3 +7,4 @@ assets
 /data/chat_history
 data/datasets/responses (0).csv
 data/datasets/responses (0).json
+data/database/history_and_usage.db
