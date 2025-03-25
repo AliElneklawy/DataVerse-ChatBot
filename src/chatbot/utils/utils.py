@@ -204,7 +204,7 @@ class EmailService:
     def __init__(self):
         self._subscribers = []
         self.sender_email = "bcaitech.ai@gmail.com"
-        self._receiver_email = "melneklawy1966@gmail.com"
+        self._receiver_email = None
         self.app_password = os.getenv("GMAIL_APP_PASSWORD")
 
     def subscribe(self, callback):
