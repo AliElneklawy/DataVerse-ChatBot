@@ -4,8 +4,10 @@ import smtplib
 import logging
 import sqlite3
 from pathlib import Path
+from email import encoders
 from typing import Optional, Any
 from collections import defaultdict
+from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 from email.mime.multipart import MIMEMultipart
@@ -72,14 +74,17 @@ class DatabaseOps:
     def get_chat_history(self, 
                          user_id: Optional[str] = None, 
                          last_n: int = 3, 
-                         full_history: bool = False):
+                         full_history: bool = False,
+                         last_n_hours: int = 24):
         with sqlite3.connect(self.db_path) as conn:
             if full_history:
+                time_wndw = datetime.now() - timedelta(hours=last_n_hours)
                 cursor = conn.execute("""
                     SELECT *
                     FROM chat_history 
+                    WHERE  timestamp >= ?
                     ORDER BY user_id, timestamp
-                """)
+                """, (time_wndw,))
                 results = cursor.fetchall()
                 grouped_history = defaultdict(list)
 
@@ -158,7 +163,7 @@ class DatabaseOps:
         logger.info(f"Appended cost for user {user_id}")
 
     def get_monitored_resp(self) -> list[tuple[str, str]]:
-        day_ago = datetime.now() - timedelta(hours=21) # get responses for the last 24 hours
+        day_ago = datetime.now() - timedelta(hours=24) # get responses for the last 24 hours
 
         with sqlite3.connect(self.db_path) as conn:
             results = conn.execute(
@@ -241,41 +246,136 @@ class EmailService:
         email_content += "</table>"
         return email_content
 
-    def _send_without_attachment(self, 
-                                 message: MIMEMultipart, 
-                                 unknowns: list[tuple[str, str]]):
+    def _send_without_attachment(self, message: MIMEMultipart, unknowns: list[tuple[str, str]]):
+        """
+        Prepare message without attachments for uncertain responses.
+
+        Args:
+            message (MIMEMultipart): The email message object
+            unknowns (list[tuple[str, str]]): List of (question, answer) tuples
+
+        Returns:
+            MIMEText: HTML content for the message
+        """
         html_content = self._format_email_content(unknowns)
         html_part = MIMEText(html_content, "html")
-
         return html_part
 
-    def _send_with_attachment(self, 
-                              message: MIMEMultipart, 
-                              json_data: list[dict[str, Any]], 
-                              filename: str):
+    def _add_file_attachment(self, message: MIMEMultipart, file_path: str, content_type=None):
+        """
+        Add a file attachment to the email message.
+
+        Args:
+            message (MIMEMultipart): The email message object
+            file_path (str): Path to the file to attach
+            content_type (str, optional): Content type of the file. Defaults to None.
+
+        Returns:
+            bool: True if attachment was successful, False otherwise
+        """
+        try:
+            if not os.path.exists(file_path):
+                logger.error(f"File not found: {file_path}")
+                return False
+                
+            filename = os.path.basename(file_path)
+            
+            with open(file_path, "rb") as attachment_file:
+                attachment_data = attachment_file.read()
+            
+            # Determine content type if not specified
+            if content_type is None:
+                if file_path.lower().endswith('.json'):
+                    content_type = 'application/json'
+                elif file_path.lower().endswith('.xlsx'):
+                    content_type = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                elif file_path.lower().endswith('.pdf'):
+                    content_type = 'application/pdf'
+                else:
+                    content_type = 'application/octet-stream'
+            
+            attachment = MIMEBase(*content_type.split('/', 1))
+            attachment.set_payload(attachment_data)
+            encoders.encode_base64(attachment)
+            attachment.add_header('Content-Disposition', 'attachment', filename=filename)
+            message.attach(attachment)
+            
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error attaching file {file_path}: {e}")
+            return False
+
+    def send_email_with_attachments(self, subject: str, message_body: str, file_paths: list[str] = None):
+        """
+        Send an email with multiple file attachments.
+
+        Args:
+            subject (str): The email subject
+            message_body (str): The email body text
+            file_paths (list[str], optional): List of file paths to attach. Defaults to None.
+        """
+        if not self._receiver_email:
+            logger.warning("Receiver email was not set. Email wasn't sent.")
+            return
+
+        message = MIMEMultipart()
+        message["Subject"] = subject
+        message["From"] = self.sender_email
+        message["To"] = self._receiver_email
+
+        text_part = MIMEText(message_body, "plain")
+        message.attach(text_part)
+
+        if file_paths:
+            for file_path in file_paths:
+                self._add_file_attachment(message, file_path)
+
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+                server.login(self.sender_email, self.app_password)
+                server.sendmail(self.sender_email, self._receiver_email, message.as_string())
+            logger.info(f"Email sent to {self._receiver_email} with subject: {subject} and {len(file_paths) if file_paths else 0} attachments")
+        except Exception as e:
+            logger.error(f"Failed to send email: {e}")
+
+    def _send_with_attachment(self, message: MIMEMultipart, json_data: list[dict[str, Any]], filename: str):
+        """
+        Add JSON data as an attachment to the email.
+
+        Args:
+            message (MIMEMultipart): The email message object
+            json_data (list[dict]): JSON data to attach
+            filename (str): Filename for the attachment
+
+        Returns:
+            MIMEApplication: The JSON attachment
+        """
         text_part = MIMEText("Please find the attached JSON file of your conversations.\n\nBest Regards,\n", "plain")
         message.attach(text_part)
         json_str = json.dumps(json_data, indent=4, ensure_ascii=False)
         attachment = MIMEApplication(json_str.encode('utf-8'))
         attachment.add_header('Content-Disposition', 'attachment', filename=filename)
-
         return attachment
 
     def send_email(self, 
                    subject: str, 
                    unknowns: list[tuple[str, str]] = None, 
                    json_data: list[dict[str, Any]] = None,
-                   filename: str = f"conversations.json"):
+                   filename: str = "conversations.json"):
         """
-        Send an email with the list of uncertain responses.
+        Send an email with either uncertain responses or JSON data.
+        
+        This method is maintained for backwards compatibility.
 
         Args:
-            receiver_email (str): The recipient's email address.
-            subject (str): The email subject line.
-            unknowns (list[tuple[str, str]]): List of (question, answer) tuples to include in the email.
+            subject (str): The email subject line
+            unknowns (list[tuple[str, str]], optional): List of uncertain responses. Defaults to None.
+            json_data (list[dict], optional): JSON data to attach. Defaults to None.
+            filename (str, optional): Filename for JSON attachment. Defaults to "conversations.json".
         """
         if not self._receiver_email:
-            logger.warning("Reciver email was not set. Email wasn't sent.")
+            logger.warning("Receiver email was not set. Email wasn't sent.")
             return
 
         msg_type = "mixed" if json_data else "alternative"
@@ -309,112 +409,3 @@ class EmailService:
         logger.info(f"Email is set to {self._receiver_email}.")
 
         self._notify_subscribers(old_value, value)
-
-
-
-
-# class ResponseMonitor: # observer pattern
-#     def __init__(self, email_service: EmailService):
-#         self.db = DatabaseOps()
-#         self.email_service = email_service
-#         self._running = False
-#         self._thread = None
-#         logger.info("ResponseMonitor initialized with _running = False")
-
-#         self.email_service.subscribe(self._on_email_change) # subscribe to the email service
-
-#         if self.email_service.receiver_email is not None:
-#             self._start_monitoring()
-
-#     def _on_email_change(self, old_email, new_email):
-#         logger.info(f"Email changed from '{old_email}' to '{new_email}', running = {self._running}")
-#         if not old_email and new_email:
-#             self._start_monitoring()
-#         elif not new_email and old_email:
-#             # waiting for the background thread to join is blocking so we need it to run async
-#             asyncio.create_task(self._stop_monitoring())
-
-#     def _start_monitoring(self):
-#         """
-#         Run a separate thread to monitor LLMs' responses.
-#         Uses random forest classifier to classify LLMs' responses.
-#         """
-#         if not self._running:
-#             schedule.every(30).seconds.do(self._retrieve_and_email)
-#             self._thread = Thread(target=self._run_scheduler, daemon=False)
-#             self._running = True
-#             self._thread.start()
-
-#             logger.info("Response monitoring thread started...")
-
-#     async def _stop_monitoring(self):
-#         if self._running:
-#             logger.info("Stopping monitoring, setting _running to False")
-#             schedule.clear()
-#             self._running = False
-#             if self._thread is not None:
-#                 loop = asyncio.get_event_loop()
-#                 await loop.run_in_executor(None, self._thread.join)
-#                 # self._thread.join() # Wait for the thread to finish
-#                 self._thread = None
-
-#             logger.info("Response monitoring thread stopped and cleaned up.")
-
-#     def _run_scheduler(self):
-#         logger.info("Scheduler loop starting with _running = True")
-#         while self._running: #===========
-#             logger.info("Scheduler checking for pending jobs...")
-#             schedule.run_pending()
-#             time.sleep(30) # check every 30 seconds for pending jobs
-        
-#         logger.info("Scheduler loop exited because _running = False")
-
-#     def _retrieve_and_email(self):
-#         unknowns = []
-#         q_a = self.db.get_monitored_resp()
-#         logger.info(f"Fetched {len(q_a)} responses from the last 24 hours.")
-
-#         for question, answer in q_a:
-#             pred = inference_pipeline(answer[:60])
-#             if pred[0] == 1: # the LLM didn't know the answer
-#                 unknowns.append((question, answer))  
-
-#         if unknowns:
-#             logger.info(f"Found {len(unknowns)} uncertain responses. Sending email...")
-#             subject = f"RAG System: {len(unknowns)} Uncertain Responses Detected"
-#             self.email_service.send_email(subject, unknowns)
-#         else:
-#             logger.info("No uncertain responses found.")
-
-#         # print(unknowns)
-
-# class ChatHistorySender(ResponseMonitor):
-#     def _start_monitoring(self):
-#         """
-#         Override to schedule ChatHistorySender's _retrieve_and_email.
-#         """
-#         if not self._running:
-#             schedule.every(30).seconds.do(self._retrieve_and_email)
-#             self._thread = Thread(target=self._run_scheduler, daemon=False)
-#             self._running = True
-#             self._thread.start()
-#             logger.info("ChatHistorySender monitoring thread started...")
-
-#     def _retrieve_and_email(self):
-#         receiver_email = self.email_service.receiver_email
-#         history = self.db.get_chat_history(full_history=True)
-#         self.save_hist(history, receiver_email)
-
-#         if history:
-#             logger.info(f"Found previous conversations. Sending email...")
-#             subject = "Chat History for Your Chatbot"
-#             self.email_service.send_email(subject, 
-#                                           json_data=history,
-#                                           filename=f"conversations_{datetime.now().strftime('%Y-%m-%d_%H:%M')}.json")
-#         else:
-#             logger.info("No chat history.")
-
-#     def save_hist(self, hist, fname):
-#         output_file = create_folder(CHAT_HIST_DIR) / f"{fname}.json"
-#         with open(output_file, "w", encoding='utf-8') as outfile:
-#             json.dump(hist, outfile, indent=4, ensure_ascii=False)

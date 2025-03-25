@@ -76,7 +76,7 @@ def main():
     USER_ID = str(uuid4())
     link = "https://bcaitech.bh/"
     domain_name = extract_domain_name(link)
-    content_path = fetch_content(link, domain_name, webpage_only=True)
+    content_path = fetch_content(link, domain_name, webpage_only=False)
     rag = CohereRAG(content_path, 
                     INDEXES_DIR, 
                     chunking_type="recursive",
