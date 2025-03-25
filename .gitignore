@@ -1,7 +1,6 @@
 test.py
 .env
 *.pyc
-assets
 .mypy_cache
 /.venv
 /data/chat_history
