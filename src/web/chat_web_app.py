@@ -16,7 +16,7 @@ rag = CohereRAG(
     WEB_CONTENT_DIR / "bcaitech.txt",
     INDEXES_DIR,
     chunking_type="recursive",
-    rerank=False
+    rerank=True
 )
 
 openai_client = AsyncOpenAI(api_key=os.getenv("OPENAI_API"))
