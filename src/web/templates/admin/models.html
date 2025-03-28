@@ -1,0 +1,550 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Models & Configuration - RAG Admin{% endblock %}
+
+{% block page_title %}Models & Configuration{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-7">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">System Configuration</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('update_model_config') }}" method="post">
+                    <div class="mb-3">
+                        <label for="llm_provider" class="form-label">Default LLM Provider</label>
+                        <select class="form-select" id="llm_provider" name="llm_provider">
+                            <option value="cohere" {% if system_configs.get('default_llm_provider') == 'cohere' %}selected{% endif %}>Cohere</option>
+                            <option value="claude" {% if system_configs.get('default_llm_provider') == 'claude' %}selected{% endif %}>Anthropic Claude</option>
+                            <option value="openai" {% if system_configs.get('default_llm_provider') == 'openai' %}selected{% endif %}>OpenAI</option>
+                            <option value="gemini" {% if system_configs.get('default_llm_provider') == 'gemini' %}selected{% endif %}>Google Gemini</option>
+                            <option value="mistral" {% if system_configs.get('default_llm_provider') == 'mistral' %}selected{% endif %}>Mistral AI</option>
+                            <option value="grok" {% if system_configs.get('default_llm_provider') == 'grok' %}selected{% endif %}>xAI Grok</option>
+                            <option value="deepseek" {% if system_configs.get('default_llm_provider') == 'deepseek' %}selected{% endif %}>DeepSeek</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="llm_model" class="form-label">Default LLM Model</label>
+                        <select class="form-select" id="llm_model" name="llm_model">
+                            <!-- Model options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="chunking_type" class="form-label">Chunking Type</label>
+                        <select class="form-select" id="chunking_type" name="chunking_type">
+                            <option value="recursive" {% if system_configs.get('default_chunking_type') == 'recursive' %}selected{% endif %}>Recursive</option>
+                            <option value="semantic" {% if system_configs.get('default_chunking_type') == 'semantic' %}selected{% endif %}>Semantic</option>
+                            <option value="basic" {% if system_configs.get('default_chunking_type') == 'basic' %}selected{% endif %}>Basic</option>
+                        </select>
+                        <div class="form-text">
+                            <ul>
+                                <li><strong>Recursive:</strong> Splits text on multiple separators recursively.</li>
+                                <li><strong>Semantic:</strong> Uses embeddings to create semantically coherent chunks.</li>
+                                <li><strong>Basic:</strong> Simple character-based splitting.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="chunk_size" class="form-label">Chunk Size</label>
+                            <input type="number" class="form-control" id="chunk_size" name="chunk_size" 
+                                   value="{{ system_configs.get('default_chunk_size', '1500') }}">
+                            <div class="form-text">Number of characters per chunk</div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="chunk_overlap" class="form-label">Chunk Overlap</label>
+                            <input type="number" class="form-control" id="chunk_overlap" name="chunk_overlap"
+                                   value="{{ system_configs.get('default_chunk_overlap', '150') }}">
+                            <div class="form-text">Number of characters overlapping between chunks</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="rerank_enabled" name="rerank_enabled"
+                               {% if system_configs.get('rerank_enabled') == 'true' %}checked{% endif %}>
+                        <label class="form-check-label" for="rerank_enabled">Enable Reranking</label>
+                        <div class="form-text">
+                            Uses Cohere's reranking model to improve retrieval quality.
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Save Configuration</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Run Benchmarks</h5>
+            </div>
+            <div class="card-body">
+                <p>Test the performance of different models and configurations on your content.</p>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#benchmarkModal">
+                    <i class="bi bi-speedometer me-1"></i> Run Benchmarks
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-5">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Available Models</h5>
+            </div>
+            <div class="card-body">
+                <ul class="nav nav-tabs" id="modelsTab" role="tablist">
+                    {% for provider, models in available_models.items() %}
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link {% if loop.first %}active{% endif %}" 
+                                id="{{ provider }}-tab" 
+                                data-bs-toggle="tab" 
+                                data-bs-target="#{{ provider }}-content" 
+                                type="button" 
+                                role="tab" 
+                                aria-controls="{{ provider }}-content" 
+                                aria-selected="{% if loop.first %}true{% else %}false{% endif %}">
+                            {{ provider|capitalize }}
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                <div class="tab-content p-3 border border-top-0 rounded-bottom" id="modelsTabContent">
+                    {% for provider, models in available_models.items() %}
+                    <div class="tab-pane fade {% if loop.first %}show active{% endif %}" 
+                         id="{{ provider }}-content" 
+                         role="tabpanel" 
+                         aria-labelledby="{{ provider }}-tab">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>Input Price (/M tokens)</th>
+                                        <th>Output Price (/M tokens)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for model_name, prices in models.items() %}
+                                    <tr>
+                                        <td>{{ model_name }}</td>
+                                        <td>${{ '%.2f'|format(prices[0]) }}</td>
+                                        <td>${{ '%.2f'|format(prices[1]) }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">API Keys Configuration</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('update_api_keys') }}" method="post">
+                    <div class="mb-3">
+                        <label for="cohere_api_key" class="form-label">Cohere API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="cohere_api_key" name="cohere_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="cohere_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="openai_api_key" class="form-label">OpenAI API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="openai_api_key" name="openai_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="openai_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="anthropic_api_key" class="form-label">Anthropic API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="anthropic_api_key" name="anthropic_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="anthropic_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="google_api_key" class="form-label">Google API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="google_api_key" name="google_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="google_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="mistral_api_key" class="form-label">Mistral API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="mistral_api_key" name="mistral_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="mistral_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="xai_api_key" class="form-label">xAI (Grok) API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="xai_api_key" name="xai_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="xai_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="deepseek_api_key" class="form-label">DeepSeek API Key</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="deepseek_api_key" name="deepseek_api_key">
+                            <button class="btn btn-outline-secondary toggle-password" type="button" data-target="deepseek_api_key">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Update API Keys</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Benchmark Modal -->
+<div class="modal fade" id="benchmarkModal" tabindex="-1" aria-labelledby="benchmarkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="benchmarkModalLabel">Run Benchmarks</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="benchmarkForm">
+                    <div class="mb-3">
+                        <label for="contentFile" class="form-label">Content File</label>
+                        <select class="form-select" id="contentFile" name="contentFile" required>
+                            <option value="">Select a content file to benchmark</option>
+                            <!-- Content files will be loaded via AJAX -->
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="benchmarkQueries" class="form-label">Test Queries (one per line)</label>
+                        <textarea class="form-control" id="benchmarkQueries" name="benchmarkQueries" rows="5" placeholder="Enter test queries, one per line"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Models to Test</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="modelCohere" name="modelsToTest[]" value="cohere:command-r-plus-08-2024" checked>
+                                    <label class="form-check-label" for="modelCohere">Cohere Command R+</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="modelClaude" name="modelsToTest[]" value="claude:claude-3-5-sonnet-20241022">
+                                    <label class="form-check-label" for="modelClaude">Claude 3.5 Sonnet</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="modelGPT4" name="modelsToTest[]" value="openai:gpt-4o">
+                                    <label class="form-check-label" for="modelGPT4">OpenAI GPT-4o</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="modelMistral" name="modelsToTest[]" value="mistral:mistral-large-latest">
+                                    <label class="form-check-label" for="modelMistral">Mistral Large</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="modelGemini" name="modelsToTest[]" value="gemini:gemini-1.5-pro">
+                                    <label class="form-check-label" for="modelGemini">Gemini 1.5 Pro</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="modelGrok" name="modelsToTest[]" value="grok:grok-2">
+                                    <label class="form-check-label" for="modelGrok">Grok 2</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Configurations to Test</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="configRecursive" name="configsToTest[]" value="recursive:true" checked>
+                                    <label class="form-check-label" for="configRecursive">Recursive + Reranking</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="configRecursiveNoRerank" name="configsToTest[]" value="recursive:false">
+                                    <label class="form-check-label" for="configRecursiveNoRerank">Recursive (No Reranking)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="configSemantic" name="configsToTest[]" value="semantic:true">
+                                    <label class="form-check-label" for="configSemantic">Semantic + Reranking</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="configSemanticNoRerank" name="configsToTest[]" value="semantic:false">
+                                    <label class="form-check-label" for="configSemanticNoRerank">Semantic (No Reranking)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                
+                <div id="benchmarkResults" style="display: none;">
+                    <hr>
+                    <h6>Benchmark Results:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-sm" id="benchmarkResultsTable">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Config</th>
+                                    <th>Avg. Time (s)</th>
+                                    <th>Success Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div id="benchmarkProgress" style="display: none;">
+                    <hr>
+                    <h6>Running Benchmarks:</h6>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" id="benchmarkProgressBar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                    <div id="benchmarkStatus" class="text-center mb-3">
+                        Initializing...
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="runBenchmarkBtn">Run Benchmark</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Populate model selection based on provider
+        const llmProvider = document.getElementById('llm_provider');
+        const llmModel = document.getElementById('llm_model');
+        const currentModel = '{{ system_configs.get("default_llm_model", "") }}';
+        
+        const availableModels = {{ available_models|tojson }};
+        
+        function updateModelOptions() {
+            const provider = llmProvider.value;
+            const models = availableModels[provider] || {};
+            
+            // Clear existing options
+            llmModel.innerHTML = '';
+            
+            // Add new options
+            Object.keys(models).forEach(modelName => {
+                const option = document.createElement('option');
+                option.value = modelName;
+                option.textContent = modelName;
+                
+                if (modelName === currentModel) {
+                    option.selected = true;
+                }
+                
+                llmModel.appendChild(option);
+            });
+        }
+        
+        // Initial population
+        updateModelOptions();
+        
+        // Update on provider change
+        llmProvider.addEventListener('change', updateModelOptions);
+        
+        // Password visibility toggle
+        const toggleButtons = document.querySelectorAll('.toggle-password');
+        toggleButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const input = document.getElementById(targetId);
+                
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    this.innerHTML = '<i class="bi bi-eye-slash"></i>';
+                } else {
+                    input.type = 'password';
+                    this.innerHTML = '<i class="bi bi-eye"></i>';
+                }
+            });
+        });
+        
+        // Load content files for benchmark
+        fetch('/content/files')
+            .then(response => response.json())
+            .then(data => {
+                const contentFileSelect = document.getElementById('contentFile');
+                
+                data.files.forEach(file => {
+                    const option = document.createElement('option');
+                    option.value = file.name;
+                    option.textContent = file.name;
+                    contentFileSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching content files:', error));
+        
+        // Run benchmark
+        const runBenchmarkBtn = document.getElementById('runBenchmarkBtn');
+        runBenchmarkBtn.addEventListener('click', function() {
+            const contentFile = document.getElementById('contentFile').value;
+            const benchmarkQueries = document.getElementById('benchmarkQueries').value;
+            const modelsToTest = Array.from(document.querySelectorAll('input[name="modelsToTest[]"]:checked')).map(el => el.value);
+            const configsToTest = Array.from(document.querySelectorAll('input[name="configsToTest[]"]:checked')).map(el => el.value);
+            
+            if (!contentFile) {
+                alert('Please select a content file');
+                return;
+            }
+            
+            if (!benchmarkQueries) {
+                alert('Please enter at least one test query');
+                return;
+            }
+            
+            if (modelsToTest.length === 0) {
+                alert('Please select at least one model to test');
+                return;
+            }
+            
+            if (configsToTest.length === 0) {
+                alert('Please select at least one configuration to test');
+                return;
+            }
+            
+            const queries = benchmarkQueries.split('\n').filter(q => q.trim().length > 0);
+            
+            document.getElementById('benchmarkProgress').style.display = 'block';
+            document.getElementById('benchmarkResults').style.display = 'none';
+            document.getElementById('runBenchmarkBtn').disabled = true;
+            
+            const totalTests = modelsToTest.length * configsToTest.length * queries.length;
+            let testsCompleted = 0;
+            
+            const benchmarkResultsTable = document.getElementById('benchmarkResultsTable').querySelector('tbody');
+            benchmarkResultsTable.innerHTML = '';
+            
+            const results = {};
+            
+            // Run benchmarks sequentially
+            const runTests = async () => {
+                for (const modelOption of modelsToTest) {
+                    const [provider, model] = modelOption.split(':');
+                    
+                    for (const configOption of configsToTest) {
+                        const [chunking, rerankStr] = configOption.split(':');
+                        const rerank = rerankStr === 'true';
+                        
+                        const configKey = `${chunking}${rerank ? '+rerank' : ''}`;
+                        const modelKey = `${provider}:${model}`;
+                        
+                        results[`${modelKey}|${configKey}`] = {
+                            model: modelKey,
+                            config: configKey,
+                            timeTaken: [],
+                            successCount: 0,
+                            totalTests: queries.length
+                        };
+                        
+                        for (const query of queries) {
+                            document.getElementById('benchmarkStatus').textContent = 
+                                `Testing ${provider}:${model} with ${chunking} chunking (${rerank ? 'with' : 'without'} reranking)`;
+                            
+                            try {
+                                const response = await fetch('/models/test', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        query: query,
+                                        filename: contentFile,
+                                        provider: provider,
+                                        model: model,
+                                        chunking_type: chunking,
+                                        rerank: rerank
+                                    })
+                                });
+                                
+                                const data = await response.json();
+                                
+                                if (data.success) {
+                                    results[`${modelKey}|${configKey}`].timeTaken.push(data.time_taken);
+                                    results[`${modelKey}|${configKey}`].successCount++;
+                                }
+                            } catch (error) {
+                                console.error('Error running test:', error);
+                            }
+                            
+                            testsCompleted++;
+                            const progress = (testsCompleted / totalTests) * 100;
+                            document.getElementById('benchmarkProgressBar').style.width = `${progress}%`;
+                        }
+                        
+                        // Update results table
+                        const resultObj = results[`${modelKey}|${configKey}`];
+                        const avgTime = resultObj.timeTaken.length > 0 
+                            ? resultObj.timeTaken.reduce((a, b) => a + b, 0) / resultObj.timeTaken.length 
+                            : 0;
+                        const successRate = (resultObj.successCount / resultObj.totalTests) * 100;
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${modelKey}</td>
+                            <td>${configKey}</td>
+                            <td>${avgTime.toFixed(2)}</td>
+                            <td>${successRate.toFixed(1)}%</td>
+                        `;
+                        benchmarkResultsTable.appendChild(row);
+                    }
+                }
+                
+                document.getElementById('benchmarkStatus').textContent = 'Benchmark completed';
+                document.getElementById('benchmarkResults').style.display = 'block';
+                document.getElementById('runBenchmarkBtn').disabled = false;
+            };
+            
+            runTests();
+        });
+    });
+</script>
+{% endblock %}

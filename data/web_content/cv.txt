@@ -1,0 +1,196 @@
+Ali Elneklawy
+Email : ali.mostafa.elneklawy@gmail.com
+LinkedIn, Portfolio
+Mobile : +201125823588
+Education
+• Faculty of Engineering
+Alexandria University
+Bachelor of Engineering in Communications and Electronics; GPA: 3.3
+Aug. 2019 – June. 2024
+Relevant Coursework
+◦Programming (Python)
+◦Data Structures and
+Algorithms
+◦Operating Systems
+◦Database Management
+◦Advanced Probability and
+Statistics
+◦Machine Learning
+◦Deep Learning
+◦Convolutional Neural
+Networks
+◦Version Control (Git)
+Experience
+◦
+Ministry of Communications and Information Technology
+Hybrid
+AWS Machine Learning Trainee
+May 2024 - Dec 2024
+∗Prompt Engineering: Completed training on prompt engineering techniques.
+∗AWS Academy Cloud Foundations: Learned fundamental AWS cloud concepts and services.
+∗AWS Academy Cloud Architecting: Studied the architecture of cloud solutions using AWS.
+∗AWS Academy Machine Learning Foundations: Studied foundational concepts in machine learning and
+practices on AWS.
+∗AWS Academy Machine Learning for Natural Language Processing: Studied machine learning
+techniques specific to natural language processing.
+∗MLOps Tools, MLflow, and Hugging Face: Explored MLOps tools including MLflow for managing the ML
+lifecycle and Hugging Face for NLP models.
+◦
+BCAITECH (ú
+«A	J¢B@ ZA¿ 	YË@ð HAÓñÊªÖÏ@ éJ
+	J®JË 	áK
+QjJ.Ë@ 	Q»QÓ)
+Remote
+Remote Chatbot Developer
+Dec 2024 - March 2025
+∗Role Overview: Develop and maintain advanced chatbots—primarily for WhatsApp—while providing best
+practices guidance to management.
+∗WhatsApp Chatbot Development: Designed and implemented custom chatbots integrated with WhatsApp,
+delivering efficient, natural conversations tailored to client needs.
+∗Best Practices Advisory: Provided strategic insights and best practices for chatbot development,
+continuously improving project quality and performance.
+∗AI-driven Live Chat System: Implemented an AI-driven project that combines natural language processing
+with web crawling to deliver real-time, context-aware responses on the company website. Implemented automated
+retraining mechanisms to ensure the system remains updated with the latest site data, enhancing user interaction
+and information retrieval.
+Projects
+∗Braille Translator (Graduation Project): Participated in the development of a system capable of converting
+scanned Braille images into English text and audio books. Achieved an accuracy rate of 99%.
+∗Real Time Face Mask Detection: Developed a computer vision project that uses deep learning techniques to
+detect if a person is wearing a face mask in real time. Achieved 93% accuracy.
+∗Real Time Sign Language Classification: Developed a machine learning model to translate sign language
+letters into English letters.
+∗WebRAG - Retrieval-Augmented Generation for Website Interaction: Developed an AI-driven system
+that integrates natural language processing with web crawling to provide real-time, context-aware responses to user
+queries based on website content.
+∗AI Programming Coach - Telegram Bot: Developed an AI-driven Telegram bot that enhances users’
+programming skills through personalized assessments and daily coding challenges. The bot dynamically evaluates
+user proficiency, provides tailored exercises, and integrates AI-based question answering. Implemented database
+management, automated task scheduling, and admin controls for question management. Deployed on AWS for
+scalability and continuous availability.
+∗
+Intelligent Telegram Chatbot with Custom Knowledge Base: Developed a sophisticated Telegram chatbot
+powered by Google’s Gemini AI, designed as a virtual personal assistant. The bot integrates a website crawler,
+document processing, and advanced text embeddings to provide intelligent, context-aware responses based on
+personal knowledge bases, including websites, documents, and custom data sources.
+∗AI-Powered HR Assistant: Developed an intelligent HR assistant chatbot leveraging Google Gemini-Pro for
+advanced NLP, Sentence Transformers for document embeddings, and Gradio for an interactive user interface. The
+chatbot streamlines HR processes by handling queries, managing leave requests, generating HR analytics, and
+providing a user-friendly experience with real-time data visualization.
+∗Chatbot: Implemented an AI chatbot using Tensorflow with a user-friendly GUI using Gradio. The project was
+deployed on Hugging face. Achieved 97% accuracy in comprehending user input.
+∗Boston House Price Prediction: A machine learning model that can be used for housing price prediction
+deployed using streamlit on Hugging face.
+∗Spam Filter: Built a highly effective spam filter using machine learning techniques. Achieved an accuracy 98%.
+∗Malware Detection from Memory Dump: Implemented a deep learning model to detect whether or not a
+specific device is infected and if it is infected, determine the type of malware. Achieved an accuracy of 99%.
+∗Diabetes Predictor: Built a machine learning model that can be used to predict whether a patient is diabetic or
+not based on several factors.
+∗PDF Text to Speech: A GUI-driven application that can be used to convert PDF files to audio files with each
+page converted separately to an audio file.
+∗PintOs: Contributed to the development of PintOs, an open-source instructional operating system kernel developed
+by Stanford university.
+Programming Skills
+∗Languages: Python, Maltalb, C, SQL
+∗Developer Tools Technologies and Frameworks: Pandas, NumPy, Matplotlib, Qt, Scikit-Learn,
+TensorFlow, Keras, Git
+Personal Skills
+∗Teamwork, Self-learner, Time Management, Presentations
+Ali Elneklawy
+Email : ali.mostafa.elneklawy@gmail.com
+LinkedIn, Portfolio
+Mobile : +201125823588
+Education
+• Faculty of Engineering
+Alexandria University
+Bachelor of Engineering in Communications and Electronics; GPA: 3.3
+Aug. 2019 – June. 2024
+Relevant Coursework
+◦Programming (Python)
+◦Data Structures and
+Algorithms
+◦Operating Systems
+◦Database Management
+◦Advanced Probability and
+Statistics
+◦Machine Learning
+◦Deep Learning
+◦Convolutional Neural
+Networks
+◦Version Control (Git)
+Experience
+◦
+Ministry of Communications and Information Technology
+Hybrid
+AWS Machine Learning Trainee
+May 2024 - Dec 2024
+∗Prompt Engineering: Completed training on prompt engineering techniques.
+∗AWS Academy Cloud Foundations: Learned fundamental AWS cloud concepts and services.
+∗AWS Academy Cloud Architecting: Studied the architecture of cloud solutions using AWS.
+∗AWS Academy Machine Learning Foundations: Studied foundational concepts in machine learning and
+practices on AWS.
+∗AWS Academy Machine Learning for Natural Language Processing: Studied machine learning
+techniques specific to natural language processing.
+∗MLOps Tools, MLflow, and Hugging Face: Explored MLOps tools including MLflow for managing the ML
+lifecycle and Hugging Face for NLP models.
+◦
+BCAITECH (ú
+«A	J¢B@ ZA¿ 	YË@ð HAÓñÊªÖÏ@ éJ
+	J®JË 	áK
+QjJ.Ë@ 	Q»QÓ)
+Remote
+Remote Chatbot Developer
+Dec 2024 - March 2025
+∗Role Overview: Develop and maintain advanced chatbots—primarily for WhatsApp—while providing best
+practices guidance to management.
+∗WhatsApp Chatbot Development: Designed and implemented custom chatbots integrated with WhatsApp,
+delivering efficient, natural conversations tailored to client needs.
+∗Best Practices Advisory: Provided strategic insights and best practices for chatbot development,
+continuously improving project quality and performance.
+∗AI-driven Live Chat System: Implemented an AI-driven project that combines natural language processing
+with web crawling to deliver real-time, context-aware responses on the company website. Implemented automated
+retraining mechanisms to ensure the system remains updated with the latest site data, enhancing user interaction
+and information retrieval.
+Projects
+∗Braille Translator (Graduation Project): Participated in the development of a system capable of converting
+scanned Braille images into English text and audio books. Achieved an accuracy rate of 99%.
+∗Real Time Face Mask Detection: Developed a computer vision project that uses deep learning techniques to
+detect if a person is wearing a face mask in real time. Achieved 93% accuracy.
+∗Real Time Sign Language Classification: Developed a machine learning model to translate sign language
+letters into English letters.
+∗WebRAG - Retrieval-Augmented Generation for Website Interaction: Developed an AI-driven system
+that integrates natural language processing with web crawling to provide real-time, context-aware responses to user
+queries based on website content.
+∗AI Programming Coach - Telegram Bot: Developed an AI-driven Telegram bot that enhances users’
+programming skills through personalized assessments and daily coding challenges. The bot dynamically evaluates
+user proficiency, provides tailored exercises, and integrates AI-based question answering. Implemented database
+management, automated task scheduling, and admin controls for question management. Deployed on AWS for
+scalability and continuous availability.
+∗
+Intelligent Telegram Chatbot with Custom Knowledge Base: Developed a sophisticated Telegram chatbot
+powered by Google’s Gemini AI, designed as a virtual personal assistant. The bot integrates a website crawler,
+document processing, and advanced text embeddings to provide intelligent, context-aware responses based on
+personal knowledge bases, including websites, documents, and custom data sources.
+∗AI-Powered HR Assistant: Developed an intelligent HR assistant chatbot leveraging Google Gemini-Pro for
+advanced NLP, Sentence Transformers for document embeddings, and Gradio for an interactive user interface. The
+chatbot streamlines HR processes by handling queries, managing leave requests, generating HR analytics, and
+providing a user-friendly experience with real-time data visualization.
+∗Chatbot: Implemented an AI chatbot using Tensorflow with a user-friendly GUI using Gradio. The project was
+deployed on Hugging face. Achieved 97% accuracy in comprehending user input.
+∗Boston House Price Prediction: A machine learning model that can be used for housing price prediction
+deployed using streamlit on Hugging face.
+∗Spam Filter: Built a highly effective spam filter using machine learning techniques. Achieved an accuracy 98%.
+∗Malware Detection from Memory Dump: Implemented a deep learning model to detect whether or not a
+specific device is infected and if it is infected, determine the type of malware. Achieved an accuracy of 99%.
+∗Diabetes Predictor: Built a machine learning model that can be used to predict whether a patient is diabetic or
+not based on several factors.
+∗PDF Text to Speech: A GUI-driven application that can be used to convert PDF files to audio files with each
+page converted separately to an audio file.
+∗PintOs: Contributed to the development of PintOs, an open-source instructional operating system kernel developed
+by Stanford university.
+Programming Skills
+∗Languages: Python, Maltalb, C, SQL
+∗Developer Tools Technologies and Frameworks: Pandas, NumPy, Matplotlib, Qt, Scikit-Learn,
+TensorFlow, Keras, Git
+Personal Skills
+∗Teamwork, Self-learner, Time Management, Presentations

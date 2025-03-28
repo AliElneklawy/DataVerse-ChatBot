@@ -1,0 +1,365 @@
+{% extends "admin/base.html" %}
+
+{% block title %}System - RAG Admin{% endblock %}
+
+{% block page_title %}System Management{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Email Notifications</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('system_email') }}" method="post">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Notification Email</label>
+                        <input type="email" class="form-control" id="email" name="email" 
+                               value="{{ current_email }}" placeholder="admin@example.com">
+                        <div class="form-text">
+                            Email address for receiving system notifications and reports.
+                        </div>
+                    </div>
+                    
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="enable_notifications" name="enable_notifications"
+                               {% if email_notifications_enabled %}checked{% endif %}>
+                        <label class="form-check-label" for="enable_notifications">Enable Email Notifications</label>
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">Save Settings</button>
+                        <button type="button" class="btn btn-outline-primary" id="testEmailBtn">Test Email</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">System Status</h5>
+            </div>
+            <div class="card-body">
+                <h6>Components</h6>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-database me-2"></i> Database
+                        </div>
+                        <span class="badge bg-success">Online</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-search me-2"></i> Embeddings Service
+                        </div>
+                        <span class="badge bg-success">Online</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-cpu me-2"></i> LLM Connection
+                        </div>
+                        <span class="badge bg-success">Online</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-envelope me-2"></i> Email Service
+                        </div>
+                        <span class="badge bg-success">Online</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-hdd-stack me-2"></i> File Storage
+                        </div>
+                        <span class="badge bg-success">Online</span>
+                    </li>
+                </ul>
+                
+                <div class="d-grid">
+                    <button class="btn btn-primary" id="refreshStatusBtn">
+                        <i class="bi bi-arrow-repeat me-1"></i> Refresh Status
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">System Logs</h5>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary" id="refreshLogsBtn">
+                        <i class="bi bi-arrow-repeat"></i> Refresh
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" id="downloadLogsBtn">
+                        <i class="bi bi-download"></i> Download
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <select class="form-select form-select-sm" id="logLevelFilter">
+                        <option value="all">All Levels</option>
+                        <option value="INFO">Info</option>
+                        <option value="WARNING">Warning</option>
+                        <option value="ERROR">Error</option>
+                        <option value="CRITICAL">Critical</option>
+                    </select>
+                </div>
+                <div class="border rounded bg-dark text-light p-3" style="height: 400px; overflow-y: auto; font-family: monospace; font-size: 0.85rem;">
+                    <div id="logContent">
+                        {% for log in logs %}
+                        <div class="log-entry {% if 'ERROR' in log %}text-danger{% elif 'WARNING' in log %}text-warning{% elif 'CRITICAL' in log %}text-danger{% else %}text-info{% endif %}">
+                            {{ log }}
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted p-3">No logs available</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">System Maintenance</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-3">
+                    <button class="btn btn-primary" id="backupBtn">
+                        <i class="bi bi-download me-1"></i> Backup System Data
+                    </button>
+                    <button class="btn btn-warning" id="clearCacheBtn">
+                        <i class="bi bi-x-circle me-1"></i> Clear System Cache
+                    </button>
+                    <button class="btn btn-danger" id="resetSystemBtn" data-bs-toggle="modal" data-bs-target="#resetSystemModal">
+                        <i class="bi bi-exclamation-triangle me-1"></i> Reset System
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reset System Modal -->
+<div class="modal fade" id="resetSystemModal" tabindex="-1" aria-labelledby="resetSystemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetSystemModalLabel">Reset System</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger mb-3">
+                    <i class="bi bi-exclamation-triangle me-2"></i> Warning! This action cannot be undone.
+                </div>
+                <p>Resetting the system will:</p>
+                <ul>
+                    <li>Clear all user conversation history</li>
+                    <li>Remove token usage statistics</li>
+                    <li>Reset system configurations to defaults</li>
+                </ul>
+                <p>Content files and indexes will be preserved.</p>
+                <div class="mb-3">
+                    <label for="resetConfirmation" class="form-label">Type "RESET" to confirm</label>
+                    <input type="text" class="form-control" id="resetConfirmation" placeholder="RESET">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmResetBtn" disabled>Reset System</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Email Modal -->
+<div class="modal fade" id="testEmailModal" tabindex="-1" aria-labelledby="testEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="testEmailModalLabel">Test Email</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Send a test email to <strong id="testEmailAddress">{{ current_email }}</strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('test_email') }}" method="post">
+                    <button type="submit" class="btn btn-primary">Send Test Email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Test Email Button
+        const testEmailBtn = document.getElementById('testEmailBtn');
+        const emailInput = document.getElementById('email');
+        const testEmailAddress = document.getElementById('testEmailAddress');
+        
+        testEmailBtn.addEventListener('click', function() {
+            testEmailAddress.textContent = emailInput.value || 'no configured email';
+            const modal = new bootstrap.Modal(document.getElementById('testEmailModal'));
+            modal.show();
+        });
+        
+        // Reset System Confirmation
+        const resetConfirmation = document.getElementById('resetConfirmation');
+        const confirmResetBtn = document.getElementById('confirmResetBtn');
+        
+        resetConfirmation.addEventListener('input', function() {
+            confirmResetBtn.disabled = resetConfirmation.value !== 'RESET';
+        });
+        
+        confirmResetBtn.addEventListener('click', function() {
+            if (resetConfirmation.value === 'RESET') {
+                // Submit form to reset system
+                fetch('/system/reset', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('System has been reset successfully. The page will now reload.');
+                        window.location.reload();
+                    } else {
+                        alert('Error resetting system: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Error resetting system: ' + error.message);
+                });
+            }
+        });
+        
+        // Log level filtering
+        const logLevelFilter = document.getElementById('logLevelFilter');
+        const logEntries = document.querySelectorAll('.log-entry');
+        
+        logLevelFilter.addEventListener('change', function() {
+            const level = logLevelFilter.value;
+            
+            logEntries.forEach(entry => {
+                if (level === 'all') {
+                    entry.style.display = '';
+                } else {
+                    if (entry.textContent.includes(level)) {
+                        entry.style.display = '';
+                    } else {
+                        entry.style.display = 'none';
+                    }
+                }
+            });
+        });
+        
+        // Refresh logs
+        const refreshLogsBtn = document.getElementById('refreshLogsBtn');
+        
+        refreshLogsBtn.addEventListener('click', function() {
+            fetch('/system/logs')
+                .then(response => response.json())
+                .then(data => {
+                    const logContent = document.getElementById('logContent');
+                    logContent.innerHTML = '';
+                    
+                    data.logs.forEach(log => {
+                        const logEntry = document.createElement('div');
+                        logEntry.className = 'log-entry';
+                        
+                        if (log.includes('ERROR')) {
+                            logEntry.classList.add('text-danger');
+                        } else if (log.includes('WARNING')) {
+                            logEntry.classList.add('text-warning');
+                        } else if (log.includes('CRITICAL')) {
+                            logEntry.classList.add('text-danger');
+                        } else {
+                            logEntry.classList.add('text-info');
+                        }
+                        
+                        logEntry.textContent = log;
+                        logContent.appendChild(logEntry);
+                    });
+                    
+                    // Apply current filter
+                    logLevelFilter.dispatchEvent(new Event('change'));
+                })
+                .catch(error => {
+                    console.error('Error fetching logs:', error);
+                });
+        });
+        
+        // Download logs
+        const downloadLogsBtn = document.getElementById('downloadLogsBtn');
+        
+        downloadLogsBtn.addEventListener('click', function() {
+            window.location.href = '/system/logs/download';
+        });
+        
+        // Backup system data
+        const backupBtn = document.getElementById('backupBtn');
+        
+        backupBtn.addEventListener('click', function() {
+            window.location.href = '/system/backup';
+        });
+        
+        // Clear cache
+        const clearCacheBtn = document.getElementById('clearCacheBtn');
+        
+        clearCacheBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear the system cache?')) {
+                fetch('/system/clear-cache', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('System cache cleared successfully.');
+                    } else {
+                        alert('Error clearing cache: ' + data.error);
+                    }
+                })
+                .catch(error => {
+                    alert('Error clearing cache: ' + error.message);
+                });
+            }
+        });
+        
+        // Refresh status
+        const refreshStatusBtn = document.getElementById('refreshStatusBtn');
+        
+        refreshStatusBtn.addEventListener('click', function() {
+            fetch('/system/status')
+                .then(response => response.json())
+                .then(data => {
+                    const statuses = document.querySelectorAll('.list-group-item .badge');
+                    
+                    statuses.forEach((badge, index) => {
+                        if (data.status[index]) {
+                            badge.className = 'badge bg-success';
+                            badge.textContent = 'Online';
+                        } else {
+                            badge.className = 'badge bg-danger';
+                            badge.textContent = 'Offline';
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching system status:', error);
+                });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,163 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Account Settings - RAG Admin{% endblock %}
+
+{% block page_title %}Account Settings{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Account Information</h5>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-5">Username:</dt>
+                    <dd class="col-sm-7">{{ username }}</dd>
+                    
+                    <!-- <dt class="col-sm-5">Email:</dt> -->
+                    <!-- <dd class="col-sm-7">{{ email }}</dd> -->
+                    
+                    <dt class="col-sm-5">Account Created:</dt>
+                    <dd class="col-sm-7">{{ created_at }}</dd>
+                    
+                    <dt class="col-sm-5">Last Login:</dt>
+                    <dd class="col-sm-7">{{ last_login }}</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Change Username</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('account_settings') }}">
+                    <input type="hidden" name="action" value="change_username">
+                    
+                    <div class="mb-3">
+                        <label for="new_username" class="form-label">New Username</label>
+                        <input type="text" class="form-control" id="new_username" name="new_username" 
+                               required minlength="4">
+                        <div class="form-text">
+                            Username must be at least 4 characters long.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="current_password_for_username" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password_for_username" 
+                               name="current_password_for_username" required>
+                        <div class="form-text">
+                            Enter your current password to confirm this change.
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-person-check me-1"></i> Update Username
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Change Password</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{ url_for('account_settings') }}">
+                    <input type="hidden" name="action" value="change_password">
+                    
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password" 
+                               name="current_password" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" 
+                               name="new_password" required minlength="8">
+                        <div class="form-text">
+                            Password must be at least 8 characters long.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">Confirm New Password</label>
+                        <input type="password" class="form-control" id="confirm_password" 
+                               name="confirm_password" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-key me-1"></i> Update Password
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Security Settings</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="enable2FA">
+                    <label class="form-check-label" for="enable2FA">Enable Two-Factor Authentication</label>
+                    <div class="form-text">
+                        <span class="badge bg-secondary">Coming Soon</span> Enhanced security with 2FA.
+                    </div>
+                </div>
+                
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" id="sessionTimeout">
+                    <label class="form-check-label" for="sessionTimeout">Enable Session Timeout</label>
+                    <div class="form-text">
+                        <span class="badge bg-secondary">Coming Soon</span> Automatically log out after period of inactivity.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Password strength meter
+        const newPassword = document.getElementById('new_password');
+        const confirmPassword = document.getElementById('confirm_password');
+        
+        if (newPassword && confirmPassword) {
+            // Check password match on input
+            confirmPassword.addEventListener('input', function() {
+                if (newPassword.value === confirmPassword.value) {
+                    confirmPassword.setCustomValidity('');
+                } else {
+                    confirmPassword.setCustomValidity('Passwords do not match');
+                }
+            });
+            
+            // Simple password strength indicator
+            newPassword.addEventListener('input', function() {
+                const password = newPassword.value;
+                let strength = 0;
+                
+                if (password.length >= 8) strength += 1;
+                if (password.match(/[A-Z]/)) strength += 1;
+                if (password.match(/[a-z]/)) strength += 1;
+                if (password.match(/[0-9]/)) strength += 1;
+                if (password.match(/[^A-Za-z0-9]/)) strength += 1;
+                
+                // Update password strength visual indicator (if we had one)
+                // This is just placeholder code for now
+                console.log('Password strength:', strength);
+            });
+        }
+    });
+</script>
+{% endblock %}

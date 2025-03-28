@@ -71,9 +71,9 @@ class TelegramBot:
         return content_path
 
     async def _init_rag_system(self):
-        # domain_name = self.extract_domain_name(self.link)
-        # content_path = await self.fetch_content(self.link, domain_name, webpage_only=False)
-        self.rag = CohereRAG(WEB_CONTENT_DIR / "bcaitech.txt", 
+        domain_name = self.extract_domain_name(self.link)
+        content_path = await self.fetch_content(self.link, domain_name, webpage_only=False)
+        self.rag = CohereRAG(content_path, 
                              INDEXES_DIR, chunking_type="recursive")
         logger.info("RAG system initialized.")
 
@@ -359,5 +359,5 @@ class TelegramBot:
             sys.exit(0)
 
 if __name__ == "__main__":
-    bot = TelegramBot("https://bcaitech.bh/")
+    bot = TelegramBot("https://alielneklawy.wixsite.com/themlengineer")
     bot.run()

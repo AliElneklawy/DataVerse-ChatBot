@@ -1,0 +1,324 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Chat History - RAG Admin{% endblock %}
+
+{% block page_title %}Chat History{% endblock %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Recent Conversations</h5>
+        <div class="d-flex gap-2">
+            <input type="text" id="searchInput" class="form-control form-control-sm" placeholder="Search conversations...">
+            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exportHistoryModal">
+                <i class="bi bi-download me-1"></i> Export
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover" id="historyTable">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Question</th>
+                        <th>Model</th>
+                        <th>Timestamp</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in history %}
+                        {% if user.interactions %}
+                            {% for interaction in user.interactions %}
+                            <tr>
+                                <td><a href="{{ url_for('user_detail', user_id=user.user_id) }}">{{ user.user_id[:8] }}...</a></td>
+                                <td>{{ interaction.user[:50] }}{% if interaction.user|length > 50 %}...{% endif %}</td>
+                                <td><span class="badge bg-info">{{ interaction.llm }}</span></td>
+                                <td>{{ interaction.timestamp.split('.')[0] if '.' in interaction.timestamp else interaction.timestamp }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-conversation-btn" 
+                                            data-user-id="{{ user.user_id }}"
+                                            data-question="{{ interaction.user }}"
+                                            data-answer="{{ interaction.assistant }}"
+                                            data-model="{{ interaction.llm }}"
+                                            data-timestamp="{{ interaction.timestamp }}">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% endif %}
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">No chat history found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">Conversation Analytics</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="dailyQueriesChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="modelUsageChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Conversation Modal -->
+<div class="modal fade" id="viewConversationModal" tabindex="-1" aria-labelledby="viewConversationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewConversationModalLabel">View Conversation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>
+                            <span class="badge bg-secondary" id="conversationUserId"></span>
+                            <span class="badge bg-info" id="conversationModel"></span>
+                        </div>
+                        <small class="text-muted" id="conversationTimestamp"></small>
+                    </div>
+                    
+                    <div class="chat-container">
+                        <div class="chat-bubble chat-user">
+                            <strong>User:</strong>
+                            <div class="mt-1" id="conversationQuestion"></div>
+                        </div>
+                        
+                        <div class="chat-bubble chat-assistant ms-auto">
+                            <strong>Assistant:</strong>
+                            <div class="mt-1" id="conversationAnswer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="copyConversationBtn">
+                    <i class="bi bi-clipboard"></i> Copy
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export History Modal -->
+<div class="modal fade" id="exportHistoryModal" tabindex="-1" aria-labelledby="exportHistoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exportHistoryModalLabel">Export Chat History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="exportHistoryForm" action="{{ url_for('export_history') }}" method="get">
+                    <div class="mb-3">
+                        <label for="exportFormat" class="form-label">Export Format</label>
+                        <select class="form-select" id="exportFormat" name="format">
+                            <option value="json">JSON</option>
+                            <option value="csv">CSV</option>
+                            <option value="xlsx">Excel (XLSX)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="exportTimeframe" class="form-label">Timeframe</label>
+                        <select class="form-select" id="exportTimeframe" name="timeframe">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d">Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" id="includeTokens" name="include_tokens" checked>
+                        <label class="form-check-label" for="includeTokens">
+                            Include token usage statistics
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitExportBtn">Export</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const historyTable = document.getElementById('historyTable');
+        const rows = historyTable.querySelectorAll('tbody tr');
+        
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            rows.forEach(row => {
+                const userId = row.querySelector('td:first-child').textContent.toLowerCase();
+                const question = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                
+                if (userId.includes(searchTerm) || question.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+        
+        // View conversation modal
+        const viewButtons = document.querySelectorAll('.view-conversation-btn');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const userId = this.getAttribute('data-user-id');
+                const question = this.getAttribute('data-question');
+                const answer = this.getAttribute('data-answer');
+                const model = this.getAttribute('data-model');
+                const timestamp = this.getAttribute('data-timestamp');
+                
+                document.getElementById('conversationUserId').textContent = userId;
+                document.getElementById('conversationQuestion').textContent = question;
+                document.getElementById('conversationAnswer').textContent = answer;
+                document.getElementById('conversationModel').textContent = model;
+                document.getElementById('conversationTimestamp').textContent = timestamp;
+                
+                const modal = new bootstrap.Modal(document.getElementById('viewConversationModal'));
+                modal.show();
+            });
+        });
+        
+        // Copy conversation
+        const copyConversationBtn = document.getElementById('copyConversationBtn');
+        copyConversationBtn.addEventListener('click', function() {
+            const userId = document.getElementById('conversationUserId').textContent;
+            const question = document.getElementById('conversationQuestion').textContent;
+            const answer = document.getElementById('conversationAnswer').textContent;
+            const model = document.getElementById('conversationModel').textContent;
+            const timestamp = document.getElementById('conversationTimestamp').textContent;
+            
+            const content = `User ID: ${userId}\nTimestamp: ${timestamp}\nModel: ${model}\n\nUser: ${question}\n\nAssistant: ${answer}`;
+            
+            navigator.clipboard.writeText(content)
+                .then(() => {
+                    alert('Conversation copied to clipboard');
+                })
+                .catch(err => {
+                    console.error('Failed to copy conversation: ', err);
+                    alert('Failed to copy conversation');
+                });
+        });
+        
+        // Export history
+        const submitExportBtn = document.getElementById('submitExportBtn');
+        submitExportBtn.addEventListener('click', function() {
+            document.getElementById('exportHistoryForm').submit();
+        });
+        
+        // Charts
+        // Fetch data for charts
+        fetch('/api/history/stats')
+            .then(response => response.json())
+            .then(data => {
+                createDailyQueriesChart(data.daily_queries);
+                createModelUsageChart(data.model_usage);
+            })
+            .catch(error => console.error('Error fetching history stats:', error));
+        
+        function createDailyQueriesChart(data) {
+            const ctx = document.getElementById('dailyQueriesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.map(item => item.date),
+                    datasets: [{
+                        label: 'Daily Queries',
+                        data: data.map(item => item.count),
+                        borderColor: '#4e73df',
+                        backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                        borderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Daily Queries'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                drawBorder: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function createModelUsageChart(data) {
+            const ctx = document.getElementById('modelUsageChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: data.map(item => item.model),
+                    datasets: [{
+                        label: 'Model Usage',
+                        data: data.map(item => item.count),
+                        backgroundColor: [
+                            '#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b',
+                            '#6f42c1', '#fd7e14', '#20c997', '#7380ec', '#ff7782'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                boxWidth: 12
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Model Usage Distribution'
+                        }
+                    }
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

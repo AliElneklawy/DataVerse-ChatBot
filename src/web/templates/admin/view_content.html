@@ -1,0 +1,209 @@
+{% extends "admin/base.html" %}
+
+{% block title %}View Content - RAG Admin{% endblock %}
+
+{% block page_title %}View Content{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('content') }}">Content Management</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ filename }}</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{{ filename }}</h5>
+        <div class="btn-group">
+            <form action="{{ url_for('index_content', filename=filename) }}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-primary">
+                    <i class="bi bi-database"></i> Index Content
+                </button>
+            </form>
+            <button type="button" class="btn btn-sm btn-outline-secondary" id="copyContentBtn">
+                <i class="bi bi-clipboard"></i> Copy Content
+            </button>
+            <form action="{{ url_for('delete_content', filename=filename) }}" method="post" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this file?')">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="mb-3">
+            <div class="d-flex justify-content-between mb-2">
+                <div>
+                    <span class="badge bg-info me-2">Size: {{ (content|length / 1024)|round(2) }} KB</span>
+                    <span class="badge bg-secondary">Characters: {{ content|length }}</span>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-outline-primary" id="toggleWrapBtn">
+                        <i class="bi bi-text-wrap"></i> Toggle Wrap
+                    </button>
+                </div>
+            </div>
+            <div class="border rounded p-3" style="max-height: 70vh; overflow-y: auto; white-space: pre-wrap;" id="contentViewer">{{ content }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Test Content Modal -->
+<div class="modal fade" id="testContentModal" tabindex="-1" aria-labelledby="testContentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="testContentModalLabel">Test RAG System with this Content</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="testContentForm">
+                    <div class="mb-3">
+                        <label for="testQuery" class="form-label">Enter a test query</label>
+                        <input type="text" class="form-control" id="testQuery" placeholder="What does this content explain about...">
+                    </div>
+                    <div class="mb-3">
+                        <label for="modelSelect" class="form-label">Model</label>
+                        <select class="form-select" id="modelSelect">
+                            <option value="cohere:command-r-plus-08-2024">Cohere Command R+ (Default)</option>
+                            <option value="claude:claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
+                            <option value="openai:gpt-4o">OpenAI GPT-4o</option>
+                            <option value="mistral:mistral-large-latest">Mistral Large</option>
+                            <option value="gemini:gemini-1.5-pro">Gemini 1.5 Pro</option>
+                        </select>
+                    </div>
+                    <div class="form-check form-switch mb-3">
+                        <input class="form-check-input" type="checkbox" id="rerankSwitch" checked>
+                        <label class="form-check-label" for="rerankSwitch">Enable Reranking</label>
+                    </div>
+                </form>
+                
+                <div id="testResults" style="display: none;">
+                    <hr>
+                    <h6>Test Results:</h6>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">Response Time:</span>
+                            <span class="badge bg-success" id="responseTime"></span>
+                        </div>
+                        <div id="responseContent" class="border rounded p-3" style="max-height: 300px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+                
+                <div id="testLoading" style="display: none;">
+                    <div class="d-flex justify-content-center my-4">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                    <p class="text-center">Processing your query...</p>
+                </div>
+                
+                <div id="testError" class="alert alert-danger" style="display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="runTestBtn">Run Test</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contentViewer = document.getElementById('contentViewer');
+        const toggleWrapBtn = document.getElementById('toggleWrapBtn');
+        const copyContentBtn = document.getElementById('copyContentBtn');
+        
+        // Toggle text wrap
+        toggleWrapBtn.addEventListener('click', function() {
+            if (contentViewer.style.whiteSpace === 'pre') {
+                contentViewer.style.whiteSpace = 'pre-wrap';
+                toggleWrapBtn.innerHTML = '<i class="bi bi-text-wrap"></i> Toggle Wrap';
+            } else {
+                contentViewer.style.whiteSpace = 'pre';
+                toggleWrapBtn.innerHTML = '<i class="bi bi-text-paragraph"></i> Toggle Wrap';
+            }
+        });
+        
+        // Copy content to clipboard
+        copyContentBtn.addEventListener('click', function() {
+            navigator.clipboard.writeText(contentViewer.textContent)
+                .then(() => {
+                    alert('Content copied to clipboard!');
+                })
+                .catch(err => {
+                    console.error('Failed to copy content: ', err);
+                    alert('Failed to copy content');
+                });
+        });
+        
+        // Add test button to header
+        const cardHeader = document.querySelector('.card-header .btn-group');
+        const testBtn = document.createElement('button');
+        testBtn.className = 'btn btn-sm btn-outline-success';
+        testBtn.innerHTML = '<i class="bi bi-lightning"></i> Test Content';
+        testBtn.setAttribute('data-bs-toggle', 'modal');
+        testBtn.setAttribute('data-bs-target', '#testContentModal');
+        cardHeader.prepend(testBtn);
+        
+        // Test content functionality
+        const runTestBtn = document.getElementById('runTestBtn');
+        runTestBtn.addEventListener('click', function() {
+            const query = document.getElementById('testQuery').value;
+            if (!query) {
+                alert('Please enter a test query');
+                return;
+            }
+            
+            const modelOption = document.getElementById('modelSelect').value;
+            const [provider, model] = modelOption.split(':');
+            const rerank = document.getElementById('rerankSwitch').checked;
+            
+            document.getElementById('testResults').style.display = 'none';
+            document.getElementById('testLoading').style.display = 'block';
+            document.getElementById('testError').style.display = 'none';
+            document.getElementById('runTestBtn').disabled = true;
+            
+            fetch('/content/test', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    query: query,
+                    filename: '{{ filename }}',
+                    provider: provider,
+                    model: model,
+                    rerank: rerank
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('testLoading').style.display = 'none';
+                document.getElementById('runTestBtn').disabled = false;
+                
+                if (data.success) {
+                    document.getElementById('testResults').style.display = 'block';
+                    document.getElementById('responseTime').textContent = data.time_taken.toFixed(2) + ' seconds';
+                    document.getElementById('responseContent').textContent = data.response;
+                } else {
+                    document.getElementById('testError').style.display = 'block';
+                    document.getElementById('testError').textContent = 'Error: ' + data.error;
+                }
+            })
+            .catch(error => {
+                document.getElementById('testLoading').style.display = 'none';
+                document.getElementById('runTestBtn').disabled = false;
+                document.getElementById('testError').style.display = 'block';
+                document.getElementById('testError').textContent = 'Error: ' + error.message;
+            });
+        });
+    });
+</script>
+{% endblock %}

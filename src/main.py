@@ -74,7 +74,7 @@ def main():
     os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
     
     USER_ID = str(uuid4())
-    link = "https://bcaitech.bh/"
+    link = "https://alielneklawy.wixsite.com/themlengineer"
     domain_name = extract_domain_name(link)
     content_path = fetch_content(link, domain_name, webpage_only=False)
     rag = CohereRAG(content_path, 
