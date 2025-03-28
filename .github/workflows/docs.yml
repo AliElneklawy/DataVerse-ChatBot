@@ -17,142 +17,329 @@ jobs:
         with:
           python-version: '3.11'  # Match your Python version
           
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y portaudio19-dev python3-dev libcairo2-dev pkg-config python3-tk
-      
-      - name: Install pdoc
+      - name: Install MkDocs
         run: |
           python -m pip install --upgrade pip
-          pip install pdoc
+          pip install mkdocs mkdocs-material
       
-      - name: Create Mock Version for Documentation
+      - name: Create Documentation Structure
         run: |
-          # Create a mock documentation directory
-          mkdir -p docs_src/src
+          # Initialize MkDocs project
+          mkdocs new .
           
-          # Create a simple index file
-          cat > docs_src/index.md << 'EOF'
-          # DataVerse-ChatBot Documentation
+          # Configure mkdocs.yml
+          cat > mkdocs.yml << 'EOF'
+          site_name: DataVerse-ChatBot Documentation
+          site_description: Documentation for the DataVerse-ChatBot RAG system
+          theme:
+            name: material
+            palette:
+              primary: indigo
+              accent: indigo
+            features:
+              - navigation.instant
+              - navigation.tracking
+              - navigation.expand
+              - content.code.copy
+          markdown_extensions:
+            - pymdownx.highlight
+            - pymdownx.superfences
+            - admonition
+            - toc:
+                permalink: true
+          EOF
           
-          DataVerse-ChatBot is a versatile RAG system that powers real-time chat with data from the web 
-          and nearly all file formats, deployable as WhatsApp/Telegram bots or an iframe.
+          # Create documentation content
+          rm -f docs/index.md  # Remove default index
           
-          ## Project Structure
+          # Create main index
+          cat > docs/index.md << 'EOF'
+          # DataVerse-ChatBot 
           
-          - `src/`: Main source code
-            - `src/chatbot/`: Core chatbot functionality
-              - `src/chatbot/config.py`: Configuration settings
-              - `src/chatbot/crawler.py`: Web crawling capabilities
-              - `src/chatbot/voice_mode.py`: Voice interaction features
-              - `src/chatbot/embeddings/`: Vector embedding handlers
-              - `src/chatbot/rag/`: RAG implementation for various LLM providers
-              - `src/chatbot/utils/`: Utility functions
-            - `src/web/`: Web interface components
+          A versatile RAG system that powers real-time chat with data from the web and nearly all file formats, deployable as WhatsApp/Telegram bots or an iframe.
           
-          ## Main Features
+          ## Overview
           
-          - Support for multiple LLM providers
-          - Web content integration
+          DataVerse-ChatBot is designed to provide natural language interaction with your data, supporting:
+          
+          - Multiple LLM providers (OpenAI, Anthropic Claude, Cohere, Gemini, Mistral, etc.)
+          - Web content retrieval and indexing
           - Support for various file formats
-          - Deployable as chatbots on different platforms
+          - Multiple deployment options (Web, WhatsApp, Telegram)
           - Voice interaction capabilities
           
-          For detailed API documentation, please see the source code files.
+          ## Getting Started
+          
+          To get started with DataVerse-ChatBot, check out:
+          
+          - [Installation](getting-started/installation.md)
+          - [Configuration](getting-started/configuration.md)
+          - [Quick Start](getting-started/quick-start.md)
           EOF
           
-          # Manual documentation for core modules
-          mkdir -p docs_src/src/chatbot
-          mkdir -p docs_src/src/chatbot/rag
-          mkdir -p docs_src/src/chatbot/embeddings
-          mkdir -p docs_src/src/chatbot/utils
-          mkdir -p docs_src/src/web
+          # Create directory structure
+          mkdir -p docs/getting-started
+          mkdir -p docs/modules
+          mkdir -p docs/deployment
           
-          # Create module docs for chatbot
-          cat > docs_src/src/chatbot/index.md << 'EOF'
-          # Chatbot Module
+          # Getting Started pages
+          cat > docs/getting-started/installation.md << 'EOF'
+          # Installation
           
-          Core chatbot functionality including configuration, RAG implementations, and utilities.
+          DataVerse-ChatBot can be installed from the source repository.
           
-          ## Key Components
+          ## Requirements
           
-          - `config.py`: Central configuration settings
-          - `crawler.py`: Web content crawling
-          - `voice_mode.py`: Voice interaction features
-          - `embeddings/`: Vector embedding implementations
-          - `rag/`: RAG implementations for different LLM providers
-          - `utils/`: Helper utilities
+          - Python 3.11+
+          - API keys for chosen LLM providers 
+          
+          ## Steps
+          
+          1. Clone the repository:
+             ```bash
+             git clone https://github.com/AliElneklawy/DataVerse-ChatBot.git
+             cd DataVerse-ChatBot
+             ```
+          
+          2. Set up environment variables:
+             ```bash
+             cp .env.example .env
+             # Edit .env with your API keys
+             ```
+          
+          3. Install dependencies:
+             ```bash
+             pip install -e .
+             ```
+          
+          4. Verify installation:
+             ```bash
+             python admin_dashboard_launcher.py --check-only
+             ```
           EOF
           
-          # Create module docs for rag
-          cat > docs_src/src/chatbot/rag/index.md << 'EOF'
+          cat > docs/getting-started/configuration.md << 'EOF'
+          # Configuration
+          
+          DataVerse-ChatBot configuration is primarily handled through the `.env` file and the `config.py` module.
+          
+          ## Environment Variables
+          
+          Create a `.env` file in the project root with the following variables:
+          
+          ```
+          # API Keys
+          ANTHROPIC_API_KEY=your_anthropic_api_key
+          OPENAI_API_KEY=your_openai_api_key
+          COHERE_API_KEY=your_cohere_api_key
+          # Add keys for other providers as needed
+          
+          # Configuration
+          LOG_LEVEL=INFO
+          ```
+          
+          ## Configuration Module
+          
+          The `src/chatbot/config.py` file contains the main configuration class that controls the chatbot's behavior.
+          EOF
+          
+          cat > docs/getting-started/quick-start.md << 'EOF'
+          # Quick Start
+          
+          Get DataVerse-ChatBot up and running quickly with these steps.
+          
+          ## Start the Admin Dashboard
+          
+          ```bash
+          python admin_dashboard_launcher.py
+          ```
+          
+          This will start the dashboard on http://localhost:5000 by default.
+          
+          ## Deploy as a Web Application
+          
+          ```bash
+          python src/web/chat_web_app.py
+          ```
+          
+          ## Use as a WhatsApp Bot
+          
+          ```bash
+          python src/whatsapp_bot.py
+          ```
+          
+          ## Use as a Telegram Bot
+          
+          ```bash
+          python src/tg_bot.py
+          ```
+          EOF
+          
+          # Modules documentation
+          cat > docs/modules/index.md << 'EOF'
+          # Modules Overview
+          
+          DataVerse-ChatBot is organized into several key modules:
+          
+          - [Chatbot Core](chatbot.md) - Main chatbot functionality
+          - [RAG Implementations](rag.md) - LLM provider integrations
+          - [Embeddings](embeddings.md) - Vector embedding handlers
+          - [Utilities](utils.md) - Helper functions
+          - [Web Interface](web.md) - Web application components
+          EOF
+          
+          cat > docs/modules/chatbot.md << 'EOF'
+          # Chatbot Core
+          
+          The core chatbot functionality is implemented in the `src/chatbot` package.
+          
+          ## Main Components
+          
+          - `config.py` - Configuration settings
+          - `crawler.py` - Web crawling capabilities
+          - `voice_mode.py` - Voice interaction features
+          
+          Each component handles a specific aspect of the chatbot's operation.
+          EOF
+          
+          cat > docs/modules/rag.md << 'EOF'
           # RAG Implementations
           
-          The `rag` module provides implementations for Retrieval-Augmented Generation with various LLM providers.
+          RAG (Retrieval Augmented Generation) implementations for different LLM providers are in the `src/chatbot/rag` package.
           
-          ## Supported Models
+          ## Supported Providers
           
-          - `claude_rag.py`: Anthropic Claude integration
-          - `cohere_rag.py`: Cohere integration
-          - `deepseek_rag.py`: DeepSeek integration
-          - `gemini_rag.py`: Google Gemini integration
-          - `grok_rag.py`: Grok integration
-          - `mistral_rag.py`: Mistral AI integration
-          - `openai_rag.py`: OpenAI integration
+          - `claude_rag.py` - Anthropic Claude integration
+          - `cohere_rag.py` - Cohere integration
+          - `deepseek_rag.py` - DeepSeek integration
+          - `gemini_rag.py` - Google Gemini integration
+          - `grok_rag.py` - Grok integration
+          - `mistral_rag.py` - Mistral AI integration
+          - `openai_rag.py` - OpenAI integration
           
           All implementations extend the `base_rag.py` abstract base class.
           EOF
           
-          # Create module docs for embeddings
-          cat > docs_src/src/chatbot/embeddings/index.md << 'EOF'
-          # Embeddings Module
+          cat > docs/modules/embeddings.md << 'EOF'
+          # Embeddings
           
-          Vector embedding implementations for semantic document chunking and retrieval.
+          Vector embedding handlers in the `src/chatbot/embeddings` package.
           
           ## Components
           
-          - `base_embedding.py`: Abstract base class for embeddings
+          - `base_embedding.py` - Abstract base class for embeddings
+          
+          The embeddings are used for semantic document chunking and retrieval.
           EOF
           
-          # Create module docs for utils
-          cat > docs_src/src/chatbot/utils/index.md << 'EOF'
+          cat > docs/modules/utils.md << 'EOF'
           # Utilities
           
-          Helper utilities for file processing, inference, monitoring, and paths management.
+          Helper utilities in the `src/chatbot/utils` package.
           
           ## Key Utilities
           
-          - `file_loader.py`: Loading documents from various file formats
-          - `inference.py`: Inference helpers
-          - `make_dataset.py`: Dataset creation utilities
-          - `monitor_service.py`: Monitoring tools
-          - `paths.py`: Path management
-          - `train_clf.py`: Training utilities
-          - `utils.py`: General utilities
+          - `file_loader.py` - Loading documents from various file formats
+          - `inference.py` - Inference helpers
+          - `make_dataset.py` - Dataset creation utilities
+          - `monitor_service.py` - Monitoring tools
+          - `paths.py` - Path management
+          - `train_clf.py` - Training utilities
+          - `utils.py` - General utilities
           EOF
           
-          # Create module docs for web
-          cat > docs_src/src/web/index.md << 'EOF'
+          cat > docs/modules/web.md << 'EOF'
           # Web Interface
           
-          Web interface components for deployment as a web application.
+          Web interface components in the `src/web` package.
           
           ## Components
           
-          - `chat_web_app.py`: Web application implementation
-          - `chat_web_template.py`: Templates for the web interface
-          - `admin_dashboard.py`: Administrative dashboard
+          - `chat_web_app.py` - Web application implementation
+          - `chat_web_template.py` - Templates for the web interface
+          - `admin_dashboard.py` - Administrative dashboard
+          EOF
+          
+          # Deployment documentation
+          cat > docs/deployment/index.md << 'EOF'
+          # Deployment
+          
+          DataVerse-ChatBot can be deployed in several ways.
+          
+          - [Web Application](web.md)
+          - [WhatsApp Bot](whatsapp.md)
+          - [Telegram Bot](telegram.md)
+          EOF
+          
+          cat > docs/deployment/web.md << 'EOF'
+          # Web Application Deployment
+          
+          Deploy DataVerse-ChatBot as a web application.
+          
+          ## Local Deployment
+          
+          ```bash
+          python src/web/chat_web_app.py
+          ```
+          
+          ## Server Deployment
+          
+          For production deployment, consider using Gunicorn or uWSGI with Nginx.
+          
+          ### Example Gunicorn Setup
+          
+          ```bash
+          pip install gunicorn
+          gunicorn -w 4 -b 0.0.0.0:8000 src.web.chat_web_app:app
+          ```
+          EOF
+          
+          cat > docs/deployment/whatsapp.md << 'EOF'
+          # WhatsApp Bot Deployment
+          
+          Deploy DataVerse-ChatBot as a WhatsApp bot.
+          
+          ## Requirements
+          
+          - Twilio account
+          - WhatsApp Business API access
+          
+          ## Setup
+          
+          1. Set up Twilio WhatsApp Sandbox
+          2. Add Twilio credentials to `.env`
+          3. Run the WhatsApp bot:
+             ```bash
+             python src/whatsapp_bot.py
+             ```
+          EOF
+          
+          cat > docs/deployment/telegram.md << 'EOF'
+          # Telegram Bot Deployment
+          
+          Deploy DataVerse-ChatBot as a Telegram bot.
+          
+          ## Requirements
+          
+          - Telegram Bot API token
+          
+          ## Setup
+          
+          1. Create a bot using BotFather on Telegram
+          2. Add the bot token to `.env`
+          3. Run the Telegram bot:
+             ```bash
+             python src/tg_bot.py
+             ```
           EOF
           
       - name: Build documentation
         run: |
-          # Run pdoc to generate docs from markdown files
-          pdoc --template-dir="$(python -c 'import pdoc; print(pdoc.__path__[0] + "/templates")')" --output-dir=./docs docs_src
+          mkdocs build
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./site
           force_orphan: true  # Use a single branch for gh-pages
