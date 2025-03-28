@@ -16,32 +16,19 @@ jobs:
         with:
           python-version: '3.10'  # Adjust to your Python version
           
-      - name: Install documentation tools
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install pdoc
-          
-      - name: Create mock packages for problematic dependencies
-        run: |
-          # Create a temporary directory for mock packages
-          mkdir -p temp_mock_packages
-          
-          # Create a mock PyAudio package
-          cat > temp_mock_packages/pyaudio.py << EOF
-          """Mock PyAudio module for documentation generation."""
-          # This is a placeholder to allow documentation to build without PyAudio
-          class PyAudio:
-              def __init__(self, *args, **kwargs):
-                  pass
-          EOF
-          
-          # Set PYTHONPATH to include our mock packages
-          echo "PYTHONPATH=$PYTHONPATH:$(pwd)/temp_mock_packages" >> $GITHUB_ENV
-          
-      - name: Install project in development mode
-        run: |
-          # Install without dependencies to avoid PyAudio issues
-          pip install -e . --no-deps
+          # Install uv
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          # Add uv to PATH
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          # Create a virtual environment using uv
+          ~/.cargo/bin/uv venv
+          # Record virtual environment bin directory for later steps
+          echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
+          # Install project dependencies
+          ~/.cargo/bin/uv pip install pdoc
+          ~/.cargo/bin/uv pip install -e .
           
       - name: Build documentation
         run: |
