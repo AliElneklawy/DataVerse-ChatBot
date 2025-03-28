@@ -8,35 +8,78 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      # Add mock API keys for documentation generation
+      ANTHROPIC_API_KEY: "mock_key_for_docs"
+      OPENAI_API_KEY: "mock_key_for_docs"
+      COHERE_API_KEY: "mock_key_for_docs"
+      MISTRAL_API_KEY: "mock_key_for_docs"
+      GOOGLE_API_KEY: "mock_key_for_docs"
+      GROK_API_KEY: "mock_key_for_docs"
+      DEEPSEEK_API_KEY: "mock_key_for_docs"
+    
     steps:
       - uses: actions/checkout@v3
       
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'  # Adjust to your Python version
+          python-version: '3.11'  # Match your Python version
           
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y portaudio19-dev python3-dev libcairo2-dev pkg-config python3-tk
+      
+      - name: Create mock or stub files
+        run: |
+          # Create a simple script to patch the Config class
+          cat > patch_config.py << 'EOF'
+          import os
+          import sys
+
+          # Get the file path from config.py
+          config_path = os.path.join('src', 'chatbot', 'config.py')
+          
+          if os.path.exists(config_path):
+              # Read the file
+              with open(config_path, 'r') as f:
+                  content = f.read()
+              
+              # Find the get_api_key function and modify it to return mock keys for docs
+              if 'def get_api_key' in content:
+                  # Create a modified version that returns mock keys
+                  content = content.replace(
+                      'def get_api_key(key_name):',
+                      'def get_api_key(key_name):\n    return "mock_key_for_documentation"'
+                  )
+              
+              # Write the modified file
+              with open(config_path, 'w') as f:
+                  f.write(content)
+              
+              print(f"Modified {config_path} for documentation")
+          else:
+              print(f"Error: Could not find {config_path}")
+              sys.exit(1)
+          EOF
+          
+          # Execute the patch script
+          python patch_config.py
           
       - name: Install dependencies
         run: |
-          # Install uv directly via pip
-          pip install uv
+          # Install pip directly
+          python -m pip install --upgrade pip
           
-          # Create virtual environment with uv
-          uv venv
+          # Install pdoc
+          pip install pdoc
           
-          # Install pdoc and project dependencies
-          uv pip install pdoc
-          uv pip install -e .
+          # Install the project in development mode with minimal dependencies
+          pip install -e .
           
       - name: Build documentation
         run: |
-          # Activate the virtual environment where pdoc was installed
-          source .venv/bin/activate
           # Run pdoc
           pdoc --output-dir ./docs src
           
