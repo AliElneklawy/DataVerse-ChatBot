@@ -1,0 +1,37 @@
+name: Build and Deploy Documentation
+
+on:
+  push:
+    branches: [main]  # Or your default branch name
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'  # Adjust to your Python version
+          
+      - name: Install dependencies
+        run: |
+          # Install uv
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          export PATH=$PATH:$HOME/.cargo/bin
+          # Use uv to install dependencies
+          uv pip install pdoc
+          uv pip install -e .
+          
+      - name: Build documentation
+        run: |
+          pdoc --html --output-dir ./docs src
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          force_orphan: true  # Use a single branch for gh-pages
