@@ -18,17 +18,9 @@ jobs:
           
       - name: Install dependencies
         run: |
-          # Install uv
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          # Add uv to PATH
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-          # Create a virtual environment using uv
-          ~/.cargo/bin/uv venv
-          # Record virtual environment bin directory for later steps
-          echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
-          # Install project dependencies
-          ~/.cargo/bin/uv pip install pdoc
-          ~/.cargo/bin/uv pip install -e .
+          python -m pip install --upgrade pip
+          pip install pdoc
+          pip install -e .
           
       - name: Build documentation
         run: |
