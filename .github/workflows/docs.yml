@@ -14,20 +14,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'  # Adjust to your Python version
+          python-version: '3.10'  # Adjust to your Python version
           
       - name: Install dependencies
         run: |
           # Install uv
           curl -LsSf https://astral.sh/uv/install.sh | sh
           export PATH=$PATH:$HOME/.cargo/bin
-          # Use uv to install dependencies
+          
+          # Create and activate virtual environment
           uv venv
           source .venv/bin/activate
-          uv pip install pdoc
-          uv add pdoc
-          uv sync
           
+          # Install dependencies with uv
+          uv pip install pdoc
+          uv pip install -e .
           
       - name: Build documentation
         run: |
