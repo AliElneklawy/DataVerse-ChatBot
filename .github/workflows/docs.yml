@@ -20,15 +20,15 @@ jobs:
         run: |
           # Install uv
           curl -LsSf https://astral.sh/uv/install.sh | sh
-          export PATH=$PATH:$HOME/.cargo/bin
-          
-          # Create and activate virtual environment
-          uv venv
-          source .venv/bin/activate
-          
-          # Install dependencies with uv
-          uv pip install pdoc
-          uv pip install -e .
+          # Add uv to PATH
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          # Create a virtual environment using uv
+          ~/.cargo/bin/uv venv
+          # Record virtual environment bin directory for later steps
+          echo "$(pwd)/.venv/bin" >> $GITHUB_PATH
+          # Install project dependencies
+          ~/.cargo/bin/uv pip install pdoc
+          ~/.cargo/bin/uv pip install -e .
           
       - name: Build documentation
         run: |
