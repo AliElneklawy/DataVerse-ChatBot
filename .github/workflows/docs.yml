@@ -23,10 +23,11 @@ jobs:
           export PATH=$PATH:$HOME/.cargo/bin
           # Use uv to install dependencies
           uv venv
+          source .venv/bin/activate
           uv pip install pdoc
           uv add pdoc
           uv sync
-          uv pip install -e .
+          
           
       - name: Build documentation
         run: |
