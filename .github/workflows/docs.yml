@@ -38,6 +38,31 @@ jobs:
 
       - name: Generate documentation
         run: |
+          # Set dummy API keys for documentation generation
+            # LLM APIs
+            export GEMINI_API='dummy'
+            export OPENAI_API='dummy'
+            export COHERE_API='dummy'
+            export DEEPSEEK_API='dummy'
+            export CLAUDE_API='dummy'
+            export GROK_API='dummy'
+            export MISTRAL_API='dummy'
+            
+            # ScrapeGraphAI web scraper (https://docs.scrapegraphai.com/api-reference/introduction)
+            export SGAI_API='dummy'
+            
+            # Gmail app password used for the email service
+            export GMAIL_APP_PASSWORD='dummy'
+            
+            # Telegram bot token
+            export BOT_TOKEN='dummy'
+            
+            # Twilio credentials for the whatsapp bot
+            export TWILIO_SID='dummy'
+            export TWILIO_AUTH_TOKEN='dummy'
+            export TWILIO_NUMBER='dummy'
+
+          
           .venv/bin/pdoc --output-dir ./docs src
 
       - name: Deploy to GitHub Pages
