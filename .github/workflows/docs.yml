@@ -40,9 +40,11 @@ jobs:
             - mkdocstrings:
                 handlers:
                   python:
+                    paths: ["."]  # Look for modules in the current directory
                     options:
                       show_source: true
-                      show_root_heading: true
+                      docstring_style: google
+                      docstring_section_style: spacy
           nav:
             - Home: index.md
             - API Reference:
@@ -51,7 +53,6 @@ jobs:
               - RAG: api/rag.md
               - Embeddings: api/embeddings.md
               - Utils: api/utils.md
-              - Web: api/web.md
           EOF
 
       - name: Create documentation structure
@@ -78,193 +79,96 @@ jobs:
           cat > docs/api/chatbot.md << EOF
           # Chatbot Module
           
-          \`\`\`python
-          from src.chatbot import config
-          \`\`\`
+          ## Config
           
           ::: src.chatbot.config
-              options:
-                  show_source: true
           
-          \`\`\`python
-          from src.chatbot import crawler
-          \`\`\`
+          ## Crawler
           
           ::: src.chatbot.crawler
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot import voice_mode
-          \`\`\`
+          ## Voice Mode
           
           ::: src.chatbot.voice_mode
-              options:
-                  show_source: true
           EOF
           
           # Create RAG module documentation
           cat > docs/api/rag.md << EOF
           # RAG Module
           
-          \`\`\`python
-          from src.chatbot.rag import base_rag
-          \`\`\`
+          ## Base RAG
           
           ::: src.chatbot.rag.base_rag
-              options:
-                  show_source: true
           
-          \`\`\`python
-          from src.chatbot.rag import claude_rag
-          \`\`\`
+          ## Claude RAG
           
           ::: src.chatbot.rag.claude_rag
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.rag import cohere_rag
-          \`\`\`
+          ## Cohere RAG
           
           ::: src.chatbot.rag.cohere_rag
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.rag import deepseek_rag
-          \`\`\`
+          ## DeepSeek RAG
           
           ::: src.chatbot.rag.deepseek_rag
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.rag import gemini_rag
-          \`\`\`
+          ## Gemini RAG
           
           ::: src.chatbot.rag.gemini_rag
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.rag import grok_rag
-          \`\`\`
+          ## Grok RAG
           
           ::: src.chatbot.rag.grok_rag
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.rag import mistral_rag
-          \`\`\`
+          ## Mistral RAG
           
           ::: src.chatbot.rag.mistral_rag
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.rag import openai_rag
-          \`\`\`
+          ## OpenAI RAG
           
           ::: src.chatbot.rag.openai_rag
-              options:
-                  show_source: true
           EOF
           
           # Create Embeddings module documentation
           cat > docs/api/embeddings.md << EOF
           # Embeddings Module
           
-          \`\`\`python
-          from src.chatbot.embeddings import base_embedding
-          \`\`\`
+          ## Base Embedding
           
           ::: src.chatbot.embeddings.base_embedding
-              options:
-                  show_source: true
           EOF
           
           # Create Utils module documentation
           cat > docs/api/utils.md << EOF
           # Utils Module
           
-          \`\`\`python
-          from src.chatbot.utils import file_loader
-          \`\`\`
+          ## File Loader
           
           ::: src.chatbot.utils.file_loader
-              options:
-                  show_source: true
           
-          \`\`\`python
-          from src.chatbot.utils import inference
-          \`\`\`
+          ## Inference
           
           ::: src.chatbot.utils.inference
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.utils import make_dataset
-          \`\`\`
+          ## Make Dataset
           
           ::: src.chatbot.utils.make_dataset
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.utils import monitor_service
-          \`\`\`
+          ## Monitor Service
           
           ::: src.chatbot.utils.monitor_service
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.utils import paths
-          \`\`\`
+          ## Paths
           
           ::: src.chatbot.utils.paths
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.utils import train_clf
-          \`\`\`
+          ## Train CLF
           
           ::: src.chatbot.utils.train_clf
-              options:
-                  show_source: true
                   
-          \`\`\`python
-          from src.chatbot.utils import utils
-          \`\`\`
+          ## Utils
           
           ::: src.chatbot.utils.utils
-              options:
-                  show_source: true
-          EOF
-          
-          # Create Web module documentation
-          cat > docs/api/web.md << EOF
-          # Web Module
-          
-          \`\`\`python
-          from src.web import chat_web_app
-          \`\`\`
-          
-          ::: src.web.chat_web_app
-              options:
-                  show_source: true
-                  
-          \`\`\`python
-          from src.web import chat_web_template
-          \`\`\`
-          
-          ::: src.web.chat_web_template
-              options:
-                  show_source: true
           EOF
 
       - name: Build documentation
