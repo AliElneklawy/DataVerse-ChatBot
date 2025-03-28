@@ -86,7 +86,7 @@ The admin dashboard provides a centralized interface for managing the RAG system
 
 - **Admin Login**: Secure access to the admin panel with a username and password.
 - **System Overview Dashboard**: Displays key metrics such as total users, active conversations, token usage, and costs over the last 24 hours. It also includes a table of recent conversations and a pie chart showing model usage distribution.
-- **Content Management** : Allows the admin to upload text files or crawl websites to expand the RAG system's knowledge base.
+- **Content Management** : Allows the admin to upload files or crawl websites to expand the RAG system's knowledge base.
 - **Account Settings** : Admins can update their username and password.
   
 ### Setup and Installation
