@@ -35,6 +35,9 @@ jobs:
           
       - name: Build documentation
         run: |
+          # Activate the virtual environment where pdoc was installed
+          source .venv/bin/activate
+          # Run pdoc
           pdoc --output-dir ./docs src
           
       - name: Deploy to GitHub Pages
