@@ -1,9 +1,9 @@
-name: Generate and deploy pdoc documentation
+name: Generate and Deploy Documentation
 
 on:
   push:
-    branches: [ main ]  # Change to your default branch name if it's different
-  workflow_dispatch:  # Allow manual triggering
+    branches: [ main ]  # Change to your default branch if different
+  workflow_dispatch:  # Allows manual triggering
 
 permissions:
   contents: write
@@ -12,7 +12,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -25,28 +25,22 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y portaudio19-dev python3-pyaudio
 
-      - name: Install uv
+      - name: Setup virtual environment
         run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-      
-      - name: Setup uv virtual environment
+          python -m venv .venv
+          echo ".venv/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
         run: |
-          uv venv
-          echo "source .venv/bin/activate" >> $GITHUB_ENV
-      
-      - name: Install dependencies with uv
-        run: |
-          source .venv/bin/activate
-          uv pip install pdoc
-          uv pip install -e .
+          .venv/bin/pip install --upgrade pip
+          .venv/bin/pip install pdoc
+          .venv/bin/pip install -e .
 
       - name: Generate documentation
         run: |
-          source .venv/bin/activate
-          pdoc --output-dir ./docs src
+          .venv/bin/pdoc --output-dir ./docs src
 
-      - name: Deploy 🚀
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: docs
