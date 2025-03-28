@@ -76,6 +76,19 @@
   - `utils/`: Helper functions.
 - **Extensibility**: Easy to add new LLMs, embedding models, or features.
 
+
+### Admin Dashboard
+The admin dashboard provides a centralized interface for managing the RAG system, offering tools to monitor usage, manage content, and update account settings.
+
+![image](https://github.com/user-attachments/assets/fe6199eb-d2f8-4662-b098-033131db8670)
+
+
+
+- **Admin Login**: Secure access to the admin panel with a username and password.
+- **System Overview Dashboard**: Displays key metrics such as total users, active conversations, token usage, and costs over the last 24 hours. It also includes a table of recent conversations and a pie chart showing model usage distribution.
+- **Content Management** : Allows the admin to upload files or crawl websites to expand the RAG system's knowledge base.
+- **Account Settings** : Admins can update their username and password.
+  
 ### Setup and Installation
 - **Automated Setup**: Single-command installation via `install.bat` (Windows) for dependencies and configuration.
 - **Dependency Management**: Installs packages from `pyproject.toml` (built by [uv](https://github.com/astral-sh/uv)).
