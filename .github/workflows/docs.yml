@@ -31,57 +31,84 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y portaudio19-dev python3-dev libcairo2-dev pkg-config python3-tk
       
-      - name: Create mock or stub files
-        run: |
-          # Create a simple script to patch the Config class
-          cat > patch_config.py << 'EOF'
-          import os
-          import sys
-
-          # Get the file path from config.py
-          config_path = os.path.join('src', 'chatbot', 'config.py')
-          
-          if os.path.exists(config_path):
-              # Read the file
-              with open(config_path, 'r') as f:
-                  content = f.read()
-              
-              # Find the get_api_key function and modify it to return mock keys for docs
-              if 'def get_api_key' in content:
-                  # Create a modified version that returns mock keys
-                  content = content.replace(
-                      'def get_api_key(key_name):',
-                      'def get_api_key(key_name):\n    return "mock_key_for_documentation"'
-                  )
-              
-              # Write the modified file
-              with open(config_path, 'w') as f:
-                  f.write(content)
-              
-              print(f"Modified {config_path} for documentation")
-          else:
-              print(f"Error: Could not find {config_path}")
-              sys.exit(1)
-          EOF
-          
-          # Execute the patch script
-          python patch_config.py
-          
       - name: Install dependencies
         run: |
-          # Install pip directly
           python -m pip install --upgrade pip
-          
-          # Install pdoc
           pip install pdoc
+          # We'll install minimal dependencies for documentation
+          pip install docling langchain numpy pandas
+      
+      - name: Generate Mock Version for Documentation
+        run: |
+          # Create a directory for mock modules
+          mkdir -p doc_src/chatbot/embeddings
+          mkdir -p doc_src/chatbot/rag
+          mkdir -p doc_src/chatbot/utils
+          mkdir -p doc_src/web
           
-          # Install the project in development mode with minimal dependencies
-          pip install -e .
+          # Copy __init__.py files
+          cp src/__init__.py doc_src/ || touch doc_src/__init__.py
+          cp src/chatbot/__init__.py doc_src/chatbot/ || touch doc_src/chatbot/__init__.py
+          cp src/chatbot/embeddings/__init__.py doc_src/chatbot/embeddings/ || touch doc_src/chatbot/embeddings/__init__.py
+          cp src/chatbot/rag/__init__.py doc_src/chatbot/rag/ || touch doc_src/chatbot/rag/__init__.py
+          cp src/chatbot/utils/__init__.py doc_src/chatbot/utils/ || touch doc_src/chatbot/utils/__init__.py
+          cp src/web/__init__.py doc_src/web/ || touch doc_src/web/__init__.py
+          
+          # Create a simplified config.py that doesn't require API keys
+          cat > doc_src/chatbot/config.py << 'EOF'
+          """Configuration module for DataVerse-ChatBot."""
+          
+          class MissingAPIKeyError(Exception):
+              """Exception raised when an API key is missing."""
+              pass
+          
+          def get_api_key(key_name):
+              """Return a mock key for documentation purposes."""
+              return "mock_key_for_documentation"
+          
+          class Config:
+              """Main configuration class for DataVerse-ChatBot."""
+              
+              def __init__(self):
+                  """Initialize with default configuration."""
+                  pass
+                  
+              # Document other methods and properties as needed
+          EOF
+          
+          # Process and copy all Python files with simplified versions
+          for py_file in $(find src -name "*.py"); do
+            # Extract directory part
+            dir_part=$(dirname "$py_file" | sed 's/^src/doc_src/')
+            # Extract filename
+            file_name=$(basename "$py_file")
+            # Create target directory if it doesn't exist
+            mkdir -p "$dir_part"
+            
+            # Skip if we've already created a custom version
+            if [ -f "$dir_part/$file_name" ]; then
+              continue
+            fi
+            
+            # Create a simplified version of each module
+            echo "\"\"\"Documentation for $(basename $py_file without extension)\"\"\"\n" > "$dir_part/$file_name"
+            
+            # Extract classes and functions to document them
+            grep -E "^(class|def) " "$py_file" | while read -r line; do
+              if [[ $line == class* ]]; then
+                echo "$line" >> "$dir_part/$file_name"
+                echo "    \"\"\"Class documentation.\"\"\"\n    pass\n" >> "$dir_part/$file_name"
+              elif [[ $line == def* ]]; then
+                echo "$line" >> "$dir_part/$file_name"
+                echo "    \"\"\"Function documentation.\"\"\"\n    pass\n" >> "$dir_part/$file_name"
+              fi
+            done
+          done
           
       - name: Build documentation
         run: |
-          # Run pdoc
-          pdoc --output-dir ./docs src
+          # Run pdoc on the mock source code
+          pdoc --output-dir ./docs doc_src
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
