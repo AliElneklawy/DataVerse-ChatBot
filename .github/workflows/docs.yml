@@ -24,9 +24,62 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pdoc python-dotenv
+          
+      - name: Create mock environment script
+        run: |
+          cat > create_mock_env.py << 'EOF'
+          #!/usr/bin/env python3
+          import sys
+          import os
+          from importlib.machinery import ModuleSpec
+          from importlib.abc import MetaPathFinder, Loader
+          from types import ModuleType
+
+          # List of modules to mock
+          MOCKED_MODULES = [
+              'dotenv', 'openai', 'cohere', 'anthropic', 'google', 'telegram',
+              'gradio', 'flask', 'faiss', 'numpy', 'pandas', 'torch', 'sklearn',
+              'matplotlib', 'sqlalchemy'
+          ]
+
+          class MockLoader(Loader):
+              @staticmethod
+              def create_module(spec):
+                  module = ModuleType(spec.name)
+                  module.__file__ = spec.origin
+                  module.__loader__ = spec.loader
+                  module.__package__ = spec.name
+                  module.__spec__ = spec
+                  return module
+              
+              @staticmethod
+              def exec_module(module):
+                  setattr(module, '__mocked__', True)
+                  for attr_name in dir(module):
+                      if not attr_name.startswith('__'):
+                          setattr(module, attr_name, lambda *args, **kwargs: None)
+
+          class MockFinder(MetaPathFinder):
+              @staticmethod
+              def find_spec(fullname, path, target=None):
+                  module_parts = fullname.split('.')
+                  if module_parts[0] in MOCKED_MODULES or fullname in MOCKED_MODULES:
+                      return ModuleSpec(fullname, MockLoader(), origin=f"<mock {fullname}>")
+                  return None
+
+          def install_mock_modules():
+              sys.meta_path.insert(0, MockFinder())
+              print(f"Installed mock modules")
+
+          if __name__ == "__main__":
+              install_mock_modules()
+          EOF
+          
+          chmod +x create_mock_env.py
 
       - name: Generate documentation
-        run: pdoc --output-dir ./docs --skip-errors src
+        run: |
+          python -c "import sys; sys.path.insert(0, '.'); from create_mock_env import install_mock_modules; install_mock_modules()" && pdoc --output-dir ./docs src
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
