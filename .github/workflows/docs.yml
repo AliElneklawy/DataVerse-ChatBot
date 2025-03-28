@@ -61,9 +61,108 @@ jobs:
             export TWILIO_SID='dummy'
             export TWILIO_AUTH_TOKEN='dummy'
             export TWILIO_NUMBER='dummy'
-
+          export PDOC_ALLOW_EXEC=1
           
+          # Create patching script
+          cat > patch_imports.py << 'EOF'
+          #!/usr/bin/env python3
+          import os
+          import re
+          import glob
+          import sys
+
+          # Files that need patching
+          files_to_patch = [
+              "src/chatbot/utils/make_dataset.py",
+              "src/chatbot/utils/train_clf.py",
+              "src/chatbot/utils/inference.py",
+              "src/chatbot/utils/file_loader.py",
+              "src/chatbot/utils/monitor_service.py"
+          ]
+
+          # Import fixes - each tuple contains (regex pattern, replacement)
+          fixes = [
+              (r"from paths import", r"from src.chatbot.utils.paths import"),
+              (r"import paths", r"import src.chatbot.utils.paths as paths"),
+              (r"from utils import", r"from src.chatbot.utils import"),
+              (r"from file_loader import", r"from src.chatbot.utils.file_loader import"),
+              (r"from train_clf import", r"from src.chatbot.utils.train_clf import"),
+              (r"from inference import", r"from src.chatbot.utils.inference import"),
+              (r"from make_dataset import", r"from src.chatbot.utils.make_dataset import")
+          ]
+
+          def create_paths_module():
+              """Create a mock paths module with necessary constants"""
+              paths_file = "src/chatbot/utils/paths.py"
+              with open(paths_file, "w") as f:
+                  f.write("# Auto-generated paths module for documentation\n")
+                  f.write("import os\n\n")
+                  f.write("# Define necessary paths\n")
+                  f.write("DATASETS_DIR = 'data/datasets'\n")
+                  f.write("INDEXES_DIR = 'data/indexes'\n")
+                  f.write("DATASET_PATH = 'data/datasets/responses.json'\n")
+                  f.write("CSV_PATH = 'data/datasets/responses.csv'\n")
+                  f.write("MODEL_PATH = 'data/models/clf.pkl'\n")
+                  f.write("MODEL_META_PATH = 'data/models/metadata.json'\n")
+
+          def create_backups():
+              """Create backup files"""
+              for file_path in files_to_patch:
+                  if os.path.exists(file_path):
+                      with open(file_path, 'r') as f:
+                          content = f.read()
+                      with open(f"{file_path}.bak", 'w') as f:
+                          f.write(content)
+                      print(f"Created backup: {file_path}.bak")
+
+          def restore_backups():
+              """Restore files from backups"""
+              for file_path in files_to_patch:
+                  backup_path = f"{file_path}.bak"
+                  if os.path.exists(backup_path):
+                      with open(backup_path, 'r') as f:
+                          content = f.read()
+                      with open(file_path, 'w') as f:
+                          f.write(content)
+                      os.remove(backup_path)
+                      print(f"Restored from backup: {file_path}")
+
+          def patch_files():
+              """Patch the import statements in files"""
+              for file_path in files_to_patch:
+                  if os.path.exists(file_path):
+                      with open(file_path, 'r') as f:
+                          content = f.read()
+                      
+                      # Apply regex replacements
+                      for pattern, replacement in fixes:
+                          content = re.sub(pattern, replacement, content, flags=re.MULTILINE)
+                      
+                      with open(file_path, 'w') as f:
+                          f.write(content)
+                      
+                      print(f"Patched file: {file_path}")
+
+          if __name__ == "__main__":
+              if len(sys.argv) > 1 and sys.argv[1] == "restore":
+                  restore_backups()
+              else:
+                  create_backups()
+                  create_paths_module()
+                  patch_files()
+          EOF
+          
+          # Make script executable
+          chmod +x patch_imports.py
+          
+          # Run the patching script
+          python patch_imports.py
+          
+          # Generate documentation
           .venv/bin/pdoc --output-dir ./docs src
+          
+          # Restore original files
+          python patch_imports.py restore
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
