@@ -8,15 +8,6 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      # Add mock API keys for documentation generation
-      ANTHROPIC_API_KEY: "mock_key_for_docs"
-      OPENAI_API_KEY: "mock_key_for_docs"
-      COHERE_API_KEY: "mock_key_for_docs"
-      MISTRAL_API_KEY: "mock_key_for_docs"
-      GOOGLE_API_KEY: "mock_key_for_docs"
-      GROK_API_KEY: "mock_key_for_docs"
-      DEEPSEEK_API_KEY: "mock_key_for_docs"
     
     steps:
       - uses: actions/checkout@v3
@@ -31,84 +22,133 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y portaudio19-dev python3-dev libcairo2-dev pkg-config python3-tk
       
-      - name: Install dependencies
+      - name: Install pdoc
         run: |
           python -m pip install --upgrade pip
           pip install pdoc
-          # We'll install minimal dependencies for documentation
-          pip install docling langchain numpy pandas
       
-      - name: Generate Mock Version for Documentation
+      - name: Create Mock Version for Documentation
         run: |
-          # Create a directory for mock modules
-          mkdir -p doc_src/chatbot/embeddings
-          mkdir -p doc_src/chatbot/rag
-          mkdir -p doc_src/chatbot/utils
-          mkdir -p doc_src/web
+          # Create a mock documentation directory
+          mkdir -p docs_src/src
           
-          # Copy __init__.py files
-          cp src/__init__.py doc_src/ || touch doc_src/__init__.py
-          cp src/chatbot/__init__.py doc_src/chatbot/ || touch doc_src/chatbot/__init__.py
-          cp src/chatbot/embeddings/__init__.py doc_src/chatbot/embeddings/ || touch doc_src/chatbot/embeddings/__init__.py
-          cp src/chatbot/rag/__init__.py doc_src/chatbot/rag/ || touch doc_src/chatbot/rag/__init__.py
-          cp src/chatbot/utils/__init__.py doc_src/chatbot/utils/ || touch doc_src/chatbot/utils/__init__.py
-          cp src/web/__init__.py doc_src/web/ || touch doc_src/web/__init__.py
+          # Create a simple index file
+          cat > docs_src/index.md << 'EOF'
+          # DataVerse-ChatBot Documentation
           
-          # Create a simplified config.py that doesn't require API keys
-          cat > doc_src/chatbot/config.py << 'EOF'
-          """Configuration module for DataVerse-ChatBot."""
+          DataVerse-ChatBot is a versatile RAG system that powers real-time chat with data from the web 
+          and nearly all file formats, deployable as WhatsApp/Telegram bots or an iframe.
           
-          class MissingAPIKeyError(Exception):
-              """Exception raised when an API key is missing."""
-              pass
+          ## Project Structure
           
-          def get_api_key(key_name):
-              """Return a mock key for documentation purposes."""
-              return "mock_key_for_documentation"
+          - `src/`: Main source code
+            - `src/chatbot/`: Core chatbot functionality
+              - `src/chatbot/config.py`: Configuration settings
+              - `src/chatbot/crawler.py`: Web crawling capabilities
+              - `src/chatbot/voice_mode.py`: Voice interaction features
+              - `src/chatbot/embeddings/`: Vector embedding handlers
+              - `src/chatbot/rag/`: RAG implementation for various LLM providers
+              - `src/chatbot/utils/`: Utility functions
+            - `src/web/`: Web interface components
           
-          class Config:
-              """Main configuration class for DataVerse-ChatBot."""
-              
-              def __init__(self):
-                  """Initialize with default configuration."""
-                  pass
-                  
-              # Document other methods and properties as needed
+          ## Main Features
+          
+          - Support for multiple LLM providers
+          - Web content integration
+          - Support for various file formats
+          - Deployable as chatbots on different platforms
+          - Voice interaction capabilities
+          
+          For detailed API documentation, please see the source code files.
           EOF
           
-          # Process and copy all Python files with simplified versions
-          for py_file in $(find src -name "*.py"); do
-            # Extract directory part
-            dir_part=$(dirname "$py_file" | sed 's/^src/doc_src/')
-            # Extract filename
-            file_name=$(basename "$py_file")
-            # Create target directory if it doesn't exist
-            mkdir -p "$dir_part"
-            
-            # Skip if we've already created a custom version
-            if [ -f "$dir_part/$file_name" ]; then
-              continue
-            fi
-            
-            # Create a simplified version of each module
-            echo "\"\"\"Documentation for $(basename $py_file without extension)\"\"\"\n" > "$dir_part/$file_name"
-            
-            # Extract classes and functions to document them
-            grep -E "^(class|def) " "$py_file" | while read -r line; do
-              if [[ $line == class* ]]; then
-                echo "$line" >> "$dir_part/$file_name"
-                echo "    \"\"\"Class documentation.\"\"\"\n    pass\n" >> "$dir_part/$file_name"
-              elif [[ $line == def* ]]; then
-                echo "$line" >> "$dir_part/$file_name"
-                echo "    \"\"\"Function documentation.\"\"\"\n    pass\n" >> "$dir_part/$file_name"
-              fi
-            done
-          done
+          # Manual documentation for core modules
+          mkdir -p docs_src/src/chatbot
+          mkdir -p docs_src/src/chatbot/rag
+          mkdir -p docs_src/src/chatbot/embeddings
+          mkdir -p docs_src/src/chatbot/utils
+          mkdir -p docs_src/src/web
+          
+          # Create module docs for chatbot
+          cat > docs_src/src/chatbot/index.md << 'EOF'
+          # Chatbot Module
+          
+          Core chatbot functionality including configuration, RAG implementations, and utilities.
+          
+          ## Key Components
+          
+          - `config.py`: Central configuration settings
+          - `crawler.py`: Web content crawling
+          - `voice_mode.py`: Voice interaction features
+          - `embeddings/`: Vector embedding implementations
+          - `rag/`: RAG implementations for different LLM providers
+          - `utils/`: Helper utilities
+          EOF
+          
+          # Create module docs for rag
+          cat > docs_src/src/chatbot/rag/index.md << 'EOF'
+          # RAG Implementations
+          
+          The `rag` module provides implementations for Retrieval-Augmented Generation with various LLM providers.
+          
+          ## Supported Models
+          
+          - `claude_rag.py`: Anthropic Claude integration
+          - `cohere_rag.py`: Cohere integration
+          - `deepseek_rag.py`: DeepSeek integration
+          - `gemini_rag.py`: Google Gemini integration
+          - `grok_rag.py`: Grok integration
+          - `mistral_rag.py`: Mistral AI integration
+          - `openai_rag.py`: OpenAI integration
+          
+          All implementations extend the `base_rag.py` abstract base class.
+          EOF
+          
+          # Create module docs for embeddings
+          cat > docs_src/src/chatbot/embeddings/index.md << 'EOF'
+          # Embeddings Module
+          
+          Vector embedding implementations for semantic document chunking and retrieval.
+          
+          ## Components
+          
+          - `base_embedding.py`: Abstract base class for embeddings
+          EOF
+          
+          # Create module docs for utils
+          cat > docs_src/src/chatbot/utils/index.md << 'EOF'
+          # Utilities
+          
+          Helper utilities for file processing, inference, monitoring, and paths management.
+          
+          ## Key Utilities
+          
+          - `file_loader.py`: Loading documents from various file formats
+          - `inference.py`: Inference helpers
+          - `make_dataset.py`: Dataset creation utilities
+          - `monitor_service.py`: Monitoring tools
+          - `paths.py`: Path management
+          - `train_clf.py`: Training utilities
+          - `utils.py`: General utilities
+          EOF
+          
+          # Create module docs for web
+          cat > docs_src/src/web/index.md << 'EOF'
+          # Web Interface
+          
+          Web interface components for deployment as a web application.
+          
+          ## Components
+          
+          - `chat_web_app.py`: Web application implementation
+          - `chat_web_template.py`: Templates for the web interface
+          - `admin_dashboard.py`: Administrative dashboard
+          EOF
           
       - name: Build documentation
         run: |
-          # Run pdoc on the mock source code
-          pdoc --output-dir ./docs doc_src
+          # Run pdoc to generate docs from markdown files
+          pdoc --template-dir="$(python -c 'import pdoc; print(pdoc.__path__[0] + "/templates")')" --output-dir=./docs docs_src
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
