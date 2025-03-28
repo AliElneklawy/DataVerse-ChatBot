@@ -1,2 +1,2 @@
-cd WebRAG/src
-python -m web.chat_web_app
+iframe: python -m web.chat_web_app
+admin dashboard: python src/admin_dashboard_launcher.py
