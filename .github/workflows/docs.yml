@@ -18,154 +18,261 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.10'
 
-      - name: Install system dependencies for PyAudio
+      - name: Install documentation dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y portaudio19-dev python3-pyaudio
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material mkdocstrings mkdocstrings-python
 
-      - name: Setup virtual environment
+      - name: Create mkdocs.yml
         run: |
-          python -m venv .venv
-          echo ".venv/bin" >> $GITHUB_PATH
+          cat > mkdocs.yml << EOF
+          site_name: DataVerse-ChatBot Documentation
+          site_description: Documentation for the DataVerse-ChatBot project
+          theme:
+            name: material
+            palette:
+              primary: indigo
+              accent: indigo
+          plugins:
+            - search
+            - mkdocstrings:
+                handlers:
+                  python:
+                    options:
+                      show_source: true
+                      show_root_heading: true
+          nav:
+            - Home: index.md
+            - API Reference:
+              - Overview: api/index.md
+              - Chatbot: api/chatbot.md
+              - RAG: api/rag.md
+              - Embeddings: api/embeddings.md
+              - Utils: api/utils.md
+              - Web: api/web.md
+          EOF
 
-      - name: Install dependencies
+      - name: Create documentation structure
         run: |
-          .venv/bin/pip install --upgrade pip
-          .venv/bin/pip install pdoc
-          .venv/bin/pip install -e .
-
-      - name: Generate documentation
-        run: |
-          # Set dummy API keys for documentation generation
-            # LLM APIs
-            export GEMINI_API='dummy'
-            export OPENAI_API='dummy'
-            export COHERE_API='dummy'
-            export DEEPSEEK_API='dummy'
-            export CLAUDE_API='dummy'
-            export GROK_API='dummy'
-            export MISTRAL_API='dummy'
-            
-            # ScrapeGraphAI web scraper (https://docs.scrapegraphai.com/api-reference/introduction)
-            export SGAI_API='dummy'
-            
-            # Gmail app password used for the email service
-            export GMAIL_APP_PASSWORD='dummy'
-            
-            # Telegram bot token
-            export BOT_TOKEN='dummy'
-            
-            # Twilio credentials for the whatsapp bot
-            export TWILIO_SID='dummy'
-            export TWILIO_AUTH_TOKEN='dummy'
-            export TWILIO_NUMBER='dummy'
-          export PDOC_ALLOW_EXEC=1
+          mkdir -p docs/api
           
-          # Create patching script
-          cat > patch_imports.py << 'EOF'
-          #!/usr/bin/env python3
-          import os
-          import re
-          import glob
-          import sys
-
-          # Files that need patching
-          files_to_patch = [
-              "src/chatbot/utils/make_dataset.py",
-              "src/chatbot/utils/train_clf.py",
-              "src/chatbot/utils/inference.py",
-              "src/chatbot/utils/file_loader.py",
-              "src/chatbot/utils/monitor_service.py"
-          ]
-
-          # Import fixes - each tuple contains (regex pattern, replacement)
-          fixes = [
-              (r"from paths import", r"from src.chatbot.utils.paths import"),
-              (r"import paths", r"import src.chatbot.utils.paths as paths"),
-              (r"from utils import", r"from src.chatbot.utils import"),
-              (r"from file_loader import", r"from src.chatbot.utils.file_loader import"),
-              (r"from train_clf import", r"from src.chatbot.utils.train_clf import"),
-              (r"from inference import", r"from src.chatbot.utils.inference import"),
-              (r"from make_dataset import", r"from src.chatbot.utils.make_dataset import")
-          ]
-
-          def create_paths_module():
-              """Create a mock paths module with necessary constants"""
-              paths_file = "src/chatbot/utils/paths.py"
-              with open(paths_file, "w") as f:
-                  f.write("# Auto-generated paths module for documentation\n")
-                  f.write("import os\n\n")
-                  f.write("# Define necessary paths\n")
-                  f.write("DATASETS_DIR = 'data/datasets'\n")
-                  f.write("INDEXES_DIR = 'data/indexes'\n")
-                  f.write("DATASET_PATH = 'data/datasets/responses.json'\n")
-                  f.write("CSV_PATH = 'data/datasets/responses.csv'\n")
-                  f.write("MODEL_PATH = 'data/models/clf.pkl'\n")
-                  f.write("MODEL_META_PATH = 'data/models/metadata.json'\n")
-
-          def create_backups():
-              """Create backup files"""
-              for file_path in files_to_patch:
-                  if os.path.exists(file_path):
-                      with open(file_path, 'r') as f:
-                          content = f.read()
-                      with open(f"{file_path}.bak", 'w') as f:
-                          f.write(content)
-                      print(f"Created backup: {file_path}.bak")
-
-          def restore_backups():
-              """Restore files from backups"""
-              for file_path in files_to_patch:
-                  backup_path = f"{file_path}.bak"
-                  if os.path.exists(backup_path):
-                      with open(backup_path, 'r') as f:
-                          content = f.read()
-                      with open(file_path, 'w') as f:
-                          f.write(content)
-                      os.remove(backup_path)
-                      print(f"Restored from backup: {file_path}")
-
-          def patch_files():
-              """Patch the import statements in files"""
-              for file_path in files_to_patch:
-                  if os.path.exists(file_path):
-                      with open(file_path, 'r') as f:
-                          content = f.read()
-                      
-                      # Apply regex replacements
-                      for pattern, replacement in fixes:
-                          content = re.sub(pattern, replacement, content, flags=re.MULTILINE)
-                      
-                      with open(file_path, 'w') as f:
-                          f.write(content)
-                      
-                      print(f"Patched file: {file_path}")
-
-          if __name__ == "__main__":
-              if len(sys.argv) > 1 and sys.argv[1] == "restore":
-                  restore_backups()
-              else:
-                  create_backups()
-                  create_paths_module()
-                  patch_files()
+          # Create index page
+          cat > docs/index.md << EOF
+          # DataVerse-ChatBot
+          
+          Welcome to the DataVerse-ChatBot documentation.
+          
+          This site contains the API documentation for the DataVerse-ChatBot project.
           EOF
           
-          # Make script executable
-          chmod +x patch_imports.py
+          # Create API overview page
+          cat > docs/api/index.md << EOF
+          # API Reference
           
-          # Run the patching script
-          python patch_imports.py
+          This section contains the API documentation for the DataVerse-ChatBot project.
+          EOF
           
-          # Generate documentation
-          .venv/bin/pdoc --output-dir ./docs src
+          # Create chatbot module documentation
+          cat > docs/api/chatbot.md << EOF
+          # Chatbot Module
           
-          # Restore original files
-          python patch_imports.py restore
+          \`\`\`python
+          from src.chatbot import config
+          \`\`\`
+          
+          ::: src.chatbot.config
+              options:
+                  show_source: true
+          
+          \`\`\`python
+          from src.chatbot import crawler
+          \`\`\`
+          
+          ::: src.chatbot.crawler
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot import voice_mode
+          \`\`\`
+          
+          ::: src.chatbot.voice_mode
+              options:
+                  show_source: true
+          EOF
+          
+          # Create RAG module documentation
+          cat > docs/api/rag.md << EOF
+          # RAG Module
+          
+          \`\`\`python
+          from src.chatbot.rag import base_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.base_rag
+              options:
+                  show_source: true
+          
+          \`\`\`python
+          from src.chatbot.rag import claude_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.claude_rag
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.rag import cohere_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.cohere_rag
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.rag import deepseek_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.deepseek_rag
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.rag import gemini_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.gemini_rag
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.rag import grok_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.grok_rag
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.rag import mistral_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.mistral_rag
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.rag import openai_rag
+          \`\`\`
+          
+          ::: src.chatbot.rag.openai_rag
+              options:
+                  show_source: true
+          EOF
+          
+          # Create Embeddings module documentation
+          cat > docs/api/embeddings.md << EOF
+          # Embeddings Module
+          
+          \`\`\`python
+          from src.chatbot.embeddings import base_embedding
+          \`\`\`
+          
+          ::: src.chatbot.embeddings.base_embedding
+              options:
+                  show_source: true
+          EOF
+          
+          # Create Utils module documentation
+          cat > docs/api/utils.md << EOF
+          # Utils Module
+          
+          \`\`\`python
+          from src.chatbot.utils import file_loader
+          \`\`\`
+          
+          ::: src.chatbot.utils.file_loader
+              options:
+                  show_source: true
+          
+          \`\`\`python
+          from src.chatbot.utils import inference
+          \`\`\`
+          
+          ::: src.chatbot.utils.inference
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.utils import make_dataset
+          \`\`\`
+          
+          ::: src.chatbot.utils.make_dataset
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.utils import monitor_service
+          \`\`\`
+          
+          ::: src.chatbot.utils.monitor_service
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.utils import paths
+          \`\`\`
+          
+          ::: src.chatbot.utils.paths
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.utils import train_clf
+          \`\`\`
+          
+          ::: src.chatbot.utils.train_clf
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.chatbot.utils import utils
+          \`\`\`
+          
+          ::: src.chatbot.utils.utils
+              options:
+                  show_source: true
+          EOF
+          
+          # Create Web module documentation
+          cat > docs/api/web.md << EOF
+          # Web Module
+          
+          \`\`\`python
+          from src.web import chat_web_app
+          \`\`\`
+          
+          ::: src.web.chat_web_app
+              options:
+                  show_source: true
+                  
+          \`\`\`python
+          from src.web import chat_web_template
+          \`\`\`
+          
+          ::: src.web.chat_web_template
+              options:
+                  show_source: true
+          EOF
+
+      - name: Build documentation
+        run: |
+          mkdocs build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs
+          folder: site
           branch: gh-pages
