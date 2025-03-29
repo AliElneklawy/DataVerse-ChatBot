@@ -121,4 +121,96 @@ The admin dashboard provides a centralized interface for managing the RAG system
      ```bash
      python main.py
 3. You can create your own dataset using `make_dataset.py` script.
-4. You can train your own classifier using `train_clf.py` script. 
+4. You can train your own classifier using `train_clf.py` script.
+
+## Project Structure
+
+```
+├── DataVerse-Chatbot
+│   ├── __init__.py 
+│   ├── data 
+│   │   ├── chat_history 
+│   │   │   ├── ....
+│   │   ├── database 
+│   │   │   ├── ....
+│   │   ├── datasets 
+│   │   │   ├── ....
+│   │   ├── indexes 
+│   │   │   ├── ....
+│   │   ├── logs 
+│   │   │   ├── ....
+│   │   ├── models 
+│   │   │   ├── clf.pkl 
+│   │   │   ├── metadata.json 
+│   │   ├── training_files 
+│   │   │   ├── ....
+│   │   ├── web_content 
+│   │   │   ├── ....
+│   ├── src 
+│   │   ├── admin_dashboard_launcher.py 
+│   │   ├── main.py 
+│   │   ├── tg_bot.py 
+│   │   ├── whatsapp_bot.py 
+│   │   ├── __init__.py 
+│   │   ├── chatbot 
+│   │   │   ├── config.py 
+│   │   │   ├── crawler.py 
+│   │   │   ├── voice_mode.py 
+│   │   │   ├── __init__.py 
+│   │   │   ├── embeddings 
+│   │   │   │   ├── base_embedding.py 
+│   │   │   │   ├── __init__.py 
+│   │   │   ├── rag 
+│   │   │   │   ├── base_rag.py 
+│   │   │   │   ├── claude_rag.py 
+│   │   │   │   ├── cohere_rag.py 
+│   │   │   │   ├── deepseek_rag.py 
+│   │   │   │   ├── gemini_rag.py 
+│   │   │   │   ├── grok_rag.py 
+│   │   │   │   ├── mistral_rag.py 
+│   │   │   │   ├── openai_rag.py 
+│   │   │   │   ├── __init__.py 
+│   │   │   ├── utils 
+│   │   │   │   ├── admin_utils.py 
+│   │   │   │   ├── crawler_progress.py 
+│   │   │   │   ├── file_loader.py 
+│   │   │   │   ├── inference.py 
+│   │   │   │   ├── make_dataset.py 
+│   │   │   │   ├── monitor_service.py 
+│   │   │   │   ├── paths.py 
+│   │   │   │   ├── train_clf.py 
+│   │   │   │   ├── utils.py 
+│   │   │   │   ├── __init__.py 
+│   │   ├── web 
+│   │   │   ├── admin_dashboard.py 
+│   │   │   ├── chat_web_app.py 
+│   │   │   ├── chat_web_template.py 
+│   │   │   ├── how to run.txt 
+│   │   │   ├── __init__.py 
+│   │   │   ├── static 
+│   │   │   │   ├── __init__.py 
+│   │   │   │   ├── css 
+│   │   │   │   │   ├── admin.css 
+│   │   │   │   │   ├── dark_mode.css 
+│   │   │   │   │   ├── __init__.py 
+│   │   │   │   ├── js 
+│   │   │   │   │   ├── admin.js 
+│   │   │   │   │   ├── __init__.py 
+│   │   │   ├── templates 
+│   │   │   │   ├── __init__.py 
+│   │   │   │   ├── admin 
+│   │   │   │   │   ├── account.html 
+│   │   │   │   │   ├── base.html 
+│   │   │   │   │   ├── content.html 
+│   │   │   │   │   ├── dashboard.html 
+│   │   │   │   │   ├── history.html 
+│   │   │   │   │   ├── login.html 
+│   │   │   │   │   ├── models.html 
+│   │   │   │   │   ├── system.html 
+│   │   │   │   │   ├── users.html 
+│   │   │   │   │   ├── user_detail.html 
+│   │   │   │   │   ├── view_content.html 
+│   │   │   │   │   ├── __init__.py 
+│   ├── tests 
+│   │   ├── locustfile.py 
+```
