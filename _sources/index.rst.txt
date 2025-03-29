@@ -1,0 +1,29 @@
+Welcome to DataVerse ChatBot Documentation
+==========================================
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+Module Documentation
+-------------------
+
+* **main.py** - Main application entry point
+* **tg_bot.py** - Telegram bot implementation
+* **whatsapp_bot.py** - WhatsApp bot implementation
+* **gradio_ui.py** - Gradio web interface
+
+Packages
+--------
+
+* **chatbot** - Core chatbot functionality
+* **chatbot.rag** - RAG implementation modules
+* **chatbot.embeddings** - Embedding modules
+* **chatbot.utils** - Utility functions
+* **web** - Web application implementations
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`search`
