@@ -1,0 +1,24 @@
+
+body {
+    font-size: 16px;  /* Increase base font size */
+}
+
+.body {
+    font-size: 16px;  /* Increase content font size */
+}
+
+pre, code {
+    font-size: 14px;  /* Increase code font size */
+}
+
+h1 {
+    font-size: 32px;  /* Increase heading font size */
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 20px;
+}

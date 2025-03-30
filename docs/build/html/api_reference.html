@@ -1,0 +1,2582 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; DataVerse Chatbot 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4be055c6" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=20623aea"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Bot Implementations" href="modules/bots.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DataVerse Chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/chatbot.html">Chatbot Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/web.html">Web Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/bots.html">Bot Implementations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#chatbot-package">chatbot Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rag-module">rag Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#baserag">BaseRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clauderag">ClaudeRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openairag">OpenAIRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cohererag">CohereRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#geminirag">GeminiRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mistralrag">MistralRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deepseekrag">DeepseekRAG</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#grokrag">GrokRAG</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#embeddings-module">embeddings Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#baseembedding">BaseEmbedding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cohereembedding">CohereEmbedding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mistralembedding">MistralEmbedding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openaiembedding">OpenAIEmbedding</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#huggingfaceembedding">HuggingFaceEmbedding</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#crawler-module">crawler Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#crawler">Crawler</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#utils-module">utils Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#general-utilities">General Utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-operations">File Operations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#database-operations">Database Operations</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#email-services">Email Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-processing">Data Processing</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#monitoring-services">Monitoring Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#path-management">Path Management</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#config-module">config Module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get_api_key"><code class="docutils literal notranslate"><span class="pre">get_api_key()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#missingapikeyerror">MissingAPIKeyError</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#config">Config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#llm-provider-configs">LLM Provider Configs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#web-package">web Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#chat-web-app">Chat Web App</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#home"><code class="docutils literal notranslate"><span class="pre">home()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#chat"><code class="docutils literal notranslate"><span class="pre">chat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transcribe_audio"><code class="docutils literal notranslate"><span class="pre">transcribe_audio()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ChatRequest"><code class="docutils literal notranslate"><span class="pre">ChatRequest</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#admin-dashboard">Admin Dashboard</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#serve_layout"><code class="docutils literal notranslate"><span class="pre">serve_layout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#register_callbacks"><code class="docutils literal notranslate"><span class="pre">register_callbacks()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authenticate_user"><code class="docutils literal notranslate"><span class="pre">authenticate_user()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#generate_metrics"><code class="docutils literal notranslate"><span class="pre">generate_metrics()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bot-implementations">Bot Implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#telegram-bot">Telegram Bot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#TelegramBot"><code class="docutils literal notranslate"><span class="pre">TelegramBot</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#whatsapp-bot">WhatsApp Bot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#TwilioClient"><code class="docutils literal notranslate"><span class="pre">TwilioClient</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#app.post"><code class="docutils literal notranslate"><span class="pre">app.post()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataVerse Chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api_reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>This section provides detailed API documentation for the DataVerse ChatBot components.</p>
+<section id="chatbot-package">
+<h2>chatbot Package<a class="headerlink" href="#chatbot-package" title="Link to this heading"></a></h2>
+<section id="rag-module">
+<h3>rag Module<a class="headerlink" href="#rag-module" title="Link to this heading"></a></h3>
+<section id="baserag">
+<h4>BaseRAG<a class="headerlink" href="#baserag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="BaseRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseRAG</span></span><a class="headerlink" href="#BaseRAG" title="Link to this definition"></a></dt>
+<dd><p>The base class for all RAG implementations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – LLM model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a response for the user query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query text</p></li>
+<li><p><strong>user_id</strong> – Unique user identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._create_embeddings">
+<span class="sig-name descname"><span class="pre">_create_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._create_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Create embeddings for text chunks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texts</strong> – List of text chunks</p></li>
+<li><p><strong>is_query</strong> – Whether these are query embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of embeddings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._generate_system_prompt">
+<span class="sig-name descname"><span class="pre">_generate_system_prompt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_prev_conv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._generate_system_prompt" title="Link to this definition"></a></dt>
+<dd><p>Generate a standardized system prompt for all LLMs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+<li><p><strong>context</strong> – Retrieved context</p></li>
+<li><p><strong>include_query</strong> – Whether to include the query</p></li>
+<li><p><strong>include_context</strong> – Whether to include context</p></li>
+<li><p><strong>include_prev_conv</strong> – Whether to include previous conversation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted system prompt</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._get_index_path">
+<span class="sig-name descname"><span class="pre">_get_index_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._get_index_path" title="Link to this definition"></a></dt>
+<dd><p>Generate unique index path based on content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content_path</strong> – Path to content</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to index</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._clean_html_content">
+<span class="sig-name descname"><span class="pre">_clean_html_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._clean_html_content" title="Link to this definition"></a></dt>
+<dd><p>Clean HTML content and convert to markdown.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content</strong> – HTML content</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cleaned markdown content</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._create_chunks">
+<span class="sig-name descname"><span class="pre">_create_chunks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._create_chunks" title="Link to this definition"></a></dt>
+<dd><p>Create chunks using the specified chunking method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> – Text to chunk</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of text chunks</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._load_or_create_vectorstore">
+<span class="sig-name descname"><span class="pre">_load_or_create_vectorstore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._load_or_create_vectorstore" title="Link to this definition"></a></dt>
+<dd><p>Load existing index or create new one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content_path</strong> – Path to content</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>FAISS vectorstore</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._create_vectorstore">
+<span class="sig-name descname"><span class="pre">_create_vectorstore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._create_vectorstore" title="Link to this definition"></a></dt>
+<dd><p>Create FAISS vectorstore from content with incremental embedding saving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>content_path</strong> – Path to content</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>FAISS vectorstore</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._update_vectorstore">
+<span class="sig-name descname"><span class="pre">_update_vectorstore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._update_vectorstore" title="Link to this definition"></a></dt>
+<dd><p>Update existing vectorstore with new content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_content</strong> – New content to add</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._save_vectorstore">
+<span class="sig-name descname"><span class="pre">_save_vectorstore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectorstore</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._save_vectorstore" title="Link to this definition"></a></dt>
+<dd><p>Save vectorstore to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectorstore</strong> – FAISS vectorstore</p></li>
+<li><p><strong>path</strong> – Path to save to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._load_vectorstore">
+<span class="sig-name descname"><span class="pre">_load_vectorstore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._load_vectorstore" title="Link to this definition"></a></dt>
+<dd><p>Load vectorstore from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to load from</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>FAISS vectorstore</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._rerank_docs">
+<span class="sig-name descname"><span class="pre">_rerank_docs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">docs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._rerank_docs" title="Link to this definition"></a></dt>
+<dd><p>Refine the top-k retrieved chunks for relevance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>docs</strong> – Retrieved documents</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Reranked documents</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG._find_relevant_context">
+<span class="sig-name descname"><span class="pre">_find_relevant_context</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG._find_relevant_context" title="Link to this definition"></a></dt>
+<dd><p>Find relevant context using similarity search.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>top_k</strong> – Number of top chunks to retrieve</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Relevant context as string</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG.get_models">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG.get_models" title="Link to this definition"></a></dt>
+<dd><p>Get available models for this RAG implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of available models</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#BaseRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the configuration class for this RAG implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Configuration class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="clauderag">
+<h4>ClaudeRAG<a class="headerlink" href="#clauderag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="ClaudeRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ClaudeRAG</span></span><a class="headerlink" href="#ClaudeRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using Anthropic’s Claude models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ClaudeRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ClaudeRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Claude RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – Claude model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ClaudeRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ClaudeRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a Claude-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ClaudeRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ClaudeRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize Claude API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ClaudeRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ClaudeRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the Claude configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ClaudeConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="openairag">
+<h4>OpenAIRAG<a class="headerlink" href="#openairag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="OpenAIRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OpenAIRAG</span></span><a class="headerlink" href="#OpenAIRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using OpenAI’s models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="OpenAIRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenAIRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the OpenAI RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – OpenAI model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="OpenAIRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenAIRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get an OpenAI-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="OpenAIRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#OpenAIRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize OpenAI API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="OpenAIRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#OpenAIRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the OpenAI configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>OpenAIConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cohererag">
+<h4>CohereRAG<a class="headerlink" href="#cohererag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="CohereRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CohereRAG</span></span><a class="headerlink" href="#CohereRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using Cohere’s models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="CohereRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CohereRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Cohere RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – Cohere model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CohereRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CohereRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a Cohere-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CohereRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CohereRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize Cohere API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CohereRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CohereRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the Cohere configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>CohereConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="geminirag">
+<h4>GeminiRAG<a class="headerlink" href="#geminirag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="GeminiRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeminiRAG</span></span><a class="headerlink" href="#GeminiRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using Google’s Gemini models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GeminiRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GeminiRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Gemini RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – Gemini model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GeminiRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GeminiRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a Gemini-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GeminiRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GeminiRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize Gemini API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GeminiRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GeminiRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the Gemini configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GeminiConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="mistralrag">
+<h4>MistralRAG<a class="headerlink" href="#mistralrag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="MistralRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MistralRAG</span></span><a class="headerlink" href="#MistralRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using Mistral AI models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MistralRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MistralRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Mistral RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – Mistral model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MistralRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MistralRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a Mistral-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MistralRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MistralRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize Mistral API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MistralRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MistralRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the Mistral configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>MistralConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="deepseekrag">
+<h4>DeepseekRAG<a class="headerlink" href="#deepseekrag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="DeepseekRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeepseekRAG</span></span><a class="headerlink" href="#DeepseekRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using Deepseek models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="DeepseekRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DeepseekRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Deepseek RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – Deepseek model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DeepseekRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DeepseekRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a Deepseek-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DeepseekRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DeepseekRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize Deepseek API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DeepseekRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DeepseekRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the Deepseek configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DeepSeekConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="grokrag">
+<h4>GrokRAG<a class="headerlink" href="#grokrag" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="GrokRAG">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrokRAG</span></span><a class="headerlink" href="#GrokRAG" title="Link to this definition"></a></dt>
+<dd><p>RAG implementation using Grok models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GrokRAG.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rerank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunking_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recursive'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GrokRAG.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Grok RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>content_path</strong> – Path to content files</p></li>
+<li><p><strong>index_path</strong> – Path to store/load vector indexes</p></li>
+<li><p><strong>rerank</strong> – Whether to enable reranking</p></li>
+<li><p><strong>model_name</strong> – Grok model name</p></li>
+<li><p><strong>chunking_type</strong> – Method for chunking text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GrokRAG.get_response">
+<span class="sig-name descname"><span class="pre">get_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GrokRAG.get_response" title="Link to this definition"></a></dt>
+<dd><p>Get a Grok-powered response.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query</strong> – User query</p></li>
+<li><p><strong>user_id</strong> – User identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GrokRAG._initialize_models">
+<span class="sig-name descname"><span class="pre">_initialize_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GrokRAG._initialize_models" title="Link to this definition"></a></dt>
+<dd><p>Initialize Grok API client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="GrokRAG.get_config_class">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_config_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#GrokRAG.get_config_class" title="Link to this definition"></a></dt>
+<dd><p>Get the Grok configuration class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>GrokConfig class</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="embeddings-module">
+<h3>embeddings Module<a class="headerlink" href="#embeddings-module" title="Link to this heading"></a></h3>
+<section id="baseembedding">
+<h4>BaseEmbedding<a class="headerlink" href="#baseembedding" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="BaseEmbedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BaseEmbedding</span></span><a class="headerlink" href="#BaseEmbedding" title="Link to this definition"></a></dt>
+<dd><p>Base class for text embedding providers.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseEmbedding.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseEmbedding.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the embedding provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> – API key for the embedding service</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="BaseEmbedding.embed">
+<span class="sig-name descname"><span class="pre">embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#BaseEmbedding.embed" title="Link to this definition"></a></dt>
+<dd><p>Create embeddings for a list of texts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texts</strong> – List of text strings</p></li>
+<li><p><strong>is_query</strong> – Whether these are query embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of embedding vectors</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="cohereembedding">
+<h4>CohereEmbedding<a class="headerlink" href="#cohereembedding" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="CohereEmbedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CohereEmbedding</span></span><a class="headerlink" href="#CohereEmbedding" title="Link to this definition"></a></dt>
+<dd><p>Cohere embedding provider.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="CohereEmbedding.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CohereEmbedding.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Cohere embedding provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> – Cohere API key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CohereEmbedding.embed">
+<span class="sig-name descname"><span class="pre">embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CohereEmbedding.embed" title="Link to this definition"></a></dt>
+<dd><p>Create embeddings using Cohere.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texts</strong> – List of text strings</p></li>
+<li><p><strong>is_query</strong> – Whether these are query embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of embedding vectors</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="mistralembedding">
+<h4>MistralEmbedding<a class="headerlink" href="#mistralembedding" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="MistralEmbedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MistralEmbedding</span></span><a class="headerlink" href="#MistralEmbedding" title="Link to this definition"></a></dt>
+<dd><p>Mistral embedding provider.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="MistralEmbedding.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MistralEmbedding.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Mistral embedding provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> – Mistral API key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="MistralEmbedding.embed">
+<span class="sig-name descname"><span class="pre">embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#MistralEmbedding.embed" title="Link to this definition"></a></dt>
+<dd><p>Create embeddings using Mistral.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texts</strong> – List of text strings</p></li>
+<li><p><strong>is_query</strong> – Whether these are query embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of embedding vectors</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="openaiembedding">
+<h4>OpenAIEmbedding<a class="headerlink" href="#openaiembedding" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="OpenAIEmbedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OpenAIEmbedding</span></span><a class="headerlink" href="#OpenAIEmbedding" title="Link to this definition"></a></dt>
+<dd><p>OpenAI embedding provider.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="OpenAIEmbedding.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">api_key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenAIEmbedding.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the OpenAI embedding provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>api_key</strong> – OpenAI API key</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="OpenAIEmbedding.embed">
+<span class="sig-name descname"><span class="pre">embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OpenAIEmbedding.embed" title="Link to this definition"></a></dt>
+<dd><p>Create embeddings using OpenAI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texts</strong> – List of text strings</p></li>
+<li><p><strong>is_query</strong> – Whether these are query embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of embedding vectors</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="huggingfaceembedding">
+<h4>HuggingFaceEmbedding<a class="headerlink" href="#huggingfaceembedding" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="HuggingFaceEmbedding">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">HuggingFaceEmbedding</span></span><a class="headerlink" href="#HuggingFaceEmbedding" title="Link to this definition"></a></dt>
+<dd><p>Hugging Face embedding provider.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingFaceEmbedding.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sentence-transformers/all-MiniLM-L6-v2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cpu'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingFaceEmbedding.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Hugging Face embedding provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model_name</strong> – Name of the Hugging Face model</p></li>
+<li><p><strong>device</strong> – Device to run the model on (cpu or cuda)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="HuggingFaceEmbedding.embed">
+<span class="sig-name descname"><span class="pre">embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#HuggingFaceEmbedding.embed" title="Link to this definition"></a></dt>
+<dd><p>Create embeddings using Hugging Face models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>texts</strong> – List of text strings</p></li>
+<li><p><strong>is_query</strong> – Whether these are query embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of embedding vectors</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="crawler-module">
+<h3>crawler Module<a class="headerlink" href="#crawler-module" title="Link to this heading"></a></h3>
+<section id="crawler">
+<h4>Crawler<a class="headerlink" href="#crawler" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="Crawler">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Crawler</span></span><a class="headerlink" href="#Crawler" title="Link to this definition"></a></dt>
+<dd><p>Web content crawler.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Crawler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wait_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">follow_links</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ignore_query_params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'crawl4ai'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Crawler.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the crawler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_url</strong> – Starting URL</p></li>
+<li><p><strong>domain_name</strong> – Target domain name</p></li>
+<li><p><strong>max_depth</strong> – Maximum crawl depth</p></li>
+<li><p><strong>max_pages</strong> – Maximum pages to crawl</p></li>
+<li><p><strong>wait_time</strong> – Time to wait between requests</p></li>
+<li><p><strong>follow_links</strong> – Whether to follow links</p></li>
+<li><p><strong>ignore_query_params</strong> – Whether to ignore URL query parameters</p></li>
+<li><p><strong>client</strong> – Client library to use for crawling</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Crawler.extract_content">
+<span class="sig-name descname"><span class="pre">extract_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webpage_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Crawler.extract_content" title="Link to this definition"></a></dt>
+<dd><p>Extract content from a webpage or multiple webpages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link</strong> – URL to crawl</p></li>
+<li><p><strong>webpage_only</strong> – Whether to only extract content from a single page</p></li>
+<li><p><strong>max_depth</strong> – Maximum depth to crawl</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the extracted content</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Crawler._clean_html">
+<span class="sig-name descname"><span class="pre">_clean_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Crawler._clean_html" title="Link to this definition"></a></dt>
+<dd><p>Clean HTML content.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>html</strong> – HTML content</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Cleaned text content</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Crawler._save_extracted_content">
+<span class="sig-name descname"><span class="pre">_save_extracted_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Crawler._save_extracted_content" title="Link to this definition"></a></dt>
+<dd><p>Save extracted content to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Content to save</p></li>
+<li><p><strong>file_path</strong> – Path to save the content to</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to the saved content</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="utils-module">
+<h3>utils Module<a class="headerlink" href="#utils-module" title="Link to this heading"></a></h3>
+<section id="general-utilities">
+<h4>General Utilities<a class="headerlink" href="#general-utilities" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="create_folder">
+<span class="sig-name descname"><span class="pre">create_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#create_folder" title="Link to this definition"></a></dt>
+<dd><p>Create a folder if it doesn’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – Path to create</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path object of the created folder</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="file-operations">
+<h4>File Operations<a class="headerlink" href="#file-operations" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="FileLoader">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FileLoader</span></span><a class="headerlink" href="#FileLoader" title="Link to this definition"></a></dt>
+<dd><p>File loading and processing utility.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="FileLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'docling'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FileLoader.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the file loader.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_path</strong> – Path to the file to load</p></li>
+<li><p><strong>content_path</strong> – Path to save extracted content</p></li>
+<li><p><strong>client</strong> – Document processing client to use</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileLoader.extract_from_file">
+<span class="sig-name descname"><span class="pre">extract_from_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FileLoader.extract_from_file" title="Link to this definition"></a></dt>
+<dd><p>Extract and process content from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of document objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileLoader._get_extension">
+<span class="sig-name descname"><span class="pre">_get_extension</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#FileLoader._get_extension" title="Link to this definition"></a></dt>
+<dd><p>Get the extension of a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> – Path to the file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>File extension</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="FileLoader.supported_extensions">
+<span class="sig-name descname"><span class="pre">supported_extensions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FileLoader.supported_extensions" title="Link to this definition"></a></dt>
+<dd><p>Get list of supported file extensions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of supported extensions</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="database-operations">
+<h4>Database Operations<a class="headerlink" href="#database-operations" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="DatabaseOps">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DatabaseOps</span></span><a class="headerlink" href="#DatabaseOps" title="Link to this definition"></a></dt>
+<dd><p>Database operations utility.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize database operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_path</strong> – Path to SQLite database</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps._init_db">
+<span class="sig-name descname"><span class="pre">_init_db</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps._init_db" title="Link to this definition"></a></dt>
+<dd><p>Initialize database tables if they don’t exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.get_chat_history">
+<span class="sig-name descname"><span class="pre">get_chat_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_history</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_n_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">24</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.get_chat_history" title="Link to this definition"></a></dt>
+<dd><p>Retrieve chat history for user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> – User identifier</p></li>
+<li><p><strong>last_n</strong> – Maximum entries to retrieve when not using full_history</p></li>
+<li><p><strong>full_history</strong> – Whether to retrieve full history for all users</p></li>
+<li><p><strong>last_n_hours</strong> – Number of hours to look back when using full_history</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Chat history as formatted string or list of interactions</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.append_chat_history">
+<span class="sig-name descname"><span class="pre">append_chat_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">question</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">answer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_used</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_model_used</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.append_chat_history" title="Link to this definition"></a></dt>
+<dd><p>Save chat interaction to database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> – User identifier</p></li>
+<li><p><strong>question</strong> – User question</p></li>
+<li><p><strong>answer</strong> – System response</p></li>
+<li><p><strong>model_used</strong> – LLM model used</p></li>
+<li><p><strong>embedding_model_used</strong> – Embedding model used</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.append_cost">
+<span class="sig-name descname"><span class="pre">append_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_used</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_model_used</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_per_input_token</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cost_per_output_token</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.append_cost" title="Link to this definition"></a></dt>
+<dd><p>Track token usage and cost.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> – User identifier</p></li>
+<li><p><strong>model_used</strong> – LLM model used</p></li>
+<li><p><strong>embedding_model_used</strong> – Embedding model used</p></li>
+<li><p><strong>input_tokens</strong> – Number of input tokens</p></li>
+<li><p><strong>output_tokens</strong> – Number of output tokens</p></li>
+<li><p><strong>cost_per_input_token</strong> – Cost per million input tokens</p></li>
+<li><p><strong>cost_per_output_token</strong> – Cost per million output tokens</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.get_monitored_resp">
+<span class="sig-name descname"><span class="pre">get_monitored_resp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.get_monitored_resp" title="Link to this definition"></a></dt>
+<dd><p>Get monitored responses from the last 24 hours.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of question-answer tuples</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.append_bot_sub">
+<span class="sig-name descname"><span class="pre">append_bot_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">first_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">platform</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.append_bot_sub" title="Link to this definition"></a></dt>
+<dd><p>Add a new bot subscriber.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> – User identifier</p></li>
+<li><p><strong>first_name</strong> – User’s first name</p></li>
+<li><p><strong>platform</strong> – Platform (Telegram, WhatsApp)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="DatabaseOps.get_bot_sub">
+<span class="sig-name descname"><span class="pre">get_bot_sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#DatabaseOps.get_bot_sub" title="Link to this definition"></a></dt>
+<dd><p>Get bot subscribers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_id</strong> – Optional user ID to filter by</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of subscribers or single subscriber</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="email-services">
+<h4>Email Services<a class="headerlink" href="#email-services" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="EmailService">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EmailService</span></span><a class="headerlink" href="#EmailService" title="Link to this definition"></a></dt>
+<dd><p>Email notification service.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">smtp_server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smtp_port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender_email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sender_password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">receiver_email</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the email service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>smtp_server</strong> – SMTP server address</p></li>
+<li><p><strong>smtp_port</strong> – SMTP server port</p></li>
+<li><p><strong>sender_email</strong> – Sender email address</p></li>
+<li><p><strong>sender_password</strong> – Sender email password</p></li>
+<li><p><strong>receiver_email</strong> – Receiver email address</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService.subscribe">
+<span class="sig-name descname"><span class="pre">subscribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService.subscribe" title="Link to this definition"></a></dt>
+<dd><p>Allow other classes to subscribe to email state changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – Callback function to notify</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService.unsubscibe">
+<span class="sig-name descname"><span class="pre">unsubscibe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService.unsubscibe" title="Link to this definition"></a></dt>
+<dd><p>Remove a subscriber.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – Callback function to remove</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService._notify_subscribers">
+<span class="sig-name descname"><span class="pre">_notify_subscribers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">old_email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_email</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService._notify_subscribers" title="Link to this definition"></a></dt>
+<dd><p>Notify subscribers of email changes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>old_email</strong> – Previous email</p></li>
+<li><p><strong>new_email</strong> – New email</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService._format_email_content">
+<span class="sig-name descname"><span class="pre">_format_email_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unknowns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService._format_email_content" title="Link to this definition"></a></dt>
+<dd><p>Format the email content with a table of uncertain responses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>unknowns</strong> – List of (question, answer) tuples</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Formatted HTML content</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService._send_without_attachment">
+<span class="sig-name descname"><span class="pre">_send_without_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknowns</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService._send_without_attachment" title="Link to this definition"></a></dt>
+<dd><p>Prepare message without attachments for uncertain responses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – The email message object</p></li>
+<li><p><strong>unknowns</strong> – List of (question, answer) tuples</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>HTML content for the message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService._add_file_attachment">
+<span class="sig-name descname"><span class="pre">_add_file_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService._add_file_attachment" title="Link to this definition"></a></dt>
+<dd><p>Add a file attachment to the email message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – The email message object</p></li>
+<li><p><strong>file_path</strong> – Path to the file to attach</p></li>
+<li><p><strong>content_type</strong> – Content type of the file</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if attachment was successful, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService.send_email_with_attachments">
+<span class="sig-name descname"><span class="pre">send_email_with_attachments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_body</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService.send_email_with_attachments" title="Link to this definition"></a></dt>
+<dd><p>Send an email with multiple file attachments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject</strong> – The email subject</p></li>
+<li><p><strong>message_body</strong> – The email body text</p></li>
+<li><p><strong>file_paths</strong> – List of file paths to attach</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService._send_with_attachment">
+<span class="sig-name descname"><span class="pre">_send_with_attachment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">message</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService._send_with_attachment" title="Link to this definition"></a></dt>
+<dd><p>Add JSON data as an attachment to the email.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – The email message object</p></li>
+<li><p><strong>json_data</strong> – JSON data to attach</p></li>
+<li><p><strong>filename</strong> – Filename for the attachment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The JSON attachment</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService.send_email">
+<span class="sig-name descname"><span class="pre">send_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subject</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unknowns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">json_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'conversations.json'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#EmailService.send_email" title="Link to this definition"></a></dt>
+<dd><p>Send an email with either uncertain responses or JSON data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subject</strong> – The email subject line</p></li>
+<li><p><strong>unknowns</strong> – List of uncertain responses</p></li>
+<li><p><strong>json_data</strong> – JSON data to attach</p></li>
+<li><p><strong>filename</strong> – Filename for JSON attachment</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="EmailService.receiver_email">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">receiver_email</span></span><a class="headerlink" href="#EmailService.receiver_email" title="Link to this definition"></a></dt>
+<dd><p>Get the receiver email address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Email address</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EmailService.receiver_email.setter">
+<span class="sig-prename descclassname"><span class="pre">receiver_email.</span></span><span class="sig-name descname"><span class="pre">setter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#EmailService.receiver_email.setter" title="Link to this definition"></a></dt>
+<dd><p>Set the receiver email address.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> – New email address</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="data-processing">
+<h4>Data Processing<a class="headerlink" href="#data-processing" title="Link to this heading"></a></h4>
+<dl class="py function">
+<dt class="sig sig-object py" id="count_labels">
+<span class="sig-name descname"><span class="pre">count_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#count_labels" title="Link to this definition"></a></dt>
+<dd><p>Count the occurrences of each label in a DataFrame column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – Pandas DataFrame</p></li>
+<li><p><strong>column</strong> – Column name to count</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Series with label counts</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="standardize_length">
+<span class="sig-name descname"><span class="pre">standardize_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">250</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#standardize_length" title="Link to this definition"></a></dt>
+<dd><p>Standardize the length of text in a DataFrame column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – Pandas DataFrame</p></li>
+<li><p><strong>max_length</strong> – Maximum length for text</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with standardized text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="truncate_to_n_tokens">
+<span class="sig-name descname"><span class="pre">truncate_to_n_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#truncate_to_n_tokens" title="Link to this definition"></a></dt>
+<dd><p>Truncate text to a maximum number of tokens.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – Text to truncate</p></li>
+<li><p><strong>tokenizer</strong> – Tokenizer to use</p></li>
+<li><p><strong>max_tokens</strong> – Maximum number of tokens</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Truncated text</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="monitoring-services">
+<h4>Monitoring Services<a class="headerlink" href="#monitoring-services" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="UncertainResponseMonitor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">UncertainResponseMonitor</span></span><a class="headerlink" href="#UncertainResponseMonitor" title="Link to this definition"></a></dt>
+<dd><p>Monitor and detect uncertain responses.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="UncertainResponseMonitor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email_service</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">24</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#UncertainResponseMonitor.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the monitor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>email_service</strong> – Email service for notifications</p></li>
+<li><p><strong>every_hours</strong> – Check frequency in hours</p></li>
+<li><p><strong>start_service</strong> – Whether to start monitoring immediately</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UncertainResponseMonitor.check_for_uncertain_responses">
+<span class="sig-name descname"><span class="pre">check_for_uncertain_responses</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UncertainResponseMonitor.check_for_uncertain_responses" title="Link to this definition"></a></dt>
+<dd><p>Check database for potentially uncertain responses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of uncertain responses</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UncertainResponseMonitor._start_monitoring">
+<span class="sig-name descname"><span class="pre">_start_monitoring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UncertainResponseMonitor._start_monitoring" title="Link to this definition"></a></dt>
+<dd><p>Start the monitoring service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UncertainResponseMonitor._stop_monitoring">
+<span class="sig-name descname"><span class="pre">_stop_monitoring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UncertainResponseMonitor._stop_monitoring" title="Link to this definition"></a></dt>
+<dd><p>Stop the monitoring service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UncertainResponseMonitor._schedule_monitoring">
+<span class="sig-name descname"><span class="pre">_schedule_monitoring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#UncertainResponseMonitor._schedule_monitoring" title="Link to this definition"></a></dt>
+<dd><p>Schedule periodic monitoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="UncertainResponseMonitor._on_exception">
+<span class="sig-name descname"><span class="pre">_on_exception</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">e</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#UncertainResponseMonitor._on_exception" title="Link to this definition"></a></dt>
+<dd><p>Handle exceptions during monitoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>e</strong> – Exception object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ChatHistoryMonitor">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ChatHistoryMonitor</span></span><a class="headerlink" href="#ChatHistoryMonitor" title="Link to this definition"></a></dt>
+<dd><p>Monitor chat history and generate reports.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="ChatHistoryMonitor.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email_service</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every_hours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">24</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_service</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ChatHistoryMonitor.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the monitor.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>email_service</strong> – Email service for notifications</p></li>
+<li><p><strong>every_hours</strong> – Check frequency in hours</p></li>
+<li><p><strong>start_service</strong> – Whether to start monitoring immediately</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChatHistoryMonitor.generate_report">
+<span class="sig-name descname"><span class="pre">generate_report</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ChatHistoryMonitor.generate_report" title="Link to this definition"></a></dt>
+<dd><p>Generate usage report from chat history.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Report data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChatHistoryMonitor._start_monitoring">
+<span class="sig-name descname"><span class="pre">_start_monitoring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ChatHistoryMonitor._start_monitoring" title="Link to this definition"></a></dt>
+<dd><p>Start the monitoring service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChatHistoryMonitor._stop_monitoring">
+<span class="sig-name descname"><span class="pre">_stop_monitoring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ChatHistoryMonitor._stop_monitoring" title="Link to this definition"></a></dt>
+<dd><p>Stop the monitoring service.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ChatHistoryMonitor._schedule_monitoring">
+<span class="sig-name descname"><span class="pre">_schedule_monitoring</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ChatHistoryMonitor._schedule_monitoring" title="Link to this definition"></a></dt>
+<dd><p>Schedule periodic monitoring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="path-management">
+<h4>Path Management<a class="headerlink" href="#path-management" title="Link to this heading"></a></h4>
+<dl class="py data">
+<dt class="sig sig-object py" id="BASE_DIR">
+<span class="sig-name descname"><span class="pre">BASE_DIR</span></span><a class="headerlink" href="#BASE_DIR" title="Link to this definition"></a></dt>
+<dd><p>Base directory of the project.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="DATA_DIR">
+<span class="sig-name descname"><span class="pre">DATA_DIR</span></span><a class="headerlink" href="#DATA_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for all data.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="WEB_CONTENT_DIR">
+<span class="sig-name descname"><span class="pre">WEB_CONTENT_DIR</span></span><a class="headerlink" href="#WEB_CONTENT_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for web content.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="DATASETS_DIR">
+<span class="sig-name descname"><span class="pre">DATASETS_DIR</span></span><a class="headerlink" href="#DATASETS_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for datasets.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="DATABASE_DIR">
+<span class="sig-name descname"><span class="pre">DATABASE_DIR</span></span><a class="headerlink" href="#DATABASE_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for database files.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="INDEXES_DIR">
+<span class="sig-name descname"><span class="pre">INDEXES_DIR</span></span><a class="headerlink" href="#INDEXES_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for vector indexes.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="VOICES_DIR">
+<span class="sig-name descname"><span class="pre">VOICES_DIR</span></span><a class="headerlink" href="#VOICES_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for voice recordings.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="MODELS_DIR">
+<span class="sig-name descname"><span class="pre">MODELS_DIR</span></span><a class="headerlink" href="#MODELS_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for ML models.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="LOGS_DIR">
+<span class="sig-name descname"><span class="pre">LOGS_DIR</span></span><a class="headerlink" href="#LOGS_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for log files.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="TRAIN_FILES_DIR">
+<span class="sig-name descname"><span class="pre">TRAIN_FILES_DIR</span></span><a class="headerlink" href="#TRAIN_FILES_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for training files.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="CHAT_HIST_DIR">
+<span class="sig-name descname"><span class="pre">CHAT_HIST_DIR</span></span><a class="headerlink" href="#CHAT_HIST_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for chat history.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="FONTS_DIR">
+<span class="sig-name descname"><span class="pre">FONTS_DIR</span></span><a class="headerlink" href="#FONTS_DIR" title="Link to this definition"></a></dt>
+<dd><p>Directory for fonts.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="CLF_PATH">
+<span class="sig-name descname"><span class="pre">CLF_PATH</span></span><a class="headerlink" href="#CLF_PATH" title="Link to this definition"></a></dt>
+<dd><p>Path to the classifier model.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="config-module">
+<h3>config Module<a class="headerlink" href="#config-module" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="get_api_key">
+<span class="sig-name descname"><span class="pre">get_api_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">provider</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#get_api_key" title="Link to this definition"></a></dt>
+<dd><p>Get API key for a specified provider.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>provider</strong> – Provider name (e.g., “OPENAI”, “COHERE”)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>API key string</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#MissingAPIKeyError" title="MissingAPIKeyError"><strong>MissingAPIKeyError</strong></a> – If the API key is not found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="missingapikeyerror">
+<h4>MissingAPIKeyError<a class="headerlink" href="#missingapikeyerror" title="Link to this heading"></a></h4>
+<dl class="py exception">
+<dt class="sig sig-object py" id="MissingAPIKeyError">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MissingAPIKeyError</span></span><a class="headerlink" href="#MissingAPIKeyError" title="Link to this definition"></a></dt>
+<dd><p>Exception raised when an API key is missing.</p>
+</dd></dl>
+
+</section>
+<section id="config">
+<h4>Config<a class="headerlink" href="#config" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Config</span></span><a class="headerlink" href="#Config" title="Link to this definition"></a></dt>
+<dd><p>Global configuration container.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Config.TEMPERATURE">
+<span class="sig-name descname"><span class="pre">TEMPERATURE</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#Config.TEMPERATURE" title="Link to this definition"></a></dt>
+<dd><p>Temperature setting for language models (0.0-1.0)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Config.MAX_TOKENS">
+<span class="sig-name descname"><span class="pre">MAX_TOKENS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#Config.MAX_TOKENS" title="Link to this definition"></a></dt>
+<dd><p>Maximum tokens for LLM responses</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Config.CHUNKING_CONFIGS">
+<span class="sig-name descname"><span class="pre">CHUNKING_CONFIGS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span></em><a class="headerlink" href="#Config.CHUNKING_CONFIGS" title="Link to this definition"></a></dt>
+<dd><p>Configuration for different text chunking methods</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Config.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#Config.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available language models</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="llm-provider-configs">
+<h4>LLM Provider Configs<a class="headerlink" href="#llm-provider-configs" title="Link to this heading"></a></h4>
+<dl class="py class">
+<dt class="sig sig-object py" id="OpenAIConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">OpenAIConfig</span></span><a class="headerlink" href="#OpenAIConfig" title="Link to this definition"></a></dt>
+<dd><p>OpenAI-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="OpenAIConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#OpenAIConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available OpenAI models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ClaudeConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ClaudeConfig</span></span><a class="headerlink" href="#ClaudeConfig" title="Link to this definition"></a></dt>
+<dd><p>Claude-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ClaudeConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#ClaudeConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available Claude models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="CohereConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CohereConfig</span></span><a class="headerlink" href="#CohereConfig" title="Link to this definition"></a></dt>
+<dd><p>Cohere-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="CohereConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#CohereConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available Cohere models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="GeminiConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GeminiConfig</span></span><a class="headerlink" href="#GeminiConfig" title="Link to this definition"></a></dt>
+<dd><p>Gemini-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="GeminiConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#GeminiConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available Gemini models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="MistralConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MistralConfig</span></span><a class="headerlink" href="#MistralConfig" title="Link to this definition"></a></dt>
+<dd><p>Mistral-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="MistralConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#MistralConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available Mistral models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="DeepSeekConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DeepSeekConfig</span></span><a class="headerlink" href="#DeepSeekConfig" title="Link to this definition"></a></dt>
+<dd><p>DeepSeek-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="DeepSeekConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#DeepSeekConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available DeepSeek models</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="GrokConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">GrokConfig</span></span><a class="headerlink" href="#GrokConfig" title="Link to this definition"></a></dt>
+<dd><p>Grok-specific configuration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="GrokConfig.AVAILABLE_MODELS">
+<span class="sig-name descname"><span class="pre">AVAILABLE_MODELS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#GrokConfig.AVAILABLE_MODELS" title="Link to this definition"></a></dt>
+<dd><p>List of available Grok models</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+<section id="web-package">
+<h2>web Package<a class="headerlink" href="#web-package" title="Link to this heading"></a></h2>
+<section id="chat-web-app">
+<h3>Chat Web App<a class="headerlink" href="#chat-web-app" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="home">
+<span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#home" title="Link to this definition"></a></dt>
+<dd><p>Serve the iframe HTML interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>HTML response with the chat interface</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chat">
+<span class="sig-name descname"><span class="pre">chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chat" title="Link to this definition"></a></dt>
+<dd><p>Handle chat requests from the web interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – ChatRequest object containing the query</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON response with the chatbot’s answer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="transcribe_audio">
+<span class="sig-name descname"><span class="pre">transcribe_audio</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transcribe_audio" title="Link to this definition"></a></dt>
+<dd><p>Handle audio transcription requests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> – Uploaded audio file</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON response with the transcription</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="ChatRequest">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ChatRequest</span></span><a class="headerlink" href="#ChatRequest" title="Link to this definition"></a></dt>
+<dd><p>Pydantic model for chat requests.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ChatRequest.query">
+<span class="sig-name descname"><span class="pre">query</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ChatRequest.query" title="Link to this definition"></a></dt>
+<dd><p>The user’s query text</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="admin-dashboard">
+<h3>Admin Dashboard<a class="headerlink" href="#admin-dashboard" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="serve_layout">
+<span class="sig-name descname"><span class="pre">serve_layout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#serve_layout" title="Link to this definition"></a></dt>
+<dd><p>Create the dashboard layout.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dash HTML layout components</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="register_callbacks">
+<span class="sig-name descname"><span class="pre">register_callbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#register_callbacks" title="Link to this definition"></a></dt>
+<dd><p>Register all dashboard callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> – Dash application instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="authenticate_user">
+<span class="sig-name descname"><span class="pre">authenticate_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#authenticate_user" title="Link to this definition"></a></dt>
+<dd><p>Authenticate a user against stored credentials.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> – Username to authenticate</p></li>
+<li><p><strong>password</strong> – Password to verify</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if authentication succeeds, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="generate_metrics">
+<span class="sig-name descname"><span class="pre">generate_metrics</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#generate_metrics" title="Link to this definition"></a></dt>
+<dd><p>Generate system metrics for the dashboard.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary of metrics (users, queries, token usage, costs)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+<section id="bot-implementations">
+<h2>Bot Implementations<a class="headerlink" href="#bot-implementations" title="Link to this heading"></a></h2>
+<section id="telegram-bot">
+<h3>Telegram Bot<a class="headerlink" href="#telegram-bot" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="TelegramBot">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TelegramBot</span></span><a class="headerlink" href="#TelegramBot" title="Link to this definition"></a></dt>
+<dd><p>Telegram bot implementation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TelegramBot.EMAIL_REGEX">
+<span class="sig-name descname"><span class="pre">EMAIL_REGEX</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#TelegramBot.EMAIL_REGEX" title="Link to this definition"></a></dt>
+<dd><p>Regular expression for validating email addresses</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TelegramBot.ADMINS">
+<span class="sig-name descname"><span class="pre">ADMINS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#TelegramBot.ADMINS" title="Link to this definition"></a></dt>
+<dd><p>List of admin user IDs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Telegram bot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>link</strong> – Website link to initialize the RAG system with</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.extract_domain_name">
+<span class="sig-name descname"><span class="pre">extract_domain_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.extract_domain_name" title="Link to this definition"></a></dt>
+<dd><p>Extract domain name from a URL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>link</strong> – URL to extract domain from</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Domain name</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.fetch_content">
+<span class="sig-name descname"><span class="pre">fetch_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">domain_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_depth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webpage_only</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.fetch_content" title="Link to this definition"></a></dt>
+<dd><p>Fetch content from a URL or file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>link</strong> – URL to fetch content from</p></li>
+<li><p><strong>domain_name</strong> – Domain name</p></li>
+<li><p><strong>max_depth</strong> – Maximum crawl depth</p></li>
+<li><p><strong>file_path</strong> – Path to file</p></li>
+<li><p><strong>webpage_only</strong> – Whether to only fetch a single page</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to fetched content</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._init_rag_system">
+<span class="sig-name descname"><span class="pre">_init_rag_system</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._init_rag_system" title="Link to this definition"></a></dt>
+<dd><p>Initialize the RAG system with content from the website.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._setup_handlers">
+<span class="sig-name descname"><span class="pre">_setup_handlers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._setup_handlers" title="Link to this definition"></a></dt>
+<dd><p>Set up Telegram command and message handlers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.start" title="Link to this definition"></a></dt>
+<dd><p>Handle the /start command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Next conversation state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.transcribe">
+<span class="sig-name descname"><span class="pre">transcribe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">audio_buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.transcribe" title="Link to this definition"></a></dt>
+<dd><p>Transcribe voice messages to text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>audio_buffer</strong> – Audio buffer containing voice message</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Transcribed text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.add_content">
+<span class="sig-name descname"><span class="pre">add_content</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.add_content" title="Link to this definition"></a></dt>
+<dd><p>Add new content to the RAG system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.add_admin">
+<span class="sig-name descname"><span class="pre">add_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.add_admin" title="Link to this definition"></a></dt>
+<dd><p>Add a new admin user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.remove_admin">
+<span class="sig-name descname"><span class="pre">remove_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.remove_admin" title="Link to this definition"></a></dt>
+<dd><p>Remove an admin user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.get_admins">
+<span class="sig-name descname"><span class="pre">get_admins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.get_admins" title="Link to this definition"></a></dt>
+<dd><p>List current admin users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._is_admin">
+<span class="sig-name descname"><span class="pre">_is_admin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._is_admin" title="Link to this definition"></a></dt>
+<dd><p>Check if a user is an admin.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>user_id</strong> – User ID to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if user is admin, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._user_exists">
+<span class="sig-name descname"><span class="pre">_user_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._user_exists" title="Link to this definition"></a></dt>
+<dd><p>Check if a user exists in the database.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>id</strong> – User ID to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if user exists, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._run_rag_query">
+<span class="sig-name descname"><span class="pre">_run_rag_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">question</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._run_rag_query" title="Link to this definition"></a></dt>
+<dd><p>Run a RAG query in a separate thread.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>question</strong> – User question</p></li>
+<li><p><strong>user_id</strong> – User ID</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>RAG response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._extract_question">
+<span class="sig-name descname"><span class="pre">_extract_question</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._extract_question" title="Link to this definition"></a></dt>
+<dd><p>Extract question from text or voice message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>msg</strong> – Message from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Extracted question text</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.handle_question">
+<span class="sig-name descname"><span class="pre">handle_question</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.handle_question" title="Link to this definition"></a></dt>
+<dd><p>Process questions from users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Next conversation state</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.cancel_conversation">
+<span class="sig-name descname"><span class="pre">cancel_conversation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.cancel_conversation" title="Link to this definition"></a></dt>
+<dd><p>Cancel the current conversation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>End of conversation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.set_email">
+<span class="sig-name descname"><span class="pre">set_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.set_email" title="Link to this definition"></a></dt>
+<dd><p>Set email for receiving notifications.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._is_valid_email">
+<span class="sig-name descname"><span class="pre">_is_valid_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_email</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._is_valid_email" title="Link to this definition"></a></dt>
+<dd><p>Check if an email address is valid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_email</strong> – Email address to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if valid, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.broadcast">
+<span class="sig-name descname"><span class="pre">broadcast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.broadcast" title="Link to this definition"></a></dt>
+<dd><p>Broadcast a message to all bot subscribers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>update</strong> – Update from Telegram</p></li>
+<li><p><strong>context</strong> – CallbackContext for the bot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.run_async">
+<span class="sig-name descname"><span class="pre">run_async</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.run_async" title="Link to this definition"></a></dt>
+<dd><p>Run the bot asynchronously.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot._handle_exit">
+<span class="sig-name descname"><span class="pre">_handle_exit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot._handle_exit" title="Link to this definition"></a></dt>
+<dd><p>Handle exit signals gracefully.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>signum</strong> – Signal number</p></li>
+<li><p><strong>frame</strong> – Current stack frame</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TelegramBot.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TelegramBot.run" title="Link to this definition"></a></dt>
+<dd><p>Run the bot using asyncio.run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="whatsapp-bot">
+<h3>WhatsApp Bot<a class="headerlink" href="#whatsapp-bot" title="Link to this heading"></a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="TwilioClient">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TwilioClient</span></span><a class="headerlink" href="#TwilioClient" title="Link to this definition"></a></dt>
+<dd><p>WhatsApp bot implementation using Twilio.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TwilioClient.TWILIO_SID">
+<span class="sig-name descname"><span class="pre">TWILIO_SID</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#TwilioClient.TWILIO_SID" title="Link to this definition"></a></dt>
+<dd><p>Twilio account SID</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TwilioClient.TWILIO_PHONE_NUMBER">
+<span class="sig-name descname"><span class="pre">TWILIO_PHONE_NUMBER</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#TwilioClient.TWILIO_PHONE_NUMBER" title="Link to this definition"></a></dt>
+<dd><p>Twilio phone number</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="TwilioClient.TWILIO_AUTH_TOKEN">
+<span class="sig-name descname"><span class="pre">TWILIO_AUTH_TOKEN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#TwilioClient.TWILIO_AUTH_TOKEN" title="Link to this definition"></a></dt>
+<dd><p>Twilio authentication token</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TwilioClient.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TwilioClient.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the Twilio client for WhatsApp messaging.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TwilioClient.send_whatsapp_message">
+<span class="sig-name descname"><span class="pre">send_whatsapp_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TwilioClient.send_whatsapp_message" title="Link to this definition"></a></dt>
+<dd><p>Send a WhatsApp message.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>to_number</strong> – Recipient’s phone number</p></li>
+<li><p><strong>message</strong> – Message to send</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Success status</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TwilioClient.webhook">
+<span class="sig-name descname"><span class="pre">webhook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TwilioClient.webhook" title="Link to this definition"></a></dt>
+<dd><p>Handle incoming webhook requests from Twilio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – FastAPI request object</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>TwiML response for Twilio</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.post">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">post</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">&quot;/sms&quot;)(twilio_bot.webhook</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#app.post" title="Link to this definition"></a></dt>
+<dd><p>Route for Twilio SMS webhook.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Response from webhook handler</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules/bots.html" class="btn btn-neutral float-left" title="Bot Implementations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, DataVerse Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

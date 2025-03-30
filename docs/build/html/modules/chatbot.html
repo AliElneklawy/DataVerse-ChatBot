@@ -1,0 +1,213 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatbot Module &mdash; DataVerse Chatbot 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4be055c6" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=20623aea"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Web Interfaces" href="web.html" />
+    <link rel="prev" title="Usage Guide" href="../usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            DataVerse Chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Chatbot Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rag-retrieval-augmented-generation">RAG (Retrieval-Augmented Generation)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-rag">Base RAG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rag-implementations">RAG Implementations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#embeddings">Embeddings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crawler">Crawler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utilities">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#file-loader">File Loader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#database-operations">Database Operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#monitoring">Monitoring</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="web.html">Web Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bots.html">Bot Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DataVerse Chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Chatbot Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/chatbot.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="chatbot-module">
+<h1>Chatbot Module<a class="headerlink" href="#chatbot-module" title="Link to this heading"></a></h1>
+<p>This module contains the core chatbot functionality.</p>
+<section id="rag-retrieval-augmented-generation">
+<h2>RAG (Retrieval-Augmented Generation)<a class="headerlink" href="#rag-retrieval-augmented-generation" title="Link to this heading"></a></h2>
+<p>The RAG module provides retrieval-augmented generation capabilities.</p>
+<section id="base-rag">
+<h3>Base RAG<a class="headerlink" href="#base-rag" title="Link to this heading"></a></h3>
+<p>The BaseRAG class is the foundation for all RAG implementations. It provides common functionality
+for document retrieval, reranking, and context generation.</p>
+<p>Key features:
+- Document vectorization and retrieval
+- Context preparation and cleaning
+- Query reformulation
+- Response monitoring</p>
+</section>
+<section id="rag-implementations">
+<h3>RAG Implementations<a class="headerlink" href="#rag-implementations" title="Link to this heading"></a></h3>
+<p>Different implementations are available for various LLM providers:</p>
+<ul class="simple">
+<li><p><strong>ClaudeRAG</strong>: Uses Anthropic’s Claude models</p></li>
+<li><p><strong>OpenAIRAG</strong>: Integrates with OpenAI’s models</p></li>
+<li><p><strong>CohereRAG</strong>: Leverages Cohere’s language models</p></li>
+<li><p><strong>GeminiRAG</strong>: Connects to Google’s Gemini AI</p></li>
+<li><p><strong>MistralRAG</strong>: Works with Mistral AI models</p></li>
+<li><p><strong>DeepseekRAG</strong>: Utilizes Deepseek’s language models</p></li>
+<li><p><strong>GrokRAG</strong>: Integrates with Grok’s AI capabilities</p></li>
+</ul>
+</section>
+</section>
+<section id="embeddings">
+<h2>Embeddings<a class="headerlink" href="#embeddings" title="Link to this heading"></a></h2>
+<p>The embeddings module provides text embedding capabilities for vector search.</p>
+<p>Available embedding models:
+- <strong>CohereEmbedding</strong>: Uses Cohere’s embedding models
+- <strong>OpenAIEmbedding</strong>: Leverages OpenAI’s embedding capabilities
+- <strong>MistralEmbedding</strong>: Works with Mistral’s embedding models
+- <strong>HuggingFaceEmbedding</strong>: Uses open-source Hugging Face models</p>
+</section>
+<section id="crawler">
+<h2>Crawler<a class="headerlink" href="#crawler" title="Link to this heading"></a></h2>
+<p>The Crawler component handles web content extraction with features:
+- Configurable depth and breadth for crawling
+- URL filtering
+- Content extraction and cleaning
+- Rate limiting and politeness controls</p>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>The config module provides centralized configuration management:
+- API key management
+- Model selection and parameters
+- Default system prompts
+- Chunking strategies</p>
+</section>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Link to this heading"></a></h2>
+<p>Various utility components provide supporting functionality:</p>
+<section id="file-loader">
+<h3>File Loader<a class="headerlink" href="#file-loader" title="Link to this heading"></a></h3>
+<p>Handles loading and processing various file formats including:
+- PDF documents
+- Microsoft Office files
+- Plain text
+- HTML content</p>
+</section>
+<section id="database-operations">
+<h3>Database Operations<a class="headerlink" href="#database-operations" title="Link to this heading"></a></h3>
+<p>Provides database interaction for:
+- Storing chat history
+- Managing document indices
+- Tracking usage metrics</p>
+</section>
+<section id="monitoring">
+<h3>Monitoring<a class="headerlink" href="#monitoring" title="Link to this heading"></a></h3>
+<p>Service monitoring capabilities include:
+- Uncertain response detection
+- Chat history analysis
+- Usage statistics
+- Alerting mechanisms</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../usage.html" class="btn btn-neutral float-left" title="Usage Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="web.html" class="btn btn-neutral float-right" title="Web Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, DataVerse Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

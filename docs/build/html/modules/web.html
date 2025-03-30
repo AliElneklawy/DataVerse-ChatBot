@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Interfaces &mdash; DataVerse Chatbot 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=4be055c6" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=20623aea"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Bot Implementations" href="bots.html" />
+    <link rel="prev" title="Chatbot Module" href="chatbot.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            DataVerse Chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chatbot.html">Chatbot Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Web Interfaces</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#chat-web-application">Chat Web Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#chat-web-template">Chat Web Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#admin-dashboard">Admin Dashboard</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main-dashboard-pages">Main Dashboard Pages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authentication-system">Authentication System</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#content-management">Content Management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#metrics-and-visualization">Metrics and Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#style-and-appearance">Style and Appearance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bots.html">Bot Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">DataVerse Chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Web Interfaces</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/modules/web.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="web-interfaces">
+<h1>Web Interfaces<a class="headerlink" href="#web-interfaces" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">web</span></code> module provides web-based interfaces for the DataVerse ChatBot, including:</p>
+<ul class="simple">
+<li><p>Chat web application with iframe embedding</p></li>
+<li><p>Admin dashboard for system management</p></li>
+</ul>
+<section id="chat-web-application">
+<h2>Chat Web Application<a class="headerlink" href="#chat-web-application" title="Link to this heading"></a></h2>
+<p>The chat web application provides a FastAPI-based interface for embedding the chatbot in websites via an iframe.</p>
+<p>Key Features:
+- Real-time chat interface
+- Message history display
+- Voice input support
+- Customizable appearance
+- Responsive design for mobile and desktop
+- Iframe embedding capability</p>
+<p>Main Functions:
+- <code class="docutils literal notranslate"><span class="pre">home()</span></code>: Serves the iframe HTML interface
+- <code class="docutils literal notranslate"><span class="pre">chat(request)</span></code>: Handles chat requests from the web interface
+- <code class="docutils literal notranslate"><span class="pre">transcribe_audio(file)</span></code>: Processes audio transcription requests</p>
+</section>
+<section id="chat-web-template">
+<h2>Chat Web Template<a class="headerlink" href="#chat-web-template" title="Link to this heading"></a></h2>
+<p>This module contains the HTML template for the chat interface.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">IFRAME_HTML</span></code> variable provides the HTML template for embedding the chat interface in an iframe.</p>
+</section>
+<section id="admin-dashboard">
+<h2>Admin Dashboard<a class="headerlink" href="#admin-dashboard" title="Link to this heading"></a></h2>
+<p>The admin dashboard provides tools for managing the RAG system. It uses Dash and includes features to:</p>
+<ul class="simple">
+<li><p>View system metrics</p></li>
+<li><p>Monitor active conversations</p></li>
+<li><p>Track token usage and costs</p></li>
+<li><p>Manage content (crawl websites, upload files)</p></li>
+<li><p>Update account settings</p></li>
+</ul>
+<p>Key Functions:
+- <code class="docutils literal notranslate"><span class="pre">serve_layout()</span></code>: Creates the dashboard layout
+- <code class="docutils literal notranslate"><span class="pre">register_callbacks(app)</span></code>: Registers all dashboard callbacks</p>
+<section id="main-dashboard-pages">
+<h3>Main Dashboard Pages<a class="headerlink" href="#main-dashboard-pages" title="Link to this heading"></a></h3>
+<p>The admin dashboard consists of several pages:</p>
+<ol class="arabic simple">
+<li><p><strong>Dashboard</strong>: Overview of system metrics and recent activity</p></li>
+<li><p><strong>Content Management</strong>: Tools to add and manage content sources</p></li>
+<li><p><strong>User Management</strong>: View and manage system users</p></li>
+<li><p><strong>Account Settings</strong>: Update admin credentials</p></li>
+<li><p><strong>System Settings</strong>: Configure system parameters</p></li>
+<li><p><strong>Chat History</strong>: View and search chat interactions</p></li>
+</ol>
+</section>
+<section id="authentication-system">
+<h3>Authentication System<a class="headerlink" href="#authentication-system" title="Link to this heading"></a></h3>
+<p>The dashboard includes authentication features:
+- <code class="docutils literal notranslate"><span class="pre">authenticate_user(username,</span> <span class="pre">password)</span></code>: Authenticates users against stored credentials
+- <code class="docutils literal notranslate"><span class="pre">update_credentials(username,</span> <span class="pre">password)</span></code>: Updates admin credentials</p>
+</section>
+<section id="content-management">
+<h3>Content Management<a class="headerlink" href="#content-management" title="Link to this heading"></a></h3>
+<p>Content management capabilities include:
+- <code class="docutils literal notranslate"><span class="pre">crawl_website(url,</span> <span class="pre">max_depth,</span> <span class="pre">client)</span></code>: Crawls websites to add content to the RAG system
+- <code class="docutils literal notranslate"><span class="pre">upload_file(content,</span> <span class="pre">filename)</span></code>: Uploads and processes files for RAG</p>
+</section>
+<section id="metrics-and-visualization">
+<h3>Metrics and Visualization<a class="headerlink" href="#metrics-and-visualization" title="Link to this heading"></a></h3>
+<p>The dashboard provides visual analytics:
+- <code class="docutils literal notranslate"><span class="pre">generate_metrics()</span></code>: Generates system metrics for the dashboard
+- <code class="docutils literal notranslate"><span class="pre">create_usage_chart()</span></code>: Creates a chart of model usage distribution
+- <code class="docutils literal notranslate"><span class="pre">create_cost_chart()</span></code>: Creates a chart of cost distribution by model</p>
+</section>
+<section id="style-and-appearance">
+<h3>Style and Appearance<a class="headerlink" href="#style-and-appearance" title="Link to this heading"></a></h3>
+<p>The dashboard uses custom CSS for styling, stored in:
+- <code class="docutils literal notranslate"><span class="pre">static/css/admin.css</span></code>: Main dashboard styling
+- <code class="docutils literal notranslate"><span class="pre">static/css/dark_mode.css</span></code>: Dark mode styling</p>
+<p>JavaScript functionality is provided in:
+- <code class="docutils literal notranslate"><span class="pre">static/js/admin.js</span></code>: Dashboard interactivity</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="chatbot.html" class="btn btn-neutral float-left" title="Chatbot Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="bots.html" class="btn btn-neutral float-right" title="Bot Implementations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, DataVerse Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
