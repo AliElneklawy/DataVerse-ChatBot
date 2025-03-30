@@ -1,0 +1,556 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chatbot.utils.utils &mdash; DataVerse Chatbot 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=4be055c6" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=20623aea"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            DataVerse Chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/chatbot.html">Chatbot Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/web.html">Web Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules/bots.html">Bot Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">DataVerse Chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">chatbot.utils.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for chatbot.utils.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">smtplib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sqlite3</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">email</span><span class="w"> </span><span class="kn">import</span> <span class="n">encoders</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">email.mime.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIMEBase</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">email.mime.text</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIMEText</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">email.mime.multipart</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIMEMultipart</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">email.mime.application</span><span class="w"> </span><span class="kn">import</span> <span class="n">MIMEApplication</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATABASE_DIR</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATABASE_DIR</span>
+
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_folder</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">p</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>    
+    <span class="k">return</span> <span class="n">p</span>
+
+<div class="viewcode-block" id="DatabaseOps">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DatabaseOps</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">create_folder</span><span class="p">(</span><span class="n">DATABASE_DIR</span><span class="p">))</span> <span class="o">/</span> <span class="s2">&quot;history_and_usage.db&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_db</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_init_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                CREATE TABLE IF NOT EXISTS chat_history (</span>
+<span class="s2">                        user_id TEXT,</span>
+<span class="s2">                        timestamp DATETIME,</span>
+<span class="s2">                        question TEXT,</span>
+<span class="s2">                        answer TEXT,</span>
+<span class="s2">                        model_used TEXT,</span>
+<span class="s2">                        embedding_model_used TEXT,</span>
+<span class="s2">                        PRIMARY KEY (user_id, timestamp)</span>
+<span class="s2">                        )</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">)</span>
+
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                CREATE TABLE IF NOT EXISTS cost_monitor (</span>
+<span class="s2">                        user_id TEXT,</span>
+<span class="s2">                        timestamp DATETIME,</span>
+<span class="s2">                        model_used TEXT, </span>
+<span class="s2">                        embedding_model_used TEXT,</span>
+<span class="s2">                        input_tokens INTEGER,</span>
+<span class="s2">                        output_tokens INTEGER,</span>
+<span class="s2">                        request_cost INTEGER,</span>
+<span class="s2">                        PRIMARY KEY (user_id, timestamp)</span>
+<span class="s2">                        )</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">)</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                CREATE TABLE IF NOT EXISTS bot_subscribers (</span>
+<span class="s2">                        user_id INTEGER PRIMARY KEY,</span>
+<span class="s2">                        first_name TEXT,</span>
+<span class="s2">                        subscribed_on DATETIME,</span>
+<span class="s2">                        platform TEXT</span>
+<span class="s2">                        )</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">)</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DatabaseOps.get_chat_history">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps.get_chat_history">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_chat_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                         <span class="n">user_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                         <span class="n">last_n</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> 
+                         <span class="n">full_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                         <span class="n">last_n_hours</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">24</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">full_history</span><span class="p">:</span>
+                <span class="n">time_wndw</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="n">last_n_hours</span><span class="p">)</span>
+                <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    SELECT *</span>
+<span class="s2">                    FROM chat_history </span>
+<span class="s2">                    WHERE  timestamp &gt;= ?</span>
+<span class="s2">                    ORDER BY user_id, timestamp</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">time_wndw</span><span class="p">,))</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+                <span class="n">grouped_history</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">ts</span><span class="p">,</span> <span class="n">question</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">llm</span><span class="p">,</span> <span class="n">embedder</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+                    <span class="n">grouped_history</span><span class="p">[</span><span class="n">uid</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                        <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">ts</span><span class="p">,</span>
+                        <span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span>
+                        <span class="s2">&quot;assistant&quot;</span><span class="p">:</span> <span class="n">answer</span><span class="p">,</span>
+                        <span class="s2">&quot;llm&quot;</span><span class="p">:</span> <span class="n">llm</span><span class="p">,</span>
+                        <span class="s2">&quot;embedder&quot;</span><span class="p">:</span> <span class="n">embedder</span>
+                    <span class="p">})</span>
+
+                <span class="n">history</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">uid</span><span class="p">,</span> <span class="s2">&quot;interactions&quot;</span><span class="p">:</span> <span class="n">interactions</span><span class="p">}</span> 
+                            <span class="k">for</span> <span class="n">uid</span><span class="p">,</span> <span class="n">interactions</span> <span class="ow">in</span> <span class="n">grouped_history</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    SELECT question, answer</span>
+<span class="s2">                    FROM chat_history</span>
+<span class="s2">                    WHERE user_id = ?</span>
+<span class="s2">                    ORDER BY timestamp</span>
+<span class="s2">                    LIMIT ?</span>
+<span class="s2">                    &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">last_n</span><span class="p">))</span>
+                <span class="n">history</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;question&quot;</span><span class="p">:</span> <span class="n">q</span><span class="p">,</span> <span class="s2">&quot;answer&quot;</span><span class="p">:</span> <span class="n">a</span><span class="p">}</span> <span class="k">for</span> <span class="n">q</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+
+            <span class="k">return</span> <span class="n">history</span> <span class="k">if</span> <span class="n">history</span> <span class="k">else</span> <span class="s2">&quot;No previous conversations.&quot;</span></div>
+
+
+<div class="viewcode-block" id="DatabaseOps.append_chat_history">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps.append_chat_history">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_chat_history</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                            <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                            <span class="n">question</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                            <span class="n">answer</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                            <span class="n">model_used</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                            <span class="n">embedding_model_used</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                INSERT INTO chat_history (user_id, </span>
+<span class="s2">                                          timestamp, </span>
+<span class="s2">                                          question, </span>
+<span class="s2">                                          answer,</span>
+<span class="s2">                                          model_used,</span>
+<span class="s2">                                          embedding_model_used)</span>
+<span class="s2">                VALUES (?, ?, ?, ?, ?, ?)</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">question</span><span class="p">,</span> <span class="n">answer</span><span class="p">,</span> <span class="n">model_used</span><span class="p">,</span> <span class="n">embedding_model_used</span><span class="p">))</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Appended chat history for user </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DatabaseOps.append_cost">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps.append_cost">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                    <span class="n">model_used</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                    <span class="n">embedding_model_used</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                    <span class="n">input_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                    <span class="n">output_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+                    <span class="n">cost_per_input_token</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                    <span class="n">cost_per_output_token</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                INSERT INTO cost_monitor (user_id,</span>
+<span class="s2">                                          timestamp,</span>
+<span class="s2">                                          model_used,</span>
+<span class="s2">                                          embedding_model_used,</span>
+<span class="s2">                                          input_tokens,</span>
+<span class="s2">                                          output_tokens, </span>
+<span class="s2">                                          request_cost)</span>
+<span class="s2">                VALUES (?, ?, ?, ?, ?, ?, (? * ? + ? * ?))</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">,</span> <span class="n">model_used</span><span class="p">,</span> 
+                      <span class="n">embedding_model_used</span><span class="p">,</span> <span class="n">input_tokens</span><span class="p">,</span> <span class="n">output_tokens</span><span class="p">,</span>
+                      <span class="n">input_tokens</span><span class="p">,</span> <span class="n">cost_per_input_token</span><span class="o">/</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">,</span>
+                      <span class="n">output_tokens</span><span class="p">,</span> <span class="n">cost_per_output_token</span><span class="o">/</span><span class="mi">10</span><span class="o">**</span><span class="mi">6</span><span class="p">,))</span> <span class="c1"># price is per million tokens</span>
+            
+            <span class="n">conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Appended cost for user </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DatabaseOps.get_monitored_resp">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps.get_monitored_resp">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_monitored_resp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]:</span>
+        <span class="n">day_ago</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span> <span class="c1"># get responses for the last 24 hours</span>
+
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">results</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+                <span class="s2">&quot;SELECT question, answer FROM chat_history WHERE timestamp &gt;= ?&quot;</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">day_ago</span><span class="p">,)</span>
+            <span class="p">)</span>
+            <span class="n">q_a</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">q_a</span></div>
+
+    
+<div class="viewcode-block" id="DatabaseOps.append_bot_sub">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps.append_bot_sub">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append_bot_sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">platform</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                INSERT INTO bot_subscribers (user_id,</span>
+<span class="s2">                                            first_name,</span>
+<span class="s2">                                            subscribed_on,</span>
+<span class="s2">                                            platform</span>
+<span class="s2">                                            )</span>
+<span class="s2">                VALUES (?, ?, ?, ?)</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">first_name</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">platform</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="DatabaseOps.get_bot_sub">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.DatabaseOps.get_bot_sub">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_bot_sub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">db_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">conn</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    SELECT user_id </span>
+<span class="s2">                    FROM bot_subscribers</span>
+<span class="s2">                    WHERE user_id = ?</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">user_id</span><span class="p">,))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">results</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                    SELECT *</span>
+<span class="s2">                    FROM bot_subscribers</span>
+<span class="s2">                &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">results</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EmailService">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.EmailService">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EmailService</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span> <span class="o">=</span> <span class="s2">&quot;bcaitech.ai@gmail.com&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app_password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;GMAIL_APP_PASSWORD&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EmailService.subscribe">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.EmailService.subscribe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Allow other classes to subscribe to email state changes.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span> <span class="ow">and</span> <span class="n">callback</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></div>
+
+    
+<div class="viewcode-block" id="EmailService.unsubscibe">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.EmailService.unsubscibe">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unsubscibe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_notify_subscribers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_email</span><span class="p">,</span> <span class="n">new_email</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">callback</span><span class="p">(</span><span class="n">old_email</span><span class="p">,</span> <span class="n">new_email</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error notifying subscibers: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Subscribers notified.&quot;</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">_format_email_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">unknowns</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Format the email content with a table of uncertain responses.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            unknowns (list[tuple[str, str]]): List of (question, answer) tuples.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Formatted HTML content for the email.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">email_content</span> <span class="o">=</span> <span class="s2">&quot;&lt;h2&gt;Uncertain Responses in RAG System&lt;/h2&gt;&quot;</span>
+        <span class="n">email_content</span> <span class="o">+=</span> <span class="s2">&quot;&lt;p&gt;The following questions received uncertain responses and might need to be added to the knowledge base:&lt;/p&gt;&quot;</span>
+        <span class="n">email_content</span> <span class="o">+=</span> <span class="s2">&quot;&lt;table border=&#39;1&#39;&gt;&lt;tr&gt;&lt;th&gt;ID&lt;/th&gt;&lt;th&gt;Question&lt;/th&gt;&lt;th&gt;Response&lt;/th&gt;&lt;/tr&gt;&quot;</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">answer</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unknowns</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">truncated_answer</span> <span class="o">=</span> <span class="p">(</span><span class="n">answer</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">answer</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="k">else</span> <span class="n">answer</span>
+            <span class="n">email_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&lt;tr&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;td&gt;</span><span class="si">{</span><span class="n">truncated_answer</span><span class="si">}</span><span class="s2">&lt;/td&gt;&lt;/tr&gt;&quot;</span>
+
+        <span class="n">email_content</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/table&gt;&quot;</span>
+        <span class="k">return</span> <span class="n">email_content</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send_without_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">MIMEMultipart</span><span class="p">,</span> <span class="n">unknowns</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare message without attachments for uncertain responses.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (MIMEMultipart): The email message object</span>
+<span class="sd">            unknowns (list[tuple[str, str]]): List of (question, answer) tuples</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            MIMEText: HTML content for the message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">html_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_email_content</span><span class="p">(</span><span class="n">unknowns</span><span class="p">)</span>
+        <span class="n">html_part</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">html_content</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html_part</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_add_file_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">MIMEMultipart</span><span class="p">,</span> <span class="n">file_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">content_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add a file attachment to the email message.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (MIMEMultipart): The email message object</span>
+<span class="sd">            file_path (str): Path to the file to attach</span>
+<span class="sd">            content_type (str, optional): Content type of the file. Defaults to None.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if attachment was successful, False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;File not found: </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+                
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+            
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">attachment_file</span><span class="p">:</span>
+                <span class="n">attachment_data</span> <span class="o">=</span> <span class="n">attachment_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            
+            <span class="c1"># Determine content type if not specified</span>
+            <span class="k">if</span> <span class="n">content_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">file_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.json&#39;</span><span class="p">):</span>
+                    <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;application/json&#39;</span>
+                <span class="k">elif</span> <span class="n">file_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">):</span>
+                    <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet&#39;</span>
+                <span class="k">elif</span> <span class="n">file_path</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.pdf&#39;</span><span class="p">):</span>
+                    <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;application/pdf&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">content_type</span> <span class="o">=</span> <span class="s1">&#39;application/octet-stream&#39;</span>
+            
+            <span class="n">attachment</span> <span class="o">=</span> <span class="n">MIMEBase</span><span class="p">(</span><span class="o">*</span><span class="n">content_type</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">attachment</span><span class="o">.</span><span class="n">set_payload</span><span class="p">(</span><span class="n">attachment_data</span><span class="p">)</span>
+            <span class="n">encoders</span><span class="o">.</span><span class="n">encode_base64</span><span class="p">(</span><span class="n">attachment</span><span class="p">)</span>
+            <span class="n">attachment</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="s1">&#39;attachment&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">attachment</span><span class="p">)</span>
+            
+            <span class="k">return</span> <span class="kc">True</span>
+            
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error attaching file </span><span class="si">{</span><span class="n">file_path</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="EmailService.send_email_with_attachments">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.EmailService.send_email_with_attachments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_email_with_attachments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">message_body</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">file_paths</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send an email with multiple file attachments.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            subject (str): The email subject</span>
+<span class="sd">            message_body (str): The email body text</span>
+<span class="sd">            file_paths (list[str], optional): List of file paths to attach. Defaults to None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Receiver email was not set. Email wasn&#39;t sent.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">()</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;From&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span>
+
+        <span class="n">text_part</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">message_body</span><span class="p">,</span> <span class="s2">&quot;plain&quot;</span><span class="p">)</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">text_part</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">file_paths</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">file_path</span> <span class="ow">in</span> <span class="n">file_paths</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_file_attachment</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">file_path</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP_SSL</span><span class="p">(</span><span class="s2">&quot;smtp.gmail.com&quot;</span><span class="p">,</span> <span class="mi">465</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+                <span class="n">server</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_password</span><span class="p">)</span>
+                <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Email sent to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="si">}</span><span class="s2"> with subject: </span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">file_paths</span><span class="p">)</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">file_paths</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="mi">0</span><span class="si">}</span><span class="s2"> attachments&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to send email: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_send_with_attachment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="n">MIMEMultipart</span><span class="p">,</span> <span class="n">json_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add JSON data as an attachment to the email.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (MIMEMultipart): The email message object</span>
+<span class="sd">            json_data (list[dict]): JSON data to attach</span>
+<span class="sd">            filename (str): Filename for the attachment</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            MIMEApplication: The JSON attachment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">text_part</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="s2">&quot;Please find the attached JSON file of your conversations.</span><span class="se">\n\n</span><span class="s2">Best Regards,</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;plain&quot;</span><span class="p">)</span>
+        <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="n">text_part</span><span class="p">)</span>
+        <span class="n">json_str</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">attachment</span> <span class="o">=</span> <span class="n">MIMEApplication</span><span class="p">(</span><span class="n">json_str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+        <span class="n">attachment</span><span class="o">.</span><span class="n">add_header</span><span class="p">(</span><span class="s1">&#39;Content-Disposition&#39;</span><span class="p">,</span> <span class="s1">&#39;attachment&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">attachment</span>
+
+<div class="viewcode-block" id="EmailService.send_email">
+<a class="viewcode-back" href="../../../api_reference.html#chatbot.utils.utils.EmailService.send_email">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> 
+                   <span class="n">subject</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+                   <span class="n">unknowns</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> 
+                   <span class="n">json_data</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;conversations.json&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Send an email with either uncertain responses or JSON data.</span>
+<span class="sd">        </span>
+<span class="sd">        This method is maintained for backwards compatibility.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            subject (str): The email subject line</span>
+<span class="sd">            unknowns (list[tuple[str, str]], optional): List of uncertain responses. Defaults to None.</span>
+<span class="sd">            json_data (list[dict], optional): JSON data to attach. Defaults to None.</span>
+<span class="sd">            filename (str, optional): Filename for JSON attachment. Defaults to &quot;conversations.json&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Receiver email was not set. Email wasn&#39;t sent.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="n">msg_type</span> <span class="o">=</span> <span class="s2">&quot;mixed&quot;</span> <span class="k">if</span> <span class="n">json_data</span> <span class="k">else</span> <span class="s2">&quot;alternative&quot;</span>
+
+        <span class="n">message</span> <span class="o">=</span> <span class="n">MIMEMultipart</span><span class="p">(</span><span class="n">msg_type</span><span class="p">)</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;Subject&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subject</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;From&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span>
+        <span class="n">message</span><span class="p">[</span><span class="s2">&quot;To&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span>
+
+        <span class="k">if</span> <span class="n">json_data</span><span class="p">:</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_send_with_attachment</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">json_data</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">message</span><span class="o">.</span><span class="n">attach</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_send_without_attachment</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">unknowns</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP_SSL</span><span class="p">(</span><span class="s2">&quot;smtp.gmail.com&quot;</span><span class="p">,</span> <span class="mi">465</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+                <span class="n">server</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_password</span><span class="p">)</span>
+                <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sender_email</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="p">,</span> <span class="n">message</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Email sent to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="si">}</span><span class="s2"> with subject: </span><span class="si">{</span><span class="n">subject</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to send email: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">receiver_email</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span>
+    
+    <span class="nd">@receiver_email</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">receiver_email</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="n">old_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Email is set to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_receiver_email</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_notify_subscribers</span><span class="p">(</span><span class="n">old_value</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, DataVerse Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

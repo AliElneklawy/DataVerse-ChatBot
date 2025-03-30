@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usage Guide &mdash; DataVerse Chatbot 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4be055c6" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=20623aea"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Chatbot Module" href="modules/chatbot.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DataVerse Chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Usage Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-cli-interface">Running the CLI Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-ingestion-methods">Data Ingestion Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#web-crawling">Web Crawling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#file-loading">File Loading</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-rag-system">Creating a RAG System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-as-a-web-interface">Deploying as a Web Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-as-a-telegram-bot">Deploying as a Telegram Bot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-as-a-whatsapp-bot">Deploying as a WhatsApp Bot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-the-admin-dashboard">Running the Admin Dashboard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-features">Advanced Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#voice-mode">Voice Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-a-custom-dataset">Creating a Custom Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-a-classifier">Training a Classifier</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules/chatbot.html">Chatbot Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/web.html">Web Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/bots.html">Bot Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataVerse Chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Usage Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/usage.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="usage-guide">
+<h1>Usage Guide<a class="headerlink" href="#usage-guide" title="Link to this heading"></a></h1>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p>After installation, you can use DataVerse ChatBot in several different ways:</p>
+<ol class="arabic simple">
+<li><p><strong>CLI Chat Interface</strong>: Interact directly via the command line</p></li>
+<li><p><strong>Web Interface</strong>: Embed or deploy as a web application</p></li>
+<li><p><strong>Telegram Bot</strong>: Deploy as a Telegram bot</p></li>
+<li><p><strong>WhatsApp Bot</strong>: Deploy as a WhatsApp bot via Twilio</p></li>
+<li><p><strong>Admin Dashboard</strong>: Manage the system through a web-based admin panel</p></li>
+</ol>
+</section>
+<section id="running-the-cli-interface">
+<h2>Running the CLI Interface<a class="headerlink" href="#running-the-cli-interface" title="Link to this heading"></a></h2>
+<p>The simplest way to start is with the command-line interface:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/main.py
+</pre></div>
+</div>
+<p>This will:</p>
+<ol class="arabic simple">
+<li><p>Load the configured content</p></li>
+<li><p>Create or load the vector index</p></li>
+<li><p>Start an interactive chat session</p></li>
+</ol>
+</section>
+<section id="data-ingestion-methods">
+<h2>Data Ingestion Methods<a class="headerlink" href="#data-ingestion-methods" title="Link to this heading"></a></h2>
+<section id="web-crawling">
+<h3>Web Crawling<a class="headerlink" href="#web-crawling" title="Link to this heading"></a></h3>
+<p>To extract content from a website:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.crawler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Crawler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tldextract</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com&quot;</span>
+<span class="n">domain_name</span> <span class="o">=</span> <span class="n">tldextract</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span>
+
+<span class="c1"># Create crawler instance (options: &quot;crawl4ai&quot; or &quot;scrapegraph&quot;)</span>
+<span class="n">crawler</span> <span class="o">=</span> <span class="n">Crawler</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">domain_name</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="s2">&quot;crawl4ai&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extract content (webpage_only=False to crawl linked pages)</span>
+<span class="n">content_path</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">crawler</span><span class="o">.</span><span class="n">extract_content</span><span class="p">(</span>
+    <span class="n">url</span><span class="p">,</span> <span class="n">webpage_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span>
+
+
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content saved to: </span><span class="si">{</span><span class="n">content_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="file-loading">
+<h3>File Loading<a class="headerlink" href="#file-loading" title="Link to this heading"></a></h3>
+<p>To extract content from files:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.file_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span>
+
+<span class="c1"># Path to your file (supports PDF, DOCX, CSV, XLSX, TXT, PPT, etc.)</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="s2">&quot;data/training_files/document.pdf&quot;</span>
+
+<span class="c1"># Output path for the content</span>
+<span class="n">output_path</span> <span class="o">=</span> <span class="n">WEB_CONTENT_DIR</span> <span class="o">/</span> <span class="s2">&quot;extracted_content.txt&quot;</span>
+
+<span class="c1"># Create loader (options: &quot;langchain&quot; or &quot;docling&quot;)</span>
+<span class="n">loader</span> <span class="o">=</span> <span class="n">FileLoader</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">client</span><span class="o">=</span><span class="s2">&quot;docling&quot;</span><span class="p">)</span>
+
+<span class="c1"># Extract content</span>
+<span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">extract_from_file</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">documents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully extracted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creating-a-rag-system">
+<h2>Creating a RAG System<a class="headerlink" href="#creating-a-rag-system" title="Link to this heading"></a></h2>
+<p>Choose your preferred LLM to create a RAG system:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.rag.openai_rag</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIRAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.rag.claude_rag</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClaudeRAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.rag.cohere_rag</span><span class="w"> </span><span class="kn">import</span> <span class="n">CohereRAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span><span class="p">,</span> <span class="n">INDEXES_DIR</span>
+
+<span class="c1"># Path to your content</span>
+<span class="n">content_path</span> <span class="o">=</span> <span class="n">WEB_CONTENT_DIR</span> <span class="o">/</span> <span class="s2">&quot;example.txt&quot;</span>
+
+<span class="c1"># Create RAG instance (example with Claude)</span>
+<span class="n">rag</span> <span class="o">=</span> <span class="n">ClaudeRAG</span><span class="p">(</span>
+    <span class="n">content_path</span><span class="p">,</span>          <span class="c1"># Content to use for RAG</span>
+    <span class="n">INDEXES_DIR</span><span class="p">,</span>           <span class="c1"># Where to store vector indexes</span>
+    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;claude-3-5-sonnet-20241022&quot;</span><span class="p">,</span>  <span class="c1"># Specific model to use</span>
+    <span class="n">chunking_type</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>  <span class="c1"># Chunking strategy (options: &quot;recursive&quot;, &quot;semantic&quot;, &quot;basic&quot;)</span>
+    <span class="n">rerank</span><span class="o">=</span><span class="kc">True</span>            <span class="c1"># Whether to use Cohere&#39;s reranking model</span>
+
+
+
+<span class="c1"># Get a response (asynchronous)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="n">user_id</span> <span class="o">=</span> <span class="s2">&quot;user123&quot;</span>        <span class="c1"># Used for chat history</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Tell me about DataVerse.&quot;</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">rag</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">user_id</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="deploying-as-a-web-interface">
+<h2>Deploying as a Web Interface<a class="headerlink" href="#deploying-as-a-web-interface" title="Link to this heading"></a></h2>
+<p>To run the web interface:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/web/chat_web_app.py
+</pre></div>
+</div>
+<p>This starts a FastAPI server on port 5001. You can access the chat interface at:
+<a class="reference external" href="http://localhost:5001/">http://localhost:5001/</a></p>
+</section>
+<section id="deploying-as-a-telegram-bot">
+<h2>Deploying as a Telegram Bot<a class="headerlink" href="#deploying-as-a-telegram-bot" title="Link to this heading"></a></h2>
+<p>To start the Telegram bot:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/tg_bot.py
+</pre></div>
+</div>
+<p>Ensure you’ve set up the Telegram Bot API token in your <cite>.env</cite> file:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># Telegram Bot</span>
+<span class="na">TELEGRAM_BOT_TOKEN</span><span class="o">=</span><span class="s">your_telegram_bot_token</span>
+</pre></div>
+</div>
+</section>
+<section id="deploying-as-a-whatsapp-bot">
+<h2>Deploying as a WhatsApp Bot<a class="headerlink" href="#deploying-as-a-whatsapp-bot" title="Link to this heading"></a></h2>
+<p>To deploy as a WhatsApp bot via Twilio:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/whatsapp_bot.py
+</pre></div>
+</div>
+<p>Configure your Twilio credentials in the <cite>.env</cite> file:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="c1"># Twilio for WhatsApp</span>
+<span class="na">TWILIO_ACCOUNT_SID</span><span class="o">=</span><span class="s">your_twilio_account_sid</span>
+<span class="na">TWILIO_AUTH_TOKEN</span><span class="o">=</span><span class="s">your_twilio_auth_token</span>
+<span class="na">TWILIO_PHONE_NUMBER</span><span class="o">=</span><span class="s">your_twilio_phone_number</span>
+</pre></div>
+</div>
+</section>
+<section id="running-the-admin-dashboard">
+<h2>Running the Admin Dashboard<a class="headerlink" href="#running-the-admin-dashboard" title="Link to this heading"></a></h2>
+<p>To launch the admin dashboard:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/admin_dashboard_launcher.py
+</pre></div>
+</div>
+<p>Navigate to: <a class="reference external" href="http://localhost:8050/">http://localhost:8050/</a> to access the dashboard.</p>
+<p>Default credentials are:
+- Username: <cite>admin</cite>
+- Password: <cite>password</cite></p>
+<p>(Change these in production!)</p>
+</section>
+<section id="advanced-features">
+<h2>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h2>
+<section id="voice-mode">
+<h3>Voice Mode<a class="headerlink" href="#voice-mode" title="Link to this heading"></a></h3>
+<p>DataVerse ChatBot supports voice interaction:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.voice_mode</span><span class="w"> </span><span class="kn">import</span> <span class="n">VoiceMode</span>
+
+<span class="n">voice_mode</span> <span class="o">=</span> <span class="n">VoiceMode</span><span class="p">()</span>
+
+<span class="c1"># Record audio and transcribe</span>
+<span class="n">wav_path</span> <span class="o">=</span> <span class="n">voice_mode</span><span class="o">.</span><span class="n">start_recording</span><span class="p">()</span>
+<span class="n">transcribed_text</span> <span class="o">=</span> <span class="n">voice_mode</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">wav_path</span><span class="p">)</span>
+
+<span class="c1"># Convert text response to speech</span>
+<span class="n">voice_mode</span><span class="o">.</span><span class="n">text_to_speech</span><span class="p">(</span><span class="s2">&quot;This is a spoken response.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="creating-a-custom-dataset">
+<h3>Creating a Custom Dataset<a class="headerlink" href="#creating-a-custom-dataset" title="Link to this heading"></a></h3>
+<p>To create a dataset for uncertainty classification:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/chatbot/utils/make_dataset.py
+</pre></div>
+</div>
+</section>
+<section id="training-a-classifier">
+<h3>Training a Classifier<a class="headerlink" href="#training-a-classifier" title="Link to this heading"></a></h3>
+<p>To train a classifier for uncertainty detection:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>src/chatbot/utils/train_clf.py
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="modules/chatbot.html" class="btn btn-neutral float-right" title="Chatbot Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, DataVerse Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

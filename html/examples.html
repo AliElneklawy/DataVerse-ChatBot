@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; DataVerse Chatbot 2.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=4be055c6" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=20623aea"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API Reference" href="api_reference.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            DataVerse Chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/chatbot.html">Chatbot Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/web.html">Web Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules/bots.html">Bot Implementations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-a-simple-rag-chatbot">Setting Up a Simple RAG Chatbot</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">DataVerse Chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<p>This page provides practical examples of how to use DataVerse ChatBot for various use cases.</p>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<section id="setting-up-a-simple-rag-chatbot">
+<h3>Setting Up a Simple RAG Chatbot<a class="headerlink" href="#setting-up-a-simple-rag-chatbot" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.rag.openai_rag</span><span class="w"> </span><span class="kn">import</span> <span class="n">OpenAIRAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span><span class="p">,</span> <span class="n">INDEXES_DIR</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+
+<span class="c1"># Path to your content</span>
+<span class="n">content_path</span> <span class="o">=</span> <span class="n">WEB_CONTENT_DIR</span> <span class="o">/</span> <span class="s2">&quot;mycontent.txt&quot;</span>
+
+<span class="c1"># Create a unique user ID</span>
+<span class="n">user_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">())</span>
+
+<span class="c1"># Initialize the RAG system</span>
+<span class="n">rag</span> <span class="o">=</span> <span class="n">OpenAIRAG</span><span class="p">(</span>
+    <span class="n">content_path</span><span class="o">=</span><span class="n">content_path</span><span class="p">,</span>
+    <span class="n">index_path</span><span class="o">=</span><span class="n">INDEXES_DIR</span><span class="p">,</span>
+    <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;gpt-3.5-turbo-0125&quot;</span><span class="p">,</span>
+    <span class="n">chunking_type</span><span class="o">=</span><span class="s2">&quot;recursive&quot;</span><span class="p">,</span>
+    <span class="n">rerank</span><span class="o">=</span><span class="kc">True</span>
+
+
+
+<span class="c1"># Function to chat with the bot</span>
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">query</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;You: &quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">query</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;exit&quot;</span><span class="p">,</span> <span class="s2">&quot;quit&quot;</span><span class="p">]:</span>
+            <span class="k">break</span>
+
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">rag</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bot: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Run the chat loop</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">chat</span><span class="p">())</span>
+
+<span class="n">Web</span> <span class="n">Crawling</span> <span class="ow">and</span> <span class="n">Content</span> <span class="n">Extraction</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tldextract</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.crawler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Crawler</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">crawl_website</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="c1"># Extract domain name from URL</span>
+    <span class="n">domain_name</span> <span class="o">=</span> <span class="n">tldextract</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">domain</span>
+
+    <span class="c1"># Initialize crawler</span>
+    <span class="n">crawler</span> <span class="o">=</span> <span class="n">Crawler</span><span class="p">(</span>
+        <span class="n">base_url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+        <span class="n">domain_name</span><span class="o">=</span><span class="n">domain_name</span><span class="p">,</span>
+        <span class="n">client</span><span class="o">=</span><span class="s2">&quot;crawl4ai&quot;</span>  <span class="c1"># or &quot;scrapegraph&quot;</span>
+
+
+
+    <span class="c1"># Extract content</span>
+    <span class="n">content_path</span> <span class="o">=</span> <span class="k">await</span> <span class="n">crawler</span><span class="o">.</span><span class="n">extract_content</span><span class="p">(</span>
+        <span class="n">link</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+        <span class="n">webpage_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>  <span class="c1"># Crawl linked pages</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span>  <span class="c1"># Crawl depth limit</span>
+
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content extracted and saved to: </span><span class="si">{</span><span class="n">content_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">content_path</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">website_url</span> <span class="o">=</span> <span class="s2">&quot;https://example.com&quot;</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">crawl_website</span><span class="p">(</span><span class="n">website_url</span><span class="p">))</span>
+
+<span class="n">File</span> <span class="n">Processing</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.file_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileLoader</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">process_file</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">output_name</span><span class="o">=</span><span class="s2">&quot;extracted_content.txt&quot;</span><span class="p">):</span>
+    <span class="c1"># Create output path</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">WEB_CONTENT_DIR</span> <span class="o">/</span> <span class="n">output_name</span>
+
+    <span class="c1"># Initialize file loader</span>
+    <span class="n">loader</span> <span class="o">=</span> <span class="n">FileLoader</span><span class="p">(</span>
+        <span class="n">file_path</span><span class="o">=</span><span class="n">file_path</span><span class="p">,</span>
+        <span class="n">content_path</span><span class="o">=</span><span class="n">output_path</span><span class="p">,</span>
+        <span class="n">client</span><span class="o">=</span><span class="s2">&quot;docling&quot;</span>  <span class="c1"># or &quot;langchain&quot;</span>
+
+
+
+    <span class="c1"># Extract content</span>
+    <span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">extract_from_file</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">documents</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully extracted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span><span class="si">}</span><span class="s2"> documents&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Content saved to: </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">output_path</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Failed to extract content&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Process a PDF file</span>
+    <span class="n">pdf_path</span> <span class="o">=</span> <span class="s2">&quot;data/training_files/document.pdf&quot;</span>
+    <span class="n">process_file</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">,</span> <span class="s2">&quot;pdf_content.txt&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Process a DOCX file</span>
+    <span class="n">docx_path</span> <span class="o">=</span> <span class="s2">&quot;data/training_files/document.docx&quot;</span>
+    <span class="n">process_file</span><span class="p">(</span><span class="n">docx_path</span><span class="p">,</span> <span class="s2">&quot;docx_content.txt&quot;</span><span class="p">)</span>
+
+<span class="n">Advanced</span> <span class="n">Usage</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<blockquote>
+<div><p>Using Voice Mode</p>
+</div></blockquote>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.voice_mode</span><span class="w"> </span><span class="kn">import</span> <span class="n">VoiceMode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.rag.claude_rag</span><span class="w"> </span><span class="kn">import</span> <span class="n">ClaudeRAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">WEB_CONTENT_DIR</span><span class="p">,</span> <span class="n">INDEXES_DIR</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">uuid</span><span class="w"> </span><span class="kn">import</span> <span class="n">uuid4</span>
+
+<span class="c1"># Initialize voice mode</span>
+<span class="n">voice</span> <span class="o">=</span> <span class="n">VoiceMode</span><span class="p">()</span>
+
+<span class="c1"># Initialize RAG</span>
+<span class="n">rag</span> <span class="o">=</span> <span class="n">ClaudeRAG</span><span class="p">(</span>
+    <span class="n">content_path</span><span class="o">=</span><span class="n">WEB_CONTENT_DIR</span> <span class="o">/</span> <span class="s2">&quot;mycontent.txt&quot;</span><span class="p">,</span>
+    <span class="n">index_path</span><span class="o">=</span><span class="n">INDEXES_DIR</span>
+
+
+
+<span class="c1"># User ID for tracking chat history</span>
+<span class="n">user_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">())</span>
+
+<span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">voice_chat</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Press Enter to start recording (5-second limit)...&quot;</span><span class="p">)</span>
+    <span class="nb">input</span><span class="p">()</span>
+
+    <span class="c1"># Record and transcribe</span>
+    <span class="n">wav_path</span> <span class="o">=</span> <span class="n">voice</span><span class="o">.</span><span class="n">start_recording</span><span class="p">()</span>
+    <span class="n">transcription</span> <span class="o">=</span> <span class="n">voice</span><span class="o">.</span><span class="n">transcribe</span><span class="p">(</span><span class="n">wav_path</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;You said: </span><span class="si">{</span><span class="n">transcription</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Get response</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">rag</span><span class="o">.</span><span class="n">get_response</span><span class="p">(</span><span class="n">transcription</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bot: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Convert response to speech</span>
+    <span class="n">voice</span><span class="o">.</span><span class="n">text_to_speech</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">voice_chat</span><span class="p">())</span>
+
+<span class="n">Custom</span> <span class="n">Dataset</span> <span class="n">Creation</span> <span class="ow">and</span> <span class="n">Classifier</span> <span class="n">Training</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.make_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.train_clf</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_classifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.utils.paths</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATASETS_DIR</span><span class="p">,</span> <span class="n">MODELS_DIR</span>
+
+<span class="c1"># Step 1: Create a dataset from RAG responses</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">prepare_dataset</span><span class="p">():</span>
+    <span class="c1"># Create dataset with labels (1 for uncertain, 0 for certain)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">create_dataset</span><span class="p">(</span>
+        <span class="n">input_file</span><span class="o">=</span><span class="n">DATASETS_DIR</span> <span class="o">/</span> <span class="s2">&quot;raw_responses.csv&quot;</span><span class="p">,</span>
+        <span class="n">output_file</span><span class="o">=</span><span class="n">DATASETS_DIR</span> <span class="o">/</span> <span class="s2">&quot;labeled_responses.csv&quot;</span><span class="p">,</span>
+        <span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;all-MiniLM-L6-v2&quot;</span>
+
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset created with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dataset</span>
+
+<span class="c1"># Step 2: Train a classifier on the dataset</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">train_uncertainty_classifier</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">):</span>
+    <span class="c1"># Train the classifier</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="n">train_classifier</span><span class="p">(</span>
+        <span class="n">dataset_path</span><span class="o">=</span><span class="n">dataset_path</span><span class="p">,</span>
+        <span class="n">model_type</span><span class="o">=</span><span class="s2">&quot;xgboost&quot;</span><span class="p">,</span>  <span class="c1"># or &quot;random_forest&quot;</span>
+        <span class="n">output_path</span><span class="o">=</span><span class="n">MODELS_DIR</span> <span class="o">/</span> <span class="s2">&quot;clf.pkl&quot;</span><span class="p">,</span>
+        <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+
+
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classifier trained successfully&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision: </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall: </span><span class="si">{</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># Prepare dataset</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">prepare_dataset</span><span class="p">()</span>
+
+    <span class="c1"># Train classifier</span>
+    <span class="n">train_uncertainty_classifier</span><span class="p">(</span><span class="n">DATASETS_DIR</span> <span class="o">/</span> <span class="s2">&quot;labeled_responses.csv&quot;</span><span class="p">)</span>
+
+<span class="n">Implementing</span> <span class="n">a</span> <span class="n">Custom</span> <span class="n">RAG</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.rag.base_rag</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseRAG</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.embeddings.base_embedding</span><span class="w"> </span><span class="kn">import</span> <span class="n">HuggingFaceEmbedding</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">chatbot.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">CustomRAG</span><span class="p">(</span><span class="n">BaseRAG</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom RAG implementation with a local HuggingFace model.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_initialize_models</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize models for the RAG system.&quot;&quot;&quot;</span>
+        <span class="c1"># Use a local embedding model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embedding_provider</span> <span class="o">=</span> <span class="n">HuggingFaceEmbedding</span><span class="p">(</span>
+            <span class="n">embedding_model</span><span class="o">=</span><span class="s2">&quot;sentence-transformers/all-mpnet-base-v2&quot;</span><span class="p">,</span>
+            <span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span>
+
+
+
+        <span class="c1"># Custom model configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;custom-model&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_price</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Free local model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_price</span> <span class="o">=</span> <span class="mf">0.0</span>  <span class="c1"># Free local model</span>
+
+    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">get_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">user_id</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate a response using a custom approach.&quot;&quot;&quot;</span>
+        <span class="c1"># Find relevant context</span>
+        <span class="n">context</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_find_relevant_context</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="c1"># Create a prompt with the context</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Context:</span><span class="se">\n</span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">Question: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># ... your custom logic to generate a response ...</span>
+        <span class="c1"># This could use a local model, rule-based system, or external API</span>
+
+        <span class="c1"># For this example, just return a placeholder</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;This is a custom RAG response for: </span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Add to chat history</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">db</span><span class="o">.</span><span class="n">append_chat_history</span><span class="p">(</span>
+            <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+            <span class="n">question</span><span class="o">=</span><span class="n">query</span><span class="p">,</span>
+            <span class="n">answer</span><span class="o">=</span><span class="n">response</span><span class="p">,</span>
+            <span class="n">model_used</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+            <span class="n">embedding_model_used</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">embedding_provider</span><span class="o">.</span><span class="n">embedding_model</span>
+
+
+
+        <span class="k">return</span> <span class="n">response</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_config_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the configuration class for this RAG.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Config</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_reference.html" class="btn btn-neutral float-left" title="API Reference" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023-2025, DataVerse Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
