@@ -1,6 +1,6 @@
 import joblib
 import logging
-from sklearn.ensemble import  RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sentence_transformers import SentenceTransformer
 
 try:
@@ -13,18 +13,21 @@ logger = logging.getLogger(__name__)
 if CLF_PATH.exists():
     classifier: RandomForestClassifier = joblib.load(CLF_PATH)
 
+
 def embed(text: str):
-    model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+    model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
     embeddings = model.encode(text)
-    return embeddings.reshape(1, -1) 
+    return embeddings.reshape(1, -1)
+
 
 def predict(response_embedding):
     return classifier.predict(response_embedding)
 
+
 def inference_pipeline(llm_response) -> list:
     logger.info(f"Running inference on response: {llm_response[:50]}...")
     response_embedding = embed(llm_response)
-    prediction = predict(response_embedding) # 1: doesn't know, 0: knows
+    prediction = predict(response_embedding)  # 1: doesn't know, 0: knows
 
     return prediction
 

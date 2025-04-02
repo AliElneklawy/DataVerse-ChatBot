@@ -1,25 +1,28 @@
 import os
+import uuid
 import logging
 import requests
-import uuid
 from pathlib import Path
 from bs4 import BeautifulSoup
 from crawl4ai import AsyncWebCrawler
-from .utils.utils import create_folder
 from .utils.paths import WEB_CONTENT_DIR
 from urllib.parse import urljoin, urlparse
-from typing import Set, List, Optional, Iterable, Dict
+from .utils.utils import create_folder, get_api_key
 from .utils.crawler_progress import CrawlerProgress
+from typing import Set, List, Optional, Iterable, Dict
 
 
 logger = logging.getLogger(__name__)
 
+
 class Crawler:
-    def __init__(self, 
-                 base_url, 
-                 domain_name,
-                 client: str = "crawl4ai",
-                 output_folder: Optional[str] = None,):
+    def __init__(
+        self,
+        base_url,
+        domain_name,
+        client: str = "crawl4ai",
+        output_folder: Optional[str] = None,
+    ):
         """
         Initialize the Crawler instance.
 
@@ -29,9 +32,9 @@ class Crawler:
             output_folder (Optional[str]): Directory to save the crawled content. Defaults to WEB_CONTENT_DIR if None.
             client (str): The crawling client to use ("crawl4ai" or "scrapegraph"). Defaults to "crawl4ai".
         """
-        output_folder = Path(output_folder) \
-                            if output_folder \
-                            else create_folder(WEB_CONTENT_DIR)
+        output_folder = (
+            Path(output_folder) if output_folder else create_folder(WEB_CONTENT_DIR)
+        )
         self.output_file = output_folder / f"{domain_name}.txt"
         self.client = client
         self.session = requests.Session()
@@ -40,27 +43,31 @@ class Crawler:
         self.base_domain = urlparse(base_url).netloc
         self.crawl_id = str(uuid.uuid4())
 
+        self._init_clients()
+        CrawlerProgress.init_progress(self.crawl_id, base_url)
+
+    def _init_clients(self):
         if self.client not in ["crawl4ai", "scrapegraph"]:
-            logger.warning(f"Invalid client type: {client}. Defaulting to Crawl4AI.")
+            logger.warning(f"Invalid client type: {self.client}. Defaulting to Crawl4AI.")
             self.client = "crawl4ai"
 
         if self.client == "crawl4ai":
             from crawl4ai.async_configs import BrowserConfig, CrawlerRunConfig
             from crawl4ai.markdown_generation_strategy import DefaultMarkdownGenerator
+
             self.browser_config = BrowserConfig()
-            self.run_config = CrawlerRunConfig(markdown_generator=DefaultMarkdownGenerator())
+            self.run_config = CrawlerRunConfig(
+                markdown_generator=DefaultMarkdownGenerator()
+            )
             self.crawler = None
         elif self.client == "scrapegraph":
             from scrapegraph_py import Client
-            self.sgai_client = Client(api_key=os.getenv("SGAI_API"))
-            
-        # Initialize progress tracking
-        CrawlerProgress.init_progress(self.crawl_id, base_url)
 
-    async def extract_content(self, 
-                              link: str, 
-                              webpage_only: bool = False, 
-                              max_depth: int = None) -> str | Path:
+            self.sgai_client = Client(api_key=get_api_key("SGAI"))        
+
+    async def extract_content(
+        self, link: str, webpage_only: bool = False, max_depth: int = None
+    ) -> str | Path:
         """
         Scrape content from a URL or list of URLs with fallback between clients.
 
@@ -75,26 +82,25 @@ class Crawler:
         Returns:
             str | Path: The path to the output file containing the scraped content.
         """
-        # Update progress: initializing
-        CrawlerProgress.update_progress(self.crawl_id, status='initializing', current_url=link)
-        
+        CrawlerProgress.update_progress(
+            self.crawl_id, status="initializing", current_url=link
+        )
+
         # if self.output_file.exists():
         #     return self.output_file
-        
-        url_list = [link] if webpage_only else await self._extract_urls(max_depth=max_depth)
-        
-        # Update progress with total URLs to crawl
-        CrawlerProgress.update_progress(
-            self.crawl_id, 
-            status='crawling',
-            total_urls=len(url_list),
-            crawled_urls=0
+
+        url_list = (
+            [link] if webpage_only else await self._extract_urls(max_depth=max_depth)
         )
-        
+
+        CrawlerProgress.update_progress(
+            self.crawl_id, status="crawling", total_urls=len(url_list), crawled_urls=0
+        )
+
         with open(self.output_file, "w", encoding="utf-8") as file:
             if self.client == "crawl4ai":
                 success_content_dict = await self._batch_crawl4ai(url_list)
-                
+
                 crawled_count = 0
                 for url, (success, content) in success_content_dict.items():
                     # Update progress for current URL
@@ -103,9 +109,9 @@ class Crawler:
                         self.crawl_id,
                         current_url=url,
                         crawled_urls=crawled_count,
-                        log_message=f"Processing {url}"
+                        log_message=f"Processing {url}",
                     )
-                    
+
                     if success:
                         file.write(content)
                         file.write("\n\n")
@@ -113,7 +119,7 @@ class Crawler:
                         logger.debug(f"Falling back to scrapegraph for {url}")
                         CrawlerProgress.update_progress(
                             self.crawl_id,
-                            log_message=f"Falling back to scrapegraph for {url}"
+                            log_message=f"Falling back to scrapegraph for {url}",
                         )
                         success, content = self._sgai_crawler_client(url)
                         if success:
@@ -123,7 +129,7 @@ class Crawler:
                             logger.error(f"Both crawlers failed for {url}")
                             CrawlerProgress.update_progress(
                                 self.crawl_id,
-                                log_message=f"Both crawlers failed for {url}"
+                                log_message=f"Both crawlers failed for {url}",
                             )
             else:  # scrapegraph
                 crawled_count = 0
@@ -134,26 +140,25 @@ class Crawler:
                         self.crawl_id,
                         current_url=url,
                         crawled_urls=crawled_count,
-                        log_message=f"Processing {url} with scrapegraph"
+                        log_message=f"Processing {url} with scrapegraph",
                     )
-                    
+
                     success, content = self._sgai_crawler_client(url)
                     if not success:
                         logger.debug(f"Falling back to crawl4ai for {url}")
                         CrawlerProgress.update_progress(
                             self.crawl_id,
-                            log_message=f"Falling back to crawl4ai for {url}"
+                            log_message=f"Falling back to crawl4ai for {url}",
                         )
                         success, content = await self._crawl4ai_crawler_client(url)
-                    
+
                     if success:
                         file.write(content)
                         file.write("\n\n")
                     else:
                         logger.error(f"Both crawlers failed for {url}")
                         CrawlerProgress.update_progress(
-                            self.crawl_id,
-                            log_message=f"Both crawlers failed for {url}"
+                            self.crawl_id, log_message=f"Both crawlers failed for {url}"
                         )
 
         # Mark crawling as complete
@@ -180,48 +185,46 @@ class Crawler:
         try:
             url_list = list(urls)
             batch_size = 10
-            
+
             for i in range(0, len(url_list), batch_size):
-                batch_urls = url_list[i:i+batch_size]
-                
+                batch_urls = url_list[i : i + batch_size]
+
                 for url in batch_urls:
                     try:
                         CrawlerProgress.update_progress(
-                            self.crawl_id,
-                            log_message=f"Processing {url} with crawl4ai"
+                            self.crawl_id, log_message=f"Processing {url} with crawl4ai"
                         )
-                        
+
                         result = await self.crawler.arun(
-                            url=url,
-                            config=self.run_config,
-                            session_id=session_id
+                            url=url, config=self.run_config, session_id=session_id
                         )
                         if result.success:
                             result_dict[url] = (True, result.markdown.raw_markdown)
                         else:
-                            logger.error(f"Crawl4ai failed for {url}: {result.error_message}")
+                            logger.error(
+                                f"Crawl4ai failed for {url}: {result.error_message}"
+                            )
                             CrawlerProgress.update_progress(
                                 self.crawl_id,
-                                log_message=f"Crawl4ai failed for {url}: {result.error_message}"
+                                log_message=f"Crawl4ai failed for {url}: {result.error_message}",
                             )
                             result_dict[url] = (False, "")
                     except Exception as e:
                         logger.error(f"Crawl4ai failed for {url}: {e}")
                         CrawlerProgress.update_progress(
                             self.crawl_id,
-                            log_message=f"Crawl4ai failed for {url}: {str(e)}"
+                            log_message=f"Crawl4ai failed for {url}: {str(e)}",
                         )
                         result_dict[url] = (False, "")
-            
+
             return result_dict
         except Exception as e:
             logger.error(f"Batch crawling failed: {e}")
             CrawlerProgress.update_progress(
-                self.crawl_id,
-                error=f"Batch crawling failed: {str(e)}"
+                self.crawl_id, error=f"Batch crawling failed: {str(e)}"
             )
             return {url: (False, "") for url in urls}
-        
+
     def _firecrawl_crawler_client(self, url: str) -> tuple[bool, str]:
         pass
 
@@ -237,9 +240,9 @@ class Crawler:
         """
         try:
             response = self.sgai_client.markdownify(website_url=url)
-            if response and 'result' in response:
-                return True, response['result']
-            
+            if response and "result" in response:
+                return True, response["result"]
+
             logger.error(f"Scrapegraph failed: {url} - Error: couldn't parse url.")
             return False, ""
         except Exception as e:
@@ -263,13 +266,11 @@ class Crawler:
         try:
             session_id = "session"
             result = await self.crawler.arun(
-                url=url,
-                config=self.run_config,
-                session_id=session_id
+                url=url, config=self.run_config, session_id=session_id
             )
             if result.success:
                 return True, result.markdown.raw_markdown
-            
+
             logger.error(f"Crawl4ai failed: {url} - Error: {result.error_message}")
             return False, ""
         except Exception as e:
@@ -288,11 +289,9 @@ class Crawler:
             Set[str]: A set of visited URLs that were crawled.
         """
         CrawlerProgress.update_progress(
-            self.crawl_id, 
-            status='discovering',
-            log_message="Discovering URLs to crawl"
+            self.crawl_id, status="discovering", log_message="Discovering URLs to crawl"
         )
-        
+
         pages_crawled = 0
 
         while self.urls_to_visit and (max_pages is None or pages_crawled < max_pages):
@@ -307,7 +306,7 @@ class Crawler:
             CrawlerProgress.update_progress(
                 self.crawl_id,
                 current_url=current_url,
-                log_message=f"Discovering links at {current_url} (depth: {current_depth + 1})"
+                log_message=f"Discovering links at {current_url} (depth: {current_depth + 1})",
             )
 
             new_links = self._crawl_page(current_url, current_depth + 1)
@@ -315,20 +314,23 @@ class Crawler:
             pages_crawled += 1
 
             for link, depth in new_links:
-                if link not in self.visited_urls and (link, depth) not in self.urls_to_visit:
+                if (
+                    link not in self.visited_urls
+                    and (link, depth) not in self.urls_to_visit
+                ):
                     self.urls_to_visit.append((link, depth))
-                    
+
             # Update progress with discovered URLs
             CrawlerProgress.update_progress(
                 self.crawl_id,
                 total_urls=len(self.visited_urls) + len(self.urls_to_visit),
                 crawled_urls=0,
-                log_message=f"Discovered {len(self.visited_urls) + len(self.urls_to_visit)} URLs so far"
+                log_message=f"Discovered {len(self.visited_urls) + len(self.urls_to_visit)} URLs so far",
             )
 
         logger.info(f"Crawling finished. Total pages crawled: {len(self.visited_urls)}")
         return self.visited_urls
-    
+
     def _crawl_page(self, url, depth) -> List[tuple[str, int]]:
         """
         Crawl a single page to extract linked URLs within the same domain.
@@ -351,7 +353,7 @@ class Crawler:
         for link in soup.find_all("a", href=True):
             next_url = urljoin(url, link["href"])
 
-            if not next_url.startswith(('http://', 'https://')):
+            if not next_url.startswith(("http://", "https://")):
                 continue
             if not self._is_same_domain(next_url):
                 continue
@@ -376,16 +378,16 @@ class Crawler:
             return urlparse(url).netloc == self.base_domain
         except:
             return False
-        
+
     def _clean_url(self, url: str) -> str:
         parsed = urlparse(url)
         return f"{parsed.scheme}://{parsed.netloc}{parsed.path}"
-        
+
     # Get crawl ID
     def get_crawl_id(self) -> str:
         """Get the unique ID for this crawl session"""
         return self.crawl_id
-        
+
     async def close(self):
         """
         Close any open connections and resources.

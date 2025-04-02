@@ -657,7 +657,7 @@ IFRAME_HTML = """
         }
 
         function isArabic(text) {
-            const arabic = /[\u0600-\u06FF]/;
+            const arabic = /[\u0600-\u06ff]/;
             return arabic.test(text);
         }
 
