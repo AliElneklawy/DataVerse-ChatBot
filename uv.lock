@@ -638,6 +638,7 @@ dependencies = [
     { name = "html2text" },
     { name = "joblib" },
     { name = "langchain" },
+    { name = "langchain-cohere" },
     { name = "langchain-community" },
     { name = "langchain-docling" },
     { name = "langchain-experimental" },
@@ -690,6 +691,7 @@ requires-dist = [
     { name = "html2text", specifier = "==2024.2.26" },
     { name = "joblib", specifier = "==1.4.2" },
     { name = "langchain", specifier = "==0.3.18" },
+    { name = "langchain-cohere", specifier = ">=0.4.3" },
     { name = "langchain-community", specifier = "==0.3.17" },
     { name = "langchain-docling", specifier = "==0.2.0" },
     { name = "langchain-experimental", specifier = "==0.3.4" },
@@ -1792,6 +1794,22 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/63/6a/b06a84b2bc3cbe4e6690ba875e732830dba8527d4511f07b4b06809416c1/langchain_aws-0.2.17.tar.gz", hash = "sha256:37631f1f4a372a6a313a3d12faeb828dedb331b18dd331294b0db8f23afc71b8", size = 93906 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/90/49/0c5289a29ac410b02b3de26f4f0aeebc2f5ad77e042eb8c70189624b03ff/langchain_aws-0.2.17-py3-none-any.whl", hash = "sha256:208fca01bbfe43869c60b3ddedb2c503b351a1be0d71ef3f58c414cf83f56fa0", size = 114986 },
+]
+
+[[package]]
+name = "langchain-cohere"
+version = "0.4.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cohere" },
+    { name = "langchain-community" },
+    { name = "langchain-core" },
+    { name = "pydantic" },
+    { name = "types-pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/02/8a/e723e02feea6c55c1c680ad649c74cefb85e9d3fadb12b666441de8238b4/langchain_cohere-0.4.3.tar.gz", hash = "sha256:b4e2c2ffaec93fae94bb04de6376dceb9b9d77f314030f120a1233d28018bb24", size = 36447 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/77/19/2fbbe32a077edfac47caa7052c11a4f737bafbff25a8a05dec4bc83e0bd4/langchain_cohere-0.4.3-py3-none-any.whl", hash = "sha256:dc2b28f04b140771a0f78a8ae0a1e04f13eae9e43392b5d7066f022f11bf9924", size = 42244 },
 ]
 
 [[package]]
@@ -4406,6 +4424,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/c5/58/a79003b91ac2c6890fc5d90145c662fd5771c6f11447f116b63300436bc9/typer-0.12.5.tar.gz", hash = "sha256:f592f089bedcc8ec1b974125d64851029c3b1af145f04aca64d69410f0c9b722", size = 98953 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a8/2b/886d13e742e514f704c33c4caa7df0f3b89e5a25ef8db02aa9ca3d9535d5/typer-0.12.5-py3-none-any.whl", hash = "sha256:62fe4e471711b147e3365034133904df3e235698399bc4de2b36c8579298d52b", size = 47288 },
+]
+
+[[package]]
+name = "types-pyyaml"
+version = "6.0.12.20250402"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/2d/68/609eed7402f87c9874af39d35942744e39646d1ea9011765ec87b01b2a3c/types_pyyaml-6.0.12.20250402.tar.gz", hash = "sha256:d7c13c3e6d335b6af4b0122a01ff1d270aba84ab96d1a1a1063ecba3e13ec075", size = 17282 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/56/1fe61db05685fbb512c07ea9323f06ea727125951f1eb4dff110b3311da3/types_pyyaml-6.0.12.20250402-py3-none-any.whl", hash = "sha256:652348fa9e7a203d4b0d21066dfb00760d3cbd5a15ebb7cf8d33c88a49546681", size = 20329 },
 ]
 
 [[package]]
