@@ -2,7 +2,7 @@
 
 ![image](https://github.com/user-attachments/assets/357e1df2-7f28-44b3-b242-6c39e9784d32)
 
-**DataVerse ChatBot** is a powerful Python-based application that enables real-time, AI-driven chat interactions by extracting and processing data from virtually any source—web pages, nearly all file formats, and more. Combining advanced web crawling, multi-format data extraction, and Retrieval-Augmented Generation (RAG) techniques, it integrates with leading Large Language Models (LLMs) to deliver context-aware responses. Deployable as WhatsApp and Telegram bots or embedded via an iframe, DataVerse ChatBot also supports voice messages, making it a versatile tool for conversational AI.
+**DataVerse ChatBot** is a powerful Python-based application that enables real-time, AI-driven chat interactions by extracting and processing data from virtually any source—web pages, nearly all file formats, and more. Combining advanced web crawling, multi-format data extraction, and Retrieval-Augmented Generation (RAG) techniques, it integrates with leading Large Language Models (LLMs) to deliver context-aware responses. The system includes a sophisticated chat history analysis agent that provides actionable insights on user engagement patterns and response quality. Deployable as WhatsApp and Telegram bots or embedded via an iframe, DataVerse ChatBot also supports voice messages, making it a versatile tool for conversational AI.
 
 ## Features
 
