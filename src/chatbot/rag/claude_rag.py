@@ -43,10 +43,10 @@ class ClaudeRAG(BaseRAG):
         
         response = await self.claude_client.messages.create(
                 model=self.claude_model,
-                max_tokens=Config.MAX_OUT_TOKENS,
+                max_tokens=RAGConfig.MAX_OUT_TOKENS,
                 messages=messages,
                 system=system_prompt,
-                temperature=Config.TEMPERATURE
+                temperature=RAGConfig.TEMPERATURE
             )
                 
         response_text = response.content[0].text

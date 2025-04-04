@@ -10,34 +10,26 @@ from werkzeug.utils import secure_filename
 import asyncio
 import threading
 import hashlib
-<<<<<<< Updated upstream
-# Add parent directory to path to import from chatbot module
-import sys
-=======
 import sys
 from contextlib import redirect_stdout
 import io
 
->>>>>>> Stashed changes
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from chatbot.agents.chat_hist_analyzer_agent import ChatHistortAnalyzerAgent
+from chatbot.agents.chat_hist_analyzer_agent import ChatHistortAnalyzerAgent
 from chatbot.utils.utils import DatabaseOps, EmailService, create_folder
 from chatbot.utils.paths import (
-<<<<<<< Updated upstream
-    DATABASE_DIR, WEB_CONTENT_DIR, INDEXES_DIR, 
-    LOGS_DIR, CHAT_HIST_DIR, DATA_DIR, TRAIN_FILES_DIR
-=======
     DATABASE_DIR,
     WEB_CONTENT_DIR,
     INDEXES_DIR,
     DATA_DIR,
     LOGS_DIR,
+    LOGS_DIR,
     TRAIN_FILES_DIR,
->>>>>>> Stashed changes
 )
 from chatbot.config import (
-    Config, GrokConfig, CohereConfig, ClaudeConfig, 
+    RAGConfig, GrokConfig, CohereConfig, ClaudeConfig, 
     GeminiConfig, MistralConfig, OpenAIConfig, DeepSeekConfig
 )
 from chatbot.rag.cohere_rag import CohereRAG
@@ -114,8 +106,8 @@ def init_admin_db():
             ("default_llm_provider", "cohere"),
             ("default_llm_model", "command-r-plus-08-2024"),
             ("default_chunking_type", "recursive"),
-            ("default_chunk_size", str(Config.CHUNK_SIZE)),
-            ("default_chunk_overlap", str(Config.CHUNK_OVERLAP)),
+            ("default_chunk_size", str(RAGConfig.CHUNK_SIZE)),
+            ("default_chunk_overlap", str(RAGConfig.CHUNK_OVERLAP)),
             ("rerank_enabled", "true"),
             ("email_notifications_enabled", "true"),
         ]
@@ -1627,8 +1619,8 @@ def reset_system():
                 ("default_llm_provider", "cohere"),
                 ("default_llm_model", "command-r-plus-08-2024"),
                 ("default_chunking_type", "recursive"),
-                ("default_chunk_size", str(Config.CHUNK_SIZE)),
-                ("default_chunk_overlap", str(Config.CHUNK_OVERLAP)),
+                ("default_chunk_size", str(RAGConfig.CHUNK_SIZE)),
+                ("default_chunk_overlap", str(RAGConfig.CHUNK_OVERLAP)),
                 ("rerank_enabled", "true"),
                 ("email_notifications_enabled", "true"),
             ]
@@ -1805,9 +1797,6 @@ def account_settings():
         last_login=user_info[3]
     )
 
-<<<<<<< Updated upstream
-if __name__ == '__main__':
-=======
 
 @app.route("/data-analysis")
 @login_required
@@ -2042,6 +2031,5 @@ def save_agent_steps():
 
 
 if __name__ == "__main__":
->>>>>>> Stashed changes
     init_admin_db()
     app.run(debug=True, host='0.0.0.0', port=5000)

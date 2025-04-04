@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from .embeddings.base_embedding import CohereEmbedding
 from langchain_experimental.text_splitter import SemanticChunker
 from langchain.text_splitter import RecursiveCharacterTextSplitter, CharacterTextSplitter
+from typing import List, Dict
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -24,14 +25,12 @@ class MissingAPIKeyError(Exception):
     """Custom exception for missing API keys."""
     pass
 
-class Config:
+class RAGConfig:
     CHUNK_SIZE: int = 1500
     TEMPERATURE: float = 0.0
     CHUNK_OVERLAP: int = 150
     MAX_OUT_TOKENS: int = 1500
 
-<<<<<<< Updated upstream
-=======
     CUSTOMER_SUPPORT_PROMPT: str = f"""
         ### Role
             - Primary Function: You are a customer support agent here to assist users based on 
@@ -61,7 +60,6 @@ class Config:
             6. Responses must be concise and to the point.
         """
 
->>>>>>> Stashed changes
     CHUNKING_CONFIGS = {
         "recursive": {
             "message": f"Performing recursive chunking with chunk size {CHUNK_SIZE} "
@@ -88,16 +86,6 @@ class Config:
     }
 
 # AVAILABLE_MODELS = {"model_name": [input_price, output_price]}
-<<<<<<< Updated upstream
-class GrokConfig:
-     AVAILABLE_MODELS = {
-         "grok-2": [2.00, 10.00],
-         "grok-2-latest": [2.00, 10.00],
-         "grok-2-vision": [2.00, 10.00],
-         "grok-2-vision-latest": [2.00, 10.00],
-         "grok-vision-beta": [5.00, 15.00],
-         "grok-beta": [5.00, 15.00],
-=======
 class LLMConfig:
     AVAILABLE_MODELS: Dict[str, List[float]] = {}
 
@@ -118,11 +106,10 @@ class GrokConfig(LLMConfig):
         "grok-2-vision-latest": [2.00, 10.00],
         "grok-vision-beta": [5.00, 15.00],
         "grok-beta": [5.00, 15.00],
->>>>>>> Stashed changes
     }
-     BASE_URL = "https://api.x.ai/v1"
+    BASE_URL = "https://api.x.ai/v1"
 
-class CohereConfig:
+class CohereConfig(LLMConfig):
      AVAILABLE_MODELS = {
          "command-r-08-2024": [0.30, 1.20],
          "command-r-plus-04-2024": [3.00, 15.00],
@@ -132,7 +119,7 @@ class CohereConfig:
          "command-a-03-2025": [2.50, 10.00]
     }
 
-class ClaudeConfig:
+class ClaudeConfig(LLMConfig):
     AVAILABLE_MODELS = {
         "claude-3-5-haiku-20241022":[0.80, 4.0],
         "claude-3-haiku-20240307":[0.25, 1.25],
@@ -143,7 +130,7 @@ class ClaudeConfig:
        # "claude-3-sonnet-20240229",
     }
 
-class GeminiConfig:
+class GeminiConfig(LLMConfig):
      AVAILABLE_MODELS = {
          "gemini-1.5-flash": [0.15, 0.60],
          "gemini-1.5-flash-8b": [0.075, 0.30],
@@ -152,7 +139,7 @@ class GeminiConfig:
          "gemini-2.0-flash": [0.70, 0.40],
      }
 
-class MistralConfig:
+class MistralConfig(LLMConfig):
      AVAILABLE_MODELS = {
          "mistral-small-latest": [0.1, 0.3],
          "mistral-saba-2502": [0.2, 0.6],
@@ -164,7 +151,7 @@ class MistralConfig:
          #"pixtral-12b-2409": [in, out],
      }
 
-class OpenAIConfig:
+class OpenAIConfig(LLMConfig):
     AVAILABLE_MODELS = { 
         "gpt-3.5-turbo-0125": [0.5, 1.5],
         "gpt-3.5-turbo-1106": [1, 2],
@@ -183,7 +170,7 @@ class OpenAIConfig:
         "gpt-4.5-preview": [75, 150],
     }
 
-class DeepSeekConfig:
+class DeepSeekConfig(LLMConfig):
     AVAILABLE_MODELS = {
         "deepseek-chat": [0.27, 1.10],
         "deepseek-reasoner": [0.55, 2.19],

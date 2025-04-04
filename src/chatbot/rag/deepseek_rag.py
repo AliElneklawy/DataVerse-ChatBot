@@ -29,8 +29,8 @@ class DeepseekRAG(OpenAIRAG, BaseRAG):
             response = await self.deepseek_client.chat.completions.create(
                 model=self.deepseek_model,
                 messages=messages,
-                max_tokens=Config.MAX_OUT_TOKENS,
-                temperature=Config.TEMPERATURE,
+                max_tokens=RAGConfig.MAX_OUT_TOKENS,
+                temperature=RAGConfig.TEMPERATURE,
                 stream=False,
             )
             response_text = response.choices[0].message.content

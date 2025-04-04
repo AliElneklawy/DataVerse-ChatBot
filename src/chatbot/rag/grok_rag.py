@@ -54,8 +54,8 @@ class GrokRAG(BaseRAG):
         response = await self.grok_client.chat.completions.create(
             model=self.grok_model,
             messages=messages,
-            max_tokens=Config.MAX_OUT_TOKENS,
-            temperature=Config.TEMPERATURE,
+            max_tokens=RAGConfig.MAX_OUT_TOKENS,
+            temperature=RAGConfig.TEMPERATURE,
         )
 
         response_text = response.choices[0].message.content.strip()

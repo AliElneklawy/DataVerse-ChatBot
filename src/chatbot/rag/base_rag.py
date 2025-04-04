@@ -10,7 +10,7 @@ import logging.handlers
 from pathlib import Path
 from datetime import datetime
 from abc import ABC, abstractmethod
-from ..config import get_api_key, Config
+from ..config import get_api_key, RAGConfig
 from typing import List, Dict, Any, Optional
 from langchain_community.vectorstores import FAISS
 from ..embeddings.base_embedding import CohereEmbedding
@@ -36,15 +36,6 @@ logger = logging.getLogger(__name__)
 
 
 class BaseRAG(ABC):
-<<<<<<< Updated upstream
-    def __init__(self, 
-                 content_path: Path,
-                 index_path: Optional[str] = None,
-                 rerank: bool = True,
-                 model_name: Optional[str] = None,
-                 chunking_type: str = "recursive") -> None:
-        
-=======
     def __init__(
         self,
         content_path: Path,
@@ -79,7 +70,6 @@ class BaseRAG(ABC):
         Returns:
             None
         """
->>>>>>> Stashed changes
         self.index_path = index_path or "indexes"
         self.model_name = model_name
         self.rerank = rerank
@@ -89,7 +79,7 @@ class BaseRAG(ABC):
 
         create_folder(self.index_path)
         
-        logger.info(f'Initializing RAG system. Model temperature {Config.TEMPERATURE}...')
+        logger.info(f'Initializing RAG system. Model temperature {RAGConfig.TEMPERATURE}...')
         self._initialize_models()
         
         if self.rerank:
@@ -103,8 +93,8 @@ class BaseRAG(ABC):
 
         self.db = DatabaseOps()
         self.email_service = EmailService()
-        self.hist_sender = ChatHistoryMonitor(self.email_service, every_hours=24, start_service=False)
-        self.resp_monitor = UncertainResponseMonitor(self.email_service, every_hours=20, start_service=False)
+        self.hist_sender = ChatHistoryMonitor(self.email_service, every_hours=hist_monitor_freq, start_service=init_hist_monitor)
+        self.resp_monitor = UncertainResponseMonitor(self.email_service, every_hours=resp_monitor_freq, start_service=init_resp_monitor)
 
     @abstractmethod
     def get_response(self, query: str, user_id: str) -> str:
@@ -191,7 +181,7 @@ class BaseRAG(ABC):
 
     def _create_chunks(self, text: str) -> List[str]:
         """Create chunks using the specified chunking method."""
-        config = Config.CHUNKING_CONFIGS.get(self.chunking_type)
+        config = RAGConfig.CHUNKING_CONFIGS.get(self.chunking_type)
         if not config:
             raise ValueError(f"Unsupported chunking type: {self.chunking_type}")
 

@@ -25,14 +25,25 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 
+def get_api_key(service: str):
+    api_key = os.getenv(f"{service}_API")
+
+    if api_key is None:
+        msg = f"API key for {service} not found in environment variables."
+        logger.error(msg)
+        raise MissingAPIKeyError(msg)
+    else:
+        logger.debug(f"Successfully retrieved API key for {service}.")
+
+    return api_key
+
+
 def create_folder(path: Path | str) -> Path:
     p = Path(path)
     if not p.exists():
         p.mkdir(exist_ok=True, parents=True)    
     return p
 
-<<<<<<< Updated upstream
-=======
 
 class MissingAPIKeyError(Exception):
     """Custom exception for missing API keys."""
@@ -40,7 +51,6 @@ class MissingAPIKeyError(Exception):
     pass
 
 
->>>>>>> Stashed changes
 class DatabaseOps:
     def __init__(self):
         self.db_path = Path(create_folder(DATABASE_DIR)) / "history_and_usage.db"

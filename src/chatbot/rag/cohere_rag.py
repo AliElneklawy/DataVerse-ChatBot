@@ -28,8 +28,8 @@ class CohereRAG(BaseRAG):
             response = await self.cohere_client.generate(
                 model=self.cohere_model,
                 prompt=system_prompt,
-                max_tokens=Config.MAX_OUT_TOKENS,
-                temperature=Config.TEMPERATURE
+                max_tokens=RAGConfig.MAX_OUT_TOKENS,
+                temperature=RAGConfig.TEMPERATURE
             )
             response_text = response.generations[0].text.strip()
             request_usage = response.meta.billed_units

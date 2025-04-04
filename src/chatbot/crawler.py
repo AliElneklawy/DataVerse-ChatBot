@@ -5,9 +5,9 @@ import uuid
 from pathlib import Path
 from bs4 import BeautifulSoup
 from crawl4ai import AsyncWebCrawler
-from .utils.utils import create_folder
 from .utils.paths import WEB_CONTENT_DIR
 from urllib.parse import urljoin, urlparse
+from .utils.utils import create_folder, get_api_key
 from typing import Set, List, Optional, Iterable, Dict
 from .utils.crawler_progress import CrawlerProgress
 
@@ -41,13 +41,9 @@ class Crawler:
         self.crawl_id = str(uuid.uuid4())
 
         if self.client not in ["crawl4ai", "scrapegraph"]:
-<<<<<<< Updated upstream
-            logger.warning(f"Invalid client type: {client}. Defaulting to Crawl4AI.")
-=======
             logger.warning(
                 f"Invalid client type: {self.client}. Defaulting to Crawl4AI."
             )
->>>>>>> Stashed changes
             self.client = "crawl4ai"
 
         if self.client == "crawl4ai":
@@ -58,23 +54,12 @@ class Crawler:
             self.crawler = None
         elif self.client == "scrapegraph":
             from scrapegraph_py import Client
-            self.sgai_client = Client(api_key=os.getenv("SGAI_API"))
-            
-        # Initialize progress tracking
-        CrawlerProgress.init_progress(self.crawl_id, base_url)
 
-<<<<<<< Updated upstream
-    async def extract_content(self, 
-                              link: str, 
-                              webpage_only: bool = False, 
-                              max_depth: int = None) -> str | Path:
-=======
             self.sgai_client = Client(api_key=get_api_key("SGAI"))
 
     async def extract_content(
         self, link: str, webpage_only: bool = False, max_depth: int = None
     ) -> str | Path:
->>>>>>> Stashed changes
         """
         Scrape content from a URL or list of URLs with fallback between clients.
 

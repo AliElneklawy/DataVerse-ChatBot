@@ -29,8 +29,8 @@ class GeminiRAG(BaseRAG):
                 generation_config=genai.types.GenerationConfig(
                     top_p=0.8,
                     top_k=40,
-                    max_output_tokens=Config.MAX_OUT_TOKENS,
-                    temperature=Config.TEMPERATURE,
+                    max_output_tokens=RAGConfig.MAX_OUT_TOKENS,
+                    temperature=RAGConfig.TEMPERATURE,
                 )
             )
                    

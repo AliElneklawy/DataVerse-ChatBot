@@ -27,8 +27,8 @@ class OpenAIRAG(BaseRAG):
             response = await self.openai_client.chat.completions.create(
                 model=self.openai_model,
                 messages=messages,
-                max_tokens=Config.MAX_OUT_TOKENS,
-                temperature=Config.TEMPERATURE,
+                max_tokens=RAGConfig.MAX_OUT_TOKENS,
+                temperature=RAGConfig.TEMPERATURE,
                 stream=False,
             )
             
