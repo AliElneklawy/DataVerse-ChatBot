@@ -36,6 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class BaseRAG(ABC):
+<<<<<<< Updated upstream
     def __init__(self, 
                  content_path: Path,
                  index_path: Optional[str] = None,
@@ -43,6 +44,42 @@ class BaseRAG(ABC):
                  model_name: Optional[str] = None,
                  chunking_type: str = "recursive") -> None:
         
+=======
+    def __init__(
+        self,
+        content_path: Path,
+        index_path: Optional[str] = None,
+        rerank: bool = True,
+        model_name: Optional[str] = None,
+        chunking_type: str = "recursive",
+        init_hist_monitor: bool = False,
+        init_resp_monitor: bool = False,
+        hist_monitor_freq: int = 24,
+        resp_monitor_freq: int = 24,
+    ) -> None:
+        """
+        Args:
+            content_path (Path): Path to the content directory or file containing the knowledge base.
+            index_path (Optional[str], optional): Path to store vector indexes. Defaults to None,
+                which uses "indexes" as the default directory.
+            rerank (bool, optional): Whether to use reranking for search results. Defaults to True.
+            model_name (Optional[str], optional): Name of the model to use. Defaults to None. Not
+                specifying a model name will select the first model from the config.
+            chunking_type (str, optional): Type of text chunking strategy to use (recursive, semantic, basic).
+                Defaults to "recursive".
+            init_hist_monitor (bool, optional): Whether to initialize the chat history monitor for sending
+                chat history over E-mail. Defaults to False.
+            init_resp_monitor (bool, optional): Whether to initialize the response uncertainty monitor
+                for sending uncertain responses over E-mail. Defaults to False.
+            hist_monitor_freq (int, optional): Frequency in hours for chat history monitoring.
+                Defaults to 24.
+            resp_monitor_freq (int, optional): Frequency in hours for response monitoring.
+                Defaults to 24.
+
+        Returns:
+            None
+        """
+>>>>>>> Stashed changes
         self.index_path = index_path or "indexes"
         self.model_name = model_name
         self.rerank = rerank

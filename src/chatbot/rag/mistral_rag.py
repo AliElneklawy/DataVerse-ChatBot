@@ -47,7 +47,11 @@ class MistralRAG(BaseRAG):
             response = await self.mistral_client.chat.complete_async(
                 model=self.model_name,
                 messages=messages,
+<<<<<<< Updated upstream
                 temperature=Config.TEMPERATURE
+=======
+                temperature=RAGConfig.TEMPERATURE,
+>>>>>>> Stashed changes
             )
 
             response_text = response.choices[0].message.content.strip()

@@ -41,7 +41,13 @@ class Crawler:
         self.crawl_id = str(uuid.uuid4())
 
         if self.client not in ["crawl4ai", "scrapegraph"]:
+<<<<<<< Updated upstream
             logger.warning(f"Invalid client type: {client}. Defaulting to Crawl4AI.")
+=======
+            logger.warning(
+                f"Invalid client type: {self.client}. Defaulting to Crawl4AI."
+            )
+>>>>>>> Stashed changes
             self.client = "crawl4ai"
 
         if self.client == "crawl4ai":
@@ -57,10 +63,18 @@ class Crawler:
         # Initialize progress tracking
         CrawlerProgress.init_progress(self.crawl_id, base_url)
 
+<<<<<<< Updated upstream
     async def extract_content(self, 
                               link: str, 
                               webpage_only: bool = False, 
                               max_depth: int = None) -> str | Path:
+=======
+            self.sgai_client = Client(api_key=get_api_key("SGAI"))
+
+    async def extract_content(
+        self, link: str, webpage_only: bool = False, max_depth: int = None
+    ) -> str | Path:
+>>>>>>> Stashed changes
         """
         Scrape content from a URL or list of URLs with fallback between clients.
 

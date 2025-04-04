@@ -5,6 +5,7 @@ import logging
 import sqlite3
 from pathlib import Path
 from email import encoders
+from dotenv import load_dotenv
 from typing import Optional, Any
 from collections import defaultdict
 from email.mime.base import MIMEBase
@@ -21,6 +22,8 @@ except ImportError:
 
 logger = logging.getLogger(__name__)
 
+load_dotenv()
+
 
 def create_folder(path: Path | str) -> Path:
     p = Path(path)
@@ -28,6 +31,16 @@ def create_folder(path: Path | str) -> Path:
         p.mkdir(exist_ok=True, parents=True)    
     return p
 
+<<<<<<< Updated upstream
+=======
+
+class MissingAPIKeyError(Exception):
+    """Custom exception for missing API keys."""
+
+    pass
+
+
+>>>>>>> Stashed changes
 class DatabaseOps:
     def __init__(self):
         self.db_path = Path(create_folder(DATABASE_DIR)) / "history_and_usage.db"
