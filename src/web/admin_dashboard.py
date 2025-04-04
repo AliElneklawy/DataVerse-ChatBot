@@ -1,5 +1,4 @@
 import os
-import json
 import sqlite3
 import logging
 from datetime import datetime, timedelta
@@ -11,14 +10,31 @@ from werkzeug.utils import secure_filename
 import asyncio
 import threading
 import hashlib
+<<<<<<< Updated upstream
 # Add parent directory to path to import from chatbot module
 import sys
+=======
+import sys
+from contextlib import redirect_stdout
+import io
+
+>>>>>>> Stashed changes
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
+from chatbot.agents.chat_hist_analyzer_agent import ChatHistortAnalyzerAgent
 from chatbot.utils.utils import DatabaseOps, EmailService, create_folder
 from chatbot.utils.paths import (
+<<<<<<< Updated upstream
     DATABASE_DIR, WEB_CONTENT_DIR, INDEXES_DIR, 
     LOGS_DIR, CHAT_HIST_DIR, DATA_DIR, TRAIN_FILES_DIR
+=======
+    DATABASE_DIR,
+    WEB_CONTENT_DIR,
+    INDEXES_DIR,
+    DATA_DIR,
+    LOGS_DIR,
+    TRAIN_FILES_DIR,
+>>>>>>> Stashed changes
 )
 from chatbot.config import (
     Config, GrokConfig, CohereConfig, ClaudeConfig, 
@@ -1789,6 +1805,243 @@ def account_settings():
         last_login=user_info[3]
     )
 
+<<<<<<< Updated upstream
 if __name__ == '__main__':
+=======
+
+@app.route("/data-analysis")
+@login_required
+def data_analysis():
+    """Data analysis dashboard page - Chat History Analyzer"""
+    db_ops = DatabaseOps()
+
+    # Get conversation count
+    with sqlite3.connect(db_ops.db_path) as conn:
+        cursor = conn.execute("SELECT COUNT(*) FROM chat_history")
+        conversation_count = cursor.fetchone()[0]
+
+    # Check if we have a record of the last analysis
+    last_analysis = None
+    with sqlite3.connect(app.config["ADMIN_DB_PATH"]) as conn:
+        cursor = conn.execute(
+            "SELECT config_value FROM system_config WHERE config_key = 'last_analysis_time'"
+        )
+        result = cursor.fetchone()
+        if result:
+            try:
+                last_analysis = datetime.fromisoformat(result[0]).strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                )
+            except:
+                last_analysis = None
+
+    return render_template(
+        "admin/data_analysis.html",
+        conversation_count=conversation_count,
+        last_analysis=last_analysis,
+        analysis_result=None,
+        thinking_steps=None,
+        query=None,
+        time_period=None,
+    )
+
+
+@app.route("/analyze-data", methods=["POST"])
+@login_required
+def analyze_data():
+    """Process data analysis request"""
+    query = request.form.get("analysis_query")
+
+    # Get time period and enforce limits
+    try:
+        time_period = int(request.form.get("time_period", 7))
+        # Enforce limits (1-90 days)
+        time_period = max(1, min(90, time_period))
+    except (ValueError, TypeError):
+        time_period = 7  # Default to 7 days if invalid input
+
+    if not query:
+        flash("Please provide an analysis query", "warning")
+        return redirect(url_for("data_analysis"))
+
+    try:
+        # Initialize the agent
+        agent = ChatHistortAnalyzerAgent()
+
+        # Capture the agent's thinking process
+        f = io.StringIO()
+        with redirect_stdout(f):
+            # Update the query to include time period information
+            enhanced_query = f"{query} for the past {time_period} days"
+
+            # Run the analysis
+            result = agent.analyze(enhanced_query)
+
+        # Get the thinking steps
+        thinking_steps = f.getvalue()
+
+        # Extract the actual response content
+        analysis_result = result.get("output", "")
+
+        # Convert markdown to HTML
+        import markdown
+
+        analysis_html = markdown.markdown(analysis_result)
+
+        # Update the last analysis time
+        with sqlite3.connect(app.config["ADMIN_DB_PATH"]) as conn:
+            conn.execute(
+                """
+                INSERT OR REPLACE INTO system_config (config_key, config_value, updated_at)
+                VALUES (?, ?, ?)
+                """,
+                ("last_analysis_time", datetime.now().isoformat(), datetime.now()),
+            )
+            conn.commit()
+
+        # Get conversation count
+        db_ops = DatabaseOps()
+        with sqlite3.connect(db_ops.db_path) as conn:
+            cursor = conn.execute("SELECT COUNT(*) FROM chat_history")
+            conversation_count = cursor.fetchone()[0]
+
+        # Get last analysis time
+        with sqlite3.connect(app.config["ADMIN_DB_PATH"]) as conn:
+            cursor = conn.execute(
+                "SELECT config_value FROM system_config WHERE config_key = 'last_analysis_time'"
+            )
+            result = cursor.fetchone()
+            last_analysis = (
+                datetime.fromisoformat(result[0]).strftime("%Y-%m-%d %H:%M:%S")
+                if result
+                else None
+            )
+
+        return render_template(
+            "admin/data_analysis.html",
+            analysis_result=analysis_html,
+            thinking_steps=thinking_steps,
+            conversation_count=conversation_count,
+            last_analysis=last_analysis,
+            query=query,
+            time_period=time_period,
+        )
+
+    except Exception as e:
+        logger.error(f"Error processing data analysis: {e}")
+        import traceback
+
+        logger.error(traceback.format_exc())
+        flash(f"Error processing analysis: {str(e)}", "danger")
+        return redirect(url_for("data_analysis"))
+
+
+@app.route("/save-analysis", methods=["POST"])
+@login_required
+def save_analysis():
+    """Save analysis results to file"""
+    try:
+        title = request.form.get(
+            "title", f"Analysis_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        )
+        description = request.form.get("description", "")
+        content = request.form.get("content", "")
+        query = request.form.get("query", "")
+        time_period = request.form.get("time_period", "")
+
+        # Create analysis directory if it doesn't exist
+        analysis_dir = Path(DATA_DIR) / "analysis"
+        if not analysis_dir.exists():
+            os.makedirs(analysis_dir)
+
+        # Sanitize filename
+        safe_title = "".join(c for c in title if c.isalnum() or c in "._- ").replace(
+            " ", "_"
+        )
+
+        # Create a file with metadata and content
+        filename = analysis_dir / f"{safe_title}.html"
+
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(f"""<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }}
+        .metadata {{ background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-bottom: 20px; }}
+        .content {{ padding: 20px; }}
+    </style>
+</head>
+<body>
+    <div class="metadata">
+        <h1>{title}</h1>
+        <p><strong>Date:</strong> {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
+        <p><strong>Query:</strong> {query}</p>
+        <p><strong>Time Period:</strong> {time_period} days</p>
+        <p><strong>Description:</strong> {description}</p>
+    </div>
+    <div class="content">
+        {content}
+    </div>
+</body>
+</html>""")
+
+        logger.info(f"Analysis saved to {filename}")
+        return jsonify({"success": True, "filename": str(filename)})
+
+    except Exception as e:
+        logger.error(f"Error saving analysis: {e}")
+        import traceback
+
+        logger.error(traceback.format_exc())
+        return jsonify({"success": False, "message": str(e)})
+
+
+@app.route("/save-agent-steps", methods=["POST"])
+@login_required
+def save_agent_steps():
+    """Save agent thinking steps to file"""
+    try:
+        title = request.form.get(
+            "title", f"AgentSteps_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        )
+        content = request.form.get("content", "")
+        query = request.form.get("query", "")
+
+        # Create analysis directory if it doesn't exist
+        analysis_dir = Path(DATA_DIR) / "analysis"
+        if not analysis_dir.exists():
+            os.makedirs(analysis_dir)
+
+        # Sanitize filename
+        safe_title = "".join(c for c in title if c.isalnum() or c in "._- ").replace(
+            " ", "_"
+        )
+
+        # Create a text file with the steps
+        filename = analysis_dir / f"{safe_title}.txt"
+
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(f"Query: {query}\n")
+            f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+            f.write("-" * 80 + "\n\n")
+            f.write(content)
+
+        logger.info(f"Agent steps saved to {filename}")
+        return jsonify({"success": True, "filename": str(filename)})
+
+    except Exception as e:
+        logger.error(f"Error saving agent steps: {e}")
+        import traceback
+
+        logger.error(traceback.format_exc())
+        return jsonify({"success": False, "message": str(e)})
+
+
+if __name__ == "__main__":
+>>>>>>> Stashed changes
     init_admin_db()
     app.run(debug=True, host='0.0.0.0', port=5000)
