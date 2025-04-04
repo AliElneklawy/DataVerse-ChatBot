@@ -10,7 +10,9 @@
 - **Web Crawling**: Supports 2 libraries for web crawling; [`crawl4ai`](https://docs.crawl4ai.com/) and [`scrapegraphai`](https://docs.scrapegraphai.com/introduction) to efficiently gather content from specified web sources, with customizable parameters (e.g., crawl depth, preferred client).
 - **Multi-Format Data Extraction**: Supports 2 libraries for data extraction; [`langchain`](https://python.langchain.com/docs/introduction/) and [`docling`](https://python.langchain.com/docs/integrations/document_loaders/docling/) to extract data from nearly all file formats (e.g., PDFs, text files, docx, csv, xlsx, etc...), broadening its knowledge base beyond web content.
 - **Content Storage**: Saves extracted data in `data/web_content/` as text files in a clean markdown format (which LLMs love) for indexing and retrieval.
-  
+
+### Chat History Agent
+An intelligent agent powered by LangChain that analyzes conversation data to extract insights about common user questions, peak usage times, response quality, user engagement patterns, ...etc.
 
 ### Monitoring and Uncertainty Detection
 - **Response Monitoring**: Implements a monitoring service to track responses and detect the questions that the LLM couldn't answer.
