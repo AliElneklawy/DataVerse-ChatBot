@@ -82,7 +82,9 @@ An intelligent agent powered by LangChain that analyzes conversation data to ext
 ### Admin Dashboard
 The admin dashboard provides a centralized interface for managing the RAG system, offering tools to monitor usage, manage content, and update account settings.
 
-![image](https://github.com/user-attachments/assets/fe6199eb-d2f8-4662-b098-033131db8670)
+
+![image](https://github.com/user-attachments/assets/ecd4917a-967d-4b96-971e-bb72c03509a9)
+
 
 
 
