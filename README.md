@@ -12,6 +12,10 @@
 - **Content Storage**: Saves extracted data in `data/web_content/` as text files in a clean markdown format (which LLMs love) for indexing and retrieval.
 
 ### Chat History Agent
+
+![image](https://github.com/user-attachments/assets/a2a348c3-8755-4260-a1cd-2e858f604f72)
+
+
 An intelligent agent powered by LangChain that analyzes conversation data to extract insights about common user questions, peak usage times, response quality, user engagement patterns, ...etc.
 
 ### Monitoring and Uncertainty Detection
