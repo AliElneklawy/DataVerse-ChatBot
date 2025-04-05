@@ -16,8 +16,7 @@ import io
 
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
-from chatbot.agents.chat_hist_analyzer_agent import ChatHistortAnalyzerAgent
-from chatbot.agents.chat_hist_analyzer_agent import ChatHistortAnalyzerAgent
+from chatbot.agents.chat_hist_analyzer_agent import ChatHistoryAnalyzerAgent
 from chatbot.utils.utils import DatabaseOps, EmailService, create_folder
 from chatbot.utils.paths import (
     DATABASE_DIR,
@@ -1855,7 +1854,7 @@ def analyze_data():
 
     try:
         # Initialize the agent
-        agent = ChatHistortAnalyzerAgent()
+        agent = ChatHistoryAnalyzerAgent()
 
         # Capture the agent's thinking process
         f = io.StringIO()
