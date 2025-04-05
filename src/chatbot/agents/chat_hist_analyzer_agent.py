@@ -1,39 +1,35 @@
-import sys
-from pathlib import Path
 from typing import List, Dict
 from datetime import datetime
+from base_agent import BaseAgent
 from langchain.tools import Tool
 from langchain_cohere import ChatCohere
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.agents import create_tool_calling_agent, AgentExecutor
-
-current_dir = Path(__file__).resolve().parent
-src_dir = current_dir.parents[1]
-if str(src_dir) not in sys.path:
-    sys.path.append(str(src_dir))
-
-from chatbot.utils.utils import get_api_key, DatabaseOps, create_folder
 from chatbot.utils.paths import CHAT_HIST_ANALYSIS_DIR
+from langchain.agents import create_tool_calling_agent, AgentExecutor
+from chatbot.utils.utils import get_api_key, DatabaseOps, create_folder
 
 
-class ChatHistoryAnalyzerAgent:
+class ChatHistoryAnalyzerAgent(BaseAgent):
     def __init__(self):
         self.db = DatabaseOps()
         self.llm = ChatCohere(
             cohere_api_key=get_api_key("COHERE"), model="command-r-plus-08-2024"
         )
         # self.llm = ChatOpenAI(api_key=get_api_key("OPENAI"), model="gpt-4o")
-        self.prompt = self._init_prompt()
-        self._init_tools()
-        self._init_agent()
+        
+        # self.prompt = self._init_prompt()
+        # self._init_tools()
+        # self._init_agent()
+
+        super().__init__()
 
     def _init_prompt(self):
         prompt = ChatPromptTemplate.from_messages(
             [
                 {
-                "role": "system",
-                "content": """
+                    "role": "system",
+                    "content": """
                 You are a helpful assistant for my RAG system. Your job is to analyze the chat history and extract 
                 detailed insights from it based on the user's query. Provide in-depth analysis including:
 
@@ -56,7 +52,7 @@ class ChatHistoryAnalyzerAgent:
                 Your analysis must be clear, insightful, and in-depth—not concise. Do not include the actual prompts 
                 in the output, only the insights. After completing the analysis and showing it on the dashboard, 
                 save it to a file in markdown format but you must show it on the dashboard first.
-                """
+                """,
                 },
                 {"role": "human", "content": "{query}"},
                 {"role": "placeholder", "content": "{agent_scratchpad}"},
@@ -87,10 +83,9 @@ class ChatHistoryAnalyzerAgent:
                     analysis_text (str): The text of the analysis to save
                 Returns:
                     Confirmation message with the path to the saved file
-                """
+                """,
             ),
         ]
-
 
     def _init_agent(self):
         self.agent = create_tool_calling_agent(
@@ -107,22 +102,22 @@ class ChatHistoryAnalyzerAgent:
     def save_analysis(self, analysis_text: str):
         """
         Save the chat history analysis to a markdown file.
-        
+
         Args:
             analysis_text (str): The text of the analysis to save
-            
+
         Returns:
             str: Confirmation message with the file path
         """
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"analysis_report_{timestamp}.md"
         filepath = create_folder(CHAT_HIST_ANALYSIS_DIR) / filename
-        
+
         with open(filepath, "w") as f:
             f.write(f"# Chat History Analysis Report\n")
             f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
             f.write(analysis_text)
-        
+
         return f"Analysis saved to: {filepath}"
 
     def get_chat_history(self, days: int = 7):
