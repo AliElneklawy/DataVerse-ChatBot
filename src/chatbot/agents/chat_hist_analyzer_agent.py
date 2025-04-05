@@ -13,10 +13,11 @@ src_dir = current_dir.parents[1]
 if str(src_dir) not in sys.path:
     sys.path.append(str(src_dir))
 
-from chatbot.utils.utils import get_api_key, DatabaseOps
+from chatbot.utils.utils import get_api_key, DatabaseOps, create_folder
+from chatbot.utils.paths import CHAT_HIST_ANALYSIS_DIR
 
 
-class ChatHistortAnalyzerAgent:
+class ChatHistoryAnalyzerAgent:
     def __init__(self):
         self.db = DatabaseOps()
         self.llm = ChatCohere(
@@ -31,17 +32,31 @@ class ChatHistortAnalyzerAgent:
         prompt = ChatPromptTemplate.from_messages(
             [
                 {
-                    "role": "system",
-                    "content": """
-                    You are a helpful assistant for my RAG system. Your job is to analyze 
-                    the chat history and extract insights from it like the most common
-                    5 questions, questions that weren't answered by the LLM, the time range at 
-                    which we get the most messages, languages used, total number of users, common
-                    patterns in questions and answers and other insights that you might find 
-                    helpful. All this based on the user's query. Your analysis must be clear, 
-                    insightful, and in-depth not consice. Don't provide the actual prompts but 
-                    only provide insights. 
-                    """,
+                "role": "system",
+                "content": """
+                You are a helpful assistant for my RAG system. Your job is to analyze the chat history and extract 
+                detailed insights from it based on the user's query. Provide in-depth analysis including:
+
+                1. General Insights:
+                - The 5 most common questions asked by users.
+                - Questions that weren't answered satisfactorily by the LLM (e.g., vague or uncertain responses).
+                - The time range with the most messages (e.g., peak hours).
+                - Languages used in the conversations.
+                - Total number of unique users.
+                - Common patterns in questions and answers.
+                - Other helpful insights you identify.
+
+                2. Sentiment Analysis:
+                - Assess the sentiment (positive, negative, neutral) of user messages and assistant responses.
+                - Calculate the distribution of sentiments (e.g., 60% positive, 30% neutral, 10% negative).
+                - Identify specific interactions with strong negative sentiment and suggest potential improvements.
+                - Highlight trends in sentiment over time or by topic (e.g., negative sentiment around a specific issue).
+                - For negative sentiment reporting, show the user's message.
+
+                Your analysis must be clear, insightful, and in-depth—not concise. Do not include the actual prompts 
+                in the output, only the insights. After completing the analysis and showing it on the dashboard, 
+                save it to a file in markdown format but you must show it on the dashboard first.
+                """
                 },
                 {"role": "human", "content": "{query}"},
                 {"role": "placeholder", "content": "{agent_scratchpad}"},
@@ -62,8 +77,20 @@ class ChatHistortAnalyzerAgent:
                 Returns:
                     Formatted chat history in markdown format
                 """,
-            )
+            ),
+            Tool(
+                name="save_chat_history_analysis",
+                func=self.save_analysis,
+                description="""
+                Save the chat history analysis to a `.md` file.
+                Args:
+                    analysis_text (str): The text of the analysis to save
+                Returns:
+                    Confirmation message with the path to the saved file
+                """
+            ),
         ]
+
 
     def _init_agent(self):
         self.agent = create_tool_calling_agent(
@@ -74,7 +101,29 @@ class ChatHistortAnalyzerAgent:
         )
 
     def analyze(self, query):
-        return self.agent_executor.invoke({"query": query})
+        result = self.agent_executor.invoke({"query": query})
+        return result
+
+    def save_analysis(self, analysis_text: str):
+        """
+        Save the chat history analysis to a markdown file.
+        
+        Args:
+            analysis_text (str): The text of the analysis to save
+            
+        Returns:
+            str: Confirmation message with the file path
+        """
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"analysis_report_{timestamp}.md"
+        filepath = create_folder(CHAT_HIST_ANALYSIS_DIR) / filename
+        
+        with open(filepath, "w") as f:
+            f.write(f"# Chat History Analysis Report\n")
+            f.write(f"Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            f.write(analysis_text)
+        
+        return f"Analysis saved to: {filepath}"
 
     def get_chat_history(self, days: int = 7):
         """
@@ -140,7 +189,7 @@ class ChatHistortAnalyzerAgent:
 
 if __name__ == "__main__":
     db = DatabaseOps()
-    agent = ChatHistortAnalyzerAgent()
+    agent = ChatHistoryAnalyzerAgent()
 
-    result = agent.analyze("Show analysis for the chat history for the past 13 days")
+    result = agent.analyze("Show analysis for the chat history for the past 6 days")
     print(result)
