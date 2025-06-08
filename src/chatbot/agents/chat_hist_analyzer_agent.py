@@ -1,6 +1,5 @@
 from typing import List, Dict
 from datetime import datetime
-from base_agent import BaseAgent
 from langchain.tools import Tool
 from langchain_cohere import ChatCohere
 from langchain_openai import ChatOpenAI
@@ -9,6 +8,10 @@ from chatbot.utils.paths import CHAT_HIST_ANALYSIS_DIR
 from langchain.agents import create_tool_calling_agent, AgentExecutor
 from chatbot.utils.utils import get_api_key, DatabaseOps, create_folder
 
+try:
+    from base_agent import BaseAgent
+except ModuleNotFoundError:
+    from .base_agent import BaseAgent
 
 class ChatHistoryAnalyzerAgent(BaseAgent):
     def __init__(self):

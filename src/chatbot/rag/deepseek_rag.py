@@ -11,9 +11,8 @@ class DeepseekRAG(OpenAIRAG, BaseRAG):
         """Initialize Deepseek chat model and Cohere embedding model."""
         config = DeepSeekConfig()
         api_key = get_api_key("DEEPSEEK")
-        self.deepseek_client = AsyncOpenAI(api_key=api_key, 
-                                      base_url=config.BASE_URL)
-        
+        self.deepseek_client = AsyncOpenAI(api_key=api_key, base_url=config.BASE_URL)
+
         self.deepseek_model = self.model_name or next(iter(config.AVAILABLE_MODELS))
         self.in_price, self.out_price = config.AVAILABLE_MODELS[self.deepseek_model]
         self.embedding_provider = CohereEmbedding(get_api_key("COHERE"))
@@ -36,19 +35,23 @@ class DeepseekRAG(OpenAIRAG, BaseRAG):
             response_text = response.choices[0].message.content
             request_usage = response.usage
 
-            self.db.append_cost(user_id,
-                             self.deepseek_model,
-                             self.embedding_provider.embedding_model,
-                             request_usage.prompt_tokens,
-                             request_usage.completion_tokens,
-                             self.in_price,
-                             self.out_price)
-            
-            self.db.append_chat_history(user_id, 
-                                     query, 
-                                     response_text, 
-                                     self.deepseek_model, 
-                                     self.embedding_provider.embedding_model)
+            self.db.append_cost(
+                user_id,
+                self.deepseek_model,
+                self.embedding_provider.embedding_model,
+                request_usage.prompt_tokens,
+                request_usage.completion_tokens,
+                self.in_price,
+                self.out_price,
+            )
+
+            self.db.append_chat_history(
+                user_id,
+                query,
+                response_text,
+                self.deepseek_model,
+                self.embedding_provider.embedding_model,
+            )
             return response_text
         except Exception as e:
             logger.error(f"Error getting DeepSeek response: {e}")
