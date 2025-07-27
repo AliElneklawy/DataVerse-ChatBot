@@ -1,0 +1,31 @@
+version: '3.8'
+
+x-common-build: &default-build
+  context: .
+  dockerfile: Dockerfile
+
+services:
+  telegram-bot:
+    build: *default-build
+    command: python src/tg_bot.py
+    ports:
+      - "8001:80"
+    restart: unless-stopped
+  whatsapp-bot:
+    build: *default-build
+    command: python src/whatsapp_bot.py
+    ports:
+      - "8002:80"
+    restart: unless-stopped
+  admin-dashboard:
+    build: *default-build
+    command: python src/admin_dashboard_launcher.py
+    ports:
+      - "8003:80"
+    restart: unless-stopped
+  web-app:
+    build: *default-build
+    command: python -m src/web.chat_web_app
+    ports:
+      - "8004:80"
+    restart: unless-stopped

@@ -1,0 +1,26 @@
+*.md
+**/__pycache__/
+.gradio/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+*.log
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.example
+install.bat
+
+# directories
+indexes
+datasets
+database
+chat_history
+chat_hist_analysis
+**/DataVerse_ChatBot.egg-info/
+tests
+docs
+assets
