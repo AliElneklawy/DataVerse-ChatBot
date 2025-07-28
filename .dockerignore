@@ -1,9 +1,9 @@
 *.md
 **/__pycache__/
 .gradio/
-.mypy_cache/
-.pytest_cache/
-.ruff_cache/
+**/.mypy_cache/
+**/.pytest_cache/
+**/.ruff_cache/
 .venv/
 
 *.log
