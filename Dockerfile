@@ -6,9 +6,12 @@ ENV PATH="/root/.local/bin:$PATH"
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev\  
     curl \
     libasound2-dev \
     libffi-dev \
+    libportaudio2 \
     portaudio19-dev \
  && pip install --no-cache-dir pipx \
  && pipx install uv \
