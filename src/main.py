@@ -85,7 +85,7 @@ def main():
     link = "https://alielneklawy.wixsite.com/themlengineer"
     domain_name = extract_domain_name(link)
     content_path = fetch_content(link, domain_name, webpage_only=False)
-    rag = CohereRAG(content_path, INDEXES_DIR, chunking_type="recursive", rerank=False)
+    rag = CohereRAG(content_path, INDEXES_DIR, chunking_type="recursive", rerank=True)
 
     response_monitor = rag.resp_monitor
     hist_sender = rag.hist_sender
