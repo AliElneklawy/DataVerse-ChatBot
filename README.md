@@ -11,6 +11,8 @@
 - **Multi-Format Data Extraction**: Supports 2 libraries for data extraction; [`langchain`](https://python.langchain.com/docs/introduction/) and [`docling`](https://python.langchain.com/docs/integrations/document_loaders/docling/) to extract data from nearly all file formats (e.g., PDFs, text files, docx, csv, xlsx, etc...), broadening its knowledge base beyond web content.
 - **Content Storage**: Saves extracted data in `data/web_content/` as text files in a clean markdown format (which LLMs love) for indexing and retrieval.
 
+<img width="1708" height="627" alt="image" src="https://github.com/user-attachments/assets/cce9aab7-ddba-470d-a330-66612fdd8062" />
+
 ### Chat History Agent
 
 ![image](https://github.com/user-attachments/assets/a2a348c3-8755-4260-a1cd-2e858f604f72)
@@ -57,6 +59,9 @@ An intelligent agent powered by LangChain that analyzes conversation data to ext
   - Grok
   - Mistral
 - **Flexible LLM Selection**: Configurable via settings to switch between LLMs based on user preference or use case.
+
+  <img width="1701" height="342" alt="image" src="https://github.com/user-attachments/assets/505de41b-c6df-4ba1-984e-9350eed3b8da" />
+
 
 ### Retrieval-Augmented Generation (RAG)
 - **Base RAG Framework**: Provides a consistent RAG interface for retrieval and generation.
@@ -109,6 +114,8 @@ The admin dashboard provides a centralized interface for managing the RAG system
   - `data/database/`: Chat history database (also monitors the induced costs for using the LLMs across all chat interfaces).
 - **Efficient Retrieval**: Uses FAISS for scalable similarity searches.
 - **Database Support**: Lightweight SQLite for chat history.
+
+<img width="1700" height="488" alt="image" src="https://github.com/user-attachments/assets/fcd16cd8-2d4e-4213-95d0-724bcc4aca04" />
 
 
 ## Installation
@@ -222,3 +229,4 @@ The admin dashboard provides a centralized interface for managing the RAG system
 │   ├── tests 
 │   │   ├── locustfile.py 
 ```
+
